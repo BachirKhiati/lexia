@@ -60,6 +60,7 @@ func main() {
 	questHandler := handlers.NewQuestHandler(db, aiService)
 	synapseHandler := handlers.NewSynapseHandler(db)
 	lensHandler := handlers.NewLensHandler(db, scraperService)
+	userHandler := handlers.NewUserHandler(db)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -115,6 +116,9 @@ func main() {
 			// The Lens - Content importer
 			r.Post("/lens/import", lensHandler.ImportArticle)
 			r.Get("/lens/articles", lensHandler.GetUserArticles)
+
+			// User progress
+			r.Get("/users/progress", userHandler.GetProgress)
 
 			// The Orator - Speaking coach (TODO)
 		})

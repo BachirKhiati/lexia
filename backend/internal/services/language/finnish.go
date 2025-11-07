@@ -5,17 +5,16 @@ import (
 	"fmt"
 
 	"github.com/BachirKhiati/synapse/internal/models"
-	"github.com/BachirKhiati/synapse/internal/services/language/finnish"
 )
 
 // Service handles language-specific operations
 type Service struct {
-	conjugator *finnish.VerbConjugator
+	conjugator *VerbConjugator
 }
 
 func NewService() *Service {
 	return &Service{
-		conjugator: finnish.NewVerbConjugator(),
+		conjugator: NewVerbConjugator(),
 	}
 }
 

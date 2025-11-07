@@ -50,6 +50,30 @@ Complete speaking practice module with:
 - Browser compatibility checks
 - Error handling
 
+#### 5. Real-time Progress Tracking
+**Status: COMPLETE** ✅
+
+Dynamic sidebar statistics from actual database:
+
+**Backend:**
+- User progress endpoint: `GET /api/v1/users/progress`
+- Auto-calculation from words and quests tables
+- user_progress table integration
+- Real-time stat updates
+
+**Frontend:**
+- Live progress fetching on mount
+- Words mastered count (status='solid')
+- Quests completed count (status='completed')
+- Streak days tracking
+- Loading states with fallbacks
+
+**Features:**
+- No more hardcoded stats
+- Real database queries
+- Automatic progress initialization
+- User-specific progress tracking
+
 #### 1. User Authentication System (JWT-based)
 **Status: COMPLETE** ✅
 
@@ -175,24 +199,18 @@ Implement SRS for optimal retention:
 
 ### 🐛 Known Issues
 
-1. **Hardcoded Progress Stats** - Sidebar shows static numbers (24 words, 12 quests)
-   - TODO: Query real data from user_progress table
-
-2. **No Real Finnish Conjugation** - Placeholder conjugations
-   - TODO: Implement proper Finnish morphology
-
-3. **YouTube Transcripts Not Supported** - The Lens doesn't extract video transcripts yet
+1. **YouTube Transcripts Not Supported** - The Lens doesn't extract video transcripts yet
    - TODO: Integrate YouTube Transcript API
 
-4. **No Email Verification** - Users can register without email confirmation
+2. **No Email Verification** - Users can register without email confirmation
    - TODO: Add email verification flow
 
-5. **No Password Reset** - Users cannot reset forgotten passwords
+3. **No Password Reset** - Users cannot reset forgotten passwords
    - TODO: Add password reset flow
 
 ### 📊 Current Project Status
 
-**Overall Progress: 70% Complete**
+**Overall Progress: 80% Complete**
 
 **Completed:**
 - ✅ Core Architecture (Backend + Frontend)
@@ -200,16 +218,16 @@ Implement SRS for optimal retention:
 - ✅ The Analyzer (Word pop-up)
 - ✅ The Synapse (Mind map visualization)
 - ✅ The Lens (Article import)
+- ✅ The Orator (Speech module)
 - ✅ User Authentication
+- ✅ Finnish Conjugation Engine
+- ✅ Real-time Progress Tracking
 - ✅ Multi-AI Provider (Claude + Gemini)
 - ✅ Docker Setup
 
 **Remaining:**
-- 🔨 The Orator (Speech module)
-- 🔨 Finnish Conjugation Engine
 - 🔨 Wiktionary Integration
 - 🔨 Spaced Repetition
-- 🔨 Real-time progress tracking
 - 🔨 Email verification
 - 🔨 Password reset
 

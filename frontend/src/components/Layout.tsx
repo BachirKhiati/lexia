@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { getUserProgress, UserProgress } from '../services/api';
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,6 +11,7 @@ const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [progress, setProgress] = useState<UserProgress | null>(null);
 
   const navItems = [
     { path: '/', label: 'Dashboard', icon: '🏠' },
@@ -18,6 +20,22 @@ const Layout = ({ children }: LayoutProps) => {
     { path: '/lens', label: 'The Lens', icon: '🌍' },
     { path: '/orator', label: 'The Orator', icon: '🗣️' },
   ];
+
+  // Fetch user progress on mount
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const data = await getUserProgress();
+        setProgress(data);
+      } catch (error) {
+        console.error('Failed to fetch progress:', error);
+      }
+    };
+
+    if (user) {
+      fetchProgress();
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen flex">
@@ -51,15 +69,21 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Words Mastered</span>
-              <span className="text-synapse-solid font-bold">24</span>
+              <span className="text-synapse-solid font-bold">
+                {progress ? progress.words_mastered : '...'}
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Quests Completed</span>
-              <span className="text-synapse-primary font-bold">12</span>
+              <span className="text-synapse-primary font-bold">
+                {progress ? progress.quests_completed : '...'}
+              </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Streak</span>
-              <span className="text-orange-500 font-bold">7 days 🔥</span>
+              <span className="text-orange-500 font-bold">
+                {progress ? `${progress.streak_days} days` : '...'} 🔥
+              </span>
             </div>
           </div>
         </div>

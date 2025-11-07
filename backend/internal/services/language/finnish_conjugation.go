@@ -1,4 +1,4 @@
-package finnish
+package language
 
 import (
 	"strings"

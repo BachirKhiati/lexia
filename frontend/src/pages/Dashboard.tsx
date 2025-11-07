@@ -1,18 +1,38 @@
 import { Link } from 'react-router-dom';
+import { HelpCircle } from 'lucide-react';
+import { useOnboarding } from '../contexts/OnboardingContext';
+import OnboardingModal from '../components/Onboarding/OnboardingModal';
 
 const Dashboard = () => {
+  const { showOnboarding, startOnboarding, completeOnboarding, closeOnboarding } = useOnboarding();
+
   return (
     <div className="p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">
-            Welcome to <span className="text-synapse-primary">Synapse</span>
-          </h1>
-          <p className="text-xl text-gray-400">
-            Your Interactive Language Universe. Don't just learn—explore.
-          </p>
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">
+              Welcome to <span className="text-synapse-primary">Synapse</span>
+            </h1>
+            <p className="text-xl text-gray-400">
+              Your Interactive Language Universe. Don't just learn—explore.
+            </p>
+          </div>
+          <button
+            onClick={startOnboarding}
+            className="flex items-center gap-2 px-4 py-2 bg-synapse-card hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors text-synapse-text"
+            title="Restart Tour"
+          >
+            <HelpCircle className="w-5 h-5" />
+            <span className="hidden md:inline">Take Tour</span>
+          </button>
         </div>
+
+        {/* Onboarding Modal */}
+        {showOnboarding && (
+          <OnboardingModal onClose={closeOnboarding} onComplete={completeOnboarding} />
+        )}
 
         {/* The 5 Modules */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

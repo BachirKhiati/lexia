@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { OnboardingProvider } from './contexts/OnboardingContext';
 import Layout from './components/Layout';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 
@@ -118,8 +119,10 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppRoutes />
-        <PWAInstallPrompt />
+        <OnboardingProvider>
+          <AppRoutes />
+          <PWAInstallPrompt />
+        </OnboardingProvider>
       </AuthProvider>
     </Router>
   );

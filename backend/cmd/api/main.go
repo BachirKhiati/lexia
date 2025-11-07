@@ -122,6 +122,7 @@ func main() {
 	userHandler := handlers.NewUserHandler(db)
 	srsHandler := handlers.NewSRSHandler(db, srsService)
 	analyticsHandler := handlers.NewAnalyticsHandler(db)
+	healthHandler := handlers.NewHealthHandler(db)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -145,10 +146,10 @@ func main() {
 	strictLimit := middleware.StrictRateLimit()
 	generousLimit := middleware.GenerousRateLimit()
 
-	// Health check
-	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("OK"))
-	})
+	// Health and monitoring endpoints (no authentication required)
+	r.Get("/health", healthHandler.Health)
+	r.Get("/ready", healthHandler.Ready)
+	r.Get("/live", healthHandler.Live)
 
 	// Swagger UI
 	r.Get("/api/docs/*", httpSwagger.Handler(
@@ -209,6 +210,9 @@ func main() {
 				r.Get("/words-by-pos", analyticsHandler.GetWordsByPartOfSpeech)
 				r.Get("/challenging-words", analyticsHandler.GetChallengingWords)
 			})
+
+			// System Statistics (protected - requires authentication)
+			r.Get("/system/stats", healthHandler.Stats)
 
 			// The Orator - Speaking coach (completed)
 		})

@@ -10,6 +10,7 @@ const ScribePage = lazy(() => import('./pages/ScribePage'));
 const SynapsePage = lazy(() => import('./pages/SynapsePage'));
 const LensPage = lazy(() => import('./pages/LensPage'));
 const OratorPage = lazy(() => import('./pages/OratorPage'));
+const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 
@@ -94,6 +95,16 @@ function AppRoutes() {
           <ProtectedRoute>
             <Layout>
               <OratorPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/analytics"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <AnalyticsPage />
             </Layout>
           </ProtectedRoute>
         }

@@ -121,6 +121,7 @@ func main() {
 	lensHandler := handlers.NewLensHandler(db, scraperService)
 	userHandler := handlers.NewUserHandler(db)
 	srsHandler := handlers.NewSRSHandler(db, srsService)
+	analyticsHandler := handlers.NewAnalyticsHandler(db)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -199,6 +200,15 @@ func main() {
 			// Spaced Repetition System
 			r.Get("/srs/due", srsHandler.GetDueWords)
 			r.Post("/srs/review", srsHandler.SubmitReview)
+
+			// Analytics Dashboard
+			r.Route("/analytics", func(r chi.Router) {
+				r.Get("/stats", analyticsHandler.GetLearningStats)
+				r.Get("/words-over-time", analyticsHandler.GetWordsOverTime)
+				r.Get("/quests-over-time", analyticsHandler.GetQuestsOverTime)
+				r.Get("/words-by-pos", analyticsHandler.GetWordsByPartOfSpeech)
+				r.Get("/challenging-words", analyticsHandler.GetChallengingWords)
+			})
 
 			// The Orator - Speaking coach (completed)
 		})

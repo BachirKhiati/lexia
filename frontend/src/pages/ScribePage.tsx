@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserQuests, generateQuest } from '../services/api';
 import QuestCard from '../components/Scribe/QuestCard';
+import { useAuth } from '../contexts/AuthContext';
 
 const ScribePage = () => {
   const queryClient = useQueryClient();
-  const userId = 1; // TODO: Get from auth context
+  const { user } = useAuth();
+  const userId = user?.id || 1;
 
   const { data: quests, isLoading } = useQuery({
     queryKey: ['quests', userId],

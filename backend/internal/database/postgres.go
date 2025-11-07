@@ -36,6 +36,7 @@ func (db *DB) InitSchema() error {
 		id SERIAL PRIMARY KEY,
 		email VARCHAR(255) UNIQUE NOT NULL,
 		username VARCHAR(100) UNIQUE NOT NULL,
+		password_hash VARCHAR(255) NOT NULL,
 		language VARCHAR(50) NOT NULL DEFAULT 'finnish',
 		created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 		updated_at TIMESTAMP NOT NULL DEFAULT NOW()

@@ -12,8 +12,11 @@ import (
 	"github.com/BachirKhiati/synapse/internal/config"
 	"github.com/BachirKhiati/synapse/internal/database"
 	"github.com/BachirKhiati/synapse/internal/handlers"
+	"github.com/BachirKhiati/synapse/internal/middleware"
 	"github.com/BachirKhiati/synapse/internal/services/ai"
+	"github.com/BachirKhiati/synapse/internal/services/auth"
 	"github.com/BachirKhiati/synapse/internal/services/language"
+	"github.com/BachirKhiati/synapse/internal/services/scraper"
 )
 
 func main() {
@@ -42,13 +45,21 @@ func main() {
 		log.Fatalf("Failed to initialize AI service: %v", err)
 	}
 
+	// Initialize auth service
+	authService := auth.NewService(cfg.Auth.JWTSecret, cfg.Auth.JWTIssuer)
+
 	// Initialize language service
 	langService := language.NewService()
 
+	// Initialize scraper service
+	scraperService := scraper.NewService()
+
 	// Initialize handlers
+	authHandler := handlers.NewAuthHandler(db, authService)
 	analyzerHandler := handlers.NewAnalyzerHandler(aiService, langService)
 	questHandler := handlers.NewQuestHandler(db, aiService)
 	synapseHandler := handlers.NewSynapseHandler(db)
+	lensHandler := handlers.NewLensHandler(db, scraperService)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -71,24 +82,42 @@ func main() {
 
 	// API routes
 	r.Route("/api/v1", func(r chi.Router) {
-		// The Analyzer - Universal word analysis
-		r.Post("/analyze", analyzerHandler.AnalyzeWord)
-
-		// The Scribe - Quest system
-		r.Route("/users/{userID}/quests", func(r chi.Router) {
-			r.Get("/", questHandler.GetUserQuests)
-			r.Post("/generate", questHandler.GenerateQuest)
-			r.Post("/validate", questHandler.ValidateQuest)
+		// Public routes (no authentication required)
+		r.Group(func(r chi.Router) {
+			r.Post("/auth/register", authHandler.Register)
+			r.Post("/auth/login", authHandler.Login)
 		})
 
-		// The Synapse - Mind map
-		r.Route("/users/{userID}/synapse", func(r chi.Router) {
-			r.Get("/", synapseHandler.GetMindMap)
-			r.Post("/words", synapseHandler.AddWord)
-		})
+		// Protected routes (authentication required)
+		r.Group(func(r chi.Router) {
+			r.Use(middleware.Auth(authService))
 
-		// The Lens - Content importer (TODO)
-		// The Orator - Speaking coach (TODO)
+			// Auth endpoints
+			r.Get("/auth/me", authHandler.Me)
+			r.Post("/auth/refresh", authHandler.RefreshToken)
+
+			// The Analyzer - Universal word analysis
+			r.Post("/analyze", analyzerHandler.AnalyzeWord)
+
+			// The Scribe - Quest system
+			r.Route("/users/{userID}/quests", func(r chi.Router) {
+				r.Get("/", questHandler.GetUserQuests)
+				r.Post("/generate", questHandler.GenerateQuest)
+				r.Post("/validate", questHandler.ValidateQuest)
+			})
+
+			// The Synapse - Mind map
+			r.Route("/users/{userID}/synapse", func(r chi.Router) {
+				r.Get("/", synapseHandler.GetMindMap)
+				r.Post("/words", synapseHandler.AddWord)
+			})
+
+			// The Lens - Content importer
+			r.Post("/lens/import", lensHandler.ImportArticle)
+			r.Get("/lens/articles", lensHandler.GetUserArticles)
+
+			// The Orator - Speaking coach (TODO)
+		})
 	})
 
 	// Start server

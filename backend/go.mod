@@ -9,6 +9,9 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/redis/go-redis/v9 v9.4.0
 	github.com/google/generative-ai-go v0.6.0
+	github.com/golang-jwt/jwt/v5 v5.2.0
+	github.com/PuerkitoBio/goquery v1.8.1
+	golang.org/x/crypto v0.18.0
 	google.golang.org/api v0.162.0
 )
 

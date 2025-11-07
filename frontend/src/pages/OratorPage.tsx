@@ -1,23 +1,22 @@
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import PronunciationPractice from '../components/Orator/PronunciationPractice';
+import ConversationMode from '../components/Orator/ConversationMode';
 
 const OratorPage = () => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [transcript, setTranscript] = useState('');
+  const { user } = useAuth();
+  const language = user?.language || 'finnish';
+  const [mode, setMode] = useState<'pronunciation' | 'conversation'>('pronunciation');
+  const [practiceWord, setPracticeWord] = useState('kirjoittaa');
 
-  const handleStartRecording = () => {
-    // TODO: Implement Web Speech API for recording
-    setIsRecording(true);
-
-    // Placeholder
-    setTimeout(() => {
-      setTranscript('This is a placeholder transcript. In production, this would use the Web Speech API.');
-      setIsRecording(false);
-    }, 2000);
-  };
-
-  const handleStopRecording = () => {
-    setIsRecording(false);
-  };
+  // Common Finnish words for practice
+  const finnishWords = [
+    'kirjoittaa', // to write
+    'puhua',      // to speak
+    'oppia',      // to learn
+    'ymmärtää',   // to understand
+    'harjoitella', // to practice
+  ];
 
   return (
     <div className="p-8">
@@ -28,75 +27,73 @@ const OratorPage = () => {
             🗣️ <span className="text-synapse-primary">The Orator</span>
           </h1>
           <p className="text-xl text-gray-400">
-            Your speaking coach. Practice pronunciation and have real conversations.
+            Your speaking coach. Practice pronunciation and have real conversations!
           </p>
         </div>
 
-        {/* Coming Soon Notice */}
-        <div className="card mb-8 text-center bg-gradient-to-br from-synapse-secondary/20 to-synapse-primary/20 border-2 border-synapse-secondary">
-          <div className="text-6xl mb-4">🚧</div>
-          <h2 className="text-2xl font-bold mb-2">Coming Soon!</h2>
-          <p className="text-gray-300 mb-6">
-            The Orator module is under development. It will include:
-          </p>
-
-          <div className="text-left max-w-md mx-auto space-y-3">
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">🎤</span>
-              <div>
-                <strong className="text-white">Pronunciation Practice</strong>
-                <p className="text-sm text-gray-400">Record yourself and get AI feedback on your pronunciation</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">🤖</span>
-              <div>
-                <strong className="text-white">AI Conversations</strong>
-                <p className="text-sm text-gray-400">Have real-time conversations with AI in Finnish</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">📊</span>
-              <div>
-                <strong className="text-white">Progress Tracking</strong>
-                <p className="text-sm text-gray-400">Track your speaking progress over time</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <span className="text-2xl">🎯</span>
-              <div>
-                <strong className="text-white">Speaking Quests</strong>
-                <p className="text-sm text-gray-400">Complete speaking challenges based on your written quests</p>
-              </div>
-            </div>
-          </div>
+        {/* Mode Selector */}
+        <div className="flex gap-4 mb-8">
+          <button
+            onClick={() => setMode('pronunciation')}
+            className={`flex-1 py-4 rounded-lg font-semibold transition-all duration-200 ${
+              mode === 'pronunciation'
+                ? 'bg-synapse-primary text-white shadow-lg'
+                : 'bg-synapse-surface text-gray-400 hover:bg-synapse-background'
+            }`}
+          >
+            🎤 Pronunciation Practice
+          </button>
+          <button
+            onClick={() => setMode('conversation')}
+            className={`flex-1 py-4 rounded-lg font-semibold transition-all duration-200 ${
+              mode === 'conversation'
+                ? 'bg-synapse-primary text-white shadow-lg'
+                : 'bg-synapse-surface text-gray-400 hover:bg-synapse-background'
+            }`}
+          >
+            💬 Conversation Mode
+          </button>
         </div>
 
-        {/* Pronunciation Demo */}
-        <div className="card">
-          <h2 className="text-2xl font-bold mb-4">Pronunciation Demo (Preview)</h2>
-
-          <div className="bg-synapse-background rounded-lg p-6 mb-4">
-            <p className="text-gray-400 mb-4">Try pronouncing this Finnish word:</p>
-            <h3 className="text-3xl font-bold text-white mb-2">Hyvää päivää</h3>
-            <p className="text-sm text-gray-400 mb-4">(Good day / Hello)</p>
-
-            <button
-              onClick={isRecording ? handleStopRecording : handleStartRecording}
-              className={`btn-primary ${isRecording ? 'animate-pulse' : ''}`}
-            >
-              {isRecording ? '🔴 Stop Recording' : '🎤 Start Recording'}
-            </button>
-          </div>
-
-          {transcript && (
-            <div className="bg-synapse-primary/20 rounded-lg p-4 border border-synapse-primary">
-              <p className="text-sm text-gray-300">{transcript}</p>
+        {/* Content */}
+        {mode === 'pronunciation' ? (
+          <div>
+            {/* Word Selector */}
+            <div className="card mb-6">
+              <h3 className="text-lg font-semibold mb-3">Choose a word to practice:</h3>
+              <div className="flex flex-wrap gap-2">
+                {finnishWords.map((word) => (
+                  <button
+                    key={word}
+                    onClick={() => setPracticeWord(word)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      practiceWord === word
+                        ? 'bg-synapse-primary text-white'
+                        : 'bg-synapse-background text-gray-300 hover:bg-synapse-surface'
+                    }`}
+                  >
+                    {word}
+                  </button>
+                ))}
+              </div>
             </div>
-          )}
+
+            {/* Pronunciation Practice Component */}
+            <PronunciationPractice targetWord={practiceWord} language={language} />
+          </div>
+        ) : (
+          <ConversationMode language={language} topic="daily conversation" />
+        )}
+
+        {/* Info Card */}
+        <div className="mt-6 p-4 bg-synapse-primary/10 rounded-lg border border-synapse-primary">
+          <h4 className="font-semibold mb-2">💡 Tips for Better Results:</h4>
+          <ul className="text-sm text-gray-300 space-y-1">
+            <li>• Speak clearly and at a natural pace</li>
+            <li>• Use a good microphone in a quiet environment</li>
+            <li>• Allow microphone access when prompted</li>
+            <li>• Works best in Chrome, Edge, or Safari</li>
+          </ul>
         </div>
       </div>
     </div>

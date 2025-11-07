@@ -4,6 +4,24 @@
 
 Synapse is an AI-powered language learning workbench that transforms passive learning into active creation. Built for learners who want to truly master a language through exploration, not memorization.
 
+---
+
+## 🚀 Quick Deploy
+
+**Deploy to production in one command:**
+```bash
+make deploy
+```
+
+**See all commands:**
+```bash
+make help
+```
+
+**Quick reference:** See `QUICK_COMMANDS.md`
+
+---
+
 ## 🌟 Core Concept
 
 Synapse creates a complete learning ecosystem where **every piece of text is alive**—hoverable, explorable, and connected to your personal knowledge graph. Learn through a natural cycle:

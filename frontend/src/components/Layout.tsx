@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,6 +8,8 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const navItems = [
     { path: '/', label: 'Dashboard', icon: '🏠' },
@@ -64,7 +67,28 @@ const Layout = ({ children }: LayoutProps) => {
         {/* Language Badge */}
         <div className="mt-4 p-3 bg-gradient-to-r from-synapse-primary to-synapse-secondary rounded-lg text-center">
           <p className="text-xs text-gray-200">Learning</p>
-          <p className="text-lg font-bold">🇫🇮 Finnish</p>
+          <p className="text-lg font-bold">
+            {user?.language === 'finnish' && '🇫🇮 Finnish'}
+            {user?.language === 'english' && '🇬🇧 English'}
+            {user?.language === 'spanish' && '🇪🇸 Spanish'}
+            {user?.language === 'french' && '🇫🇷 French'}
+            {user?.language === 'german' && '🇩🇪 German'}
+          </p>
+        </div>
+
+        {/* User info & logout */}
+        <div className="mt-4 p-3 bg-synapse-background rounded-lg">
+          <p className="text-sm text-gray-400 mb-1">Logged in as</p>
+          <p className="text-white font-semibold mb-3">{user?.username}</p>
+          <button
+            onClick={() => {
+              logout();
+              navigate('/login');
+            }}
+            className="text-sm text-red-400 hover:text-red-300 transition-colors"
+          >
+            🚪 Log Out
+          </button>
         </div>
       </aside>
 

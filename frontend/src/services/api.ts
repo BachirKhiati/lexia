@@ -14,6 +14,28 @@ const api = axios.create({
   },
 });
 
+// Add auth token to requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('synapse_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Handle token expiration
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token expired or invalid
+      localStorage.removeItem('synapse_token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Analyzer API
 export const analyzeWord = async (word: string, language: string, context?: string): Promise<AnalyzerResponse> => {
   const { data } = await api.post('/analyze', { word, language, context });

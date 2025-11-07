@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import HoverableText from '../components/Analyzer/HoverableText';
+import { useAuth } from '../contexts/AuthContext';
 
 const LensPage = () => {
+  const { user } = useAuth();
+  const userId = user?.id || 1;
   const [url, setUrl] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const userId = 1; // TODO: Get from auth context
 
   const handleImport = async () => {
     if (!url.trim()) return;

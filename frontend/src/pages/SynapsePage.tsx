@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { getMindMap } from '../services/api';
 import MindMap from '../components/Synapse/MindMap';
 import { MindMapNode } from '../types';
+import { useAuth } from '../contexts/AuthContext';
 
 const SynapsePage = () => {
-  const userId = 1; // TODO: Get from auth context
+  const { user } = useAuth();
+  const userId = user?.id || 1;
 
   const { data: mindMapData, isLoading } = useQuery({
     queryKey: ['mindMap', userId],

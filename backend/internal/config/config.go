@@ -15,6 +15,7 @@ type Config struct {
 	AI       AIConfig
 	Language LanguageConfig
 	CORS     CORSConfig
+	Auth     AuthConfig
 }
 
 type ServerConfig struct {
@@ -52,6 +53,11 @@ type CORSConfig struct {
 	AllowedOrigins []string
 }
 
+type AuthConfig struct {
+	JWTSecret string
+	JWTIssuer string
+}
+
 func Load() *Config {
 	// Load .env file if it exists
 	if err := godotenv.Load(); err != nil {
@@ -87,6 +93,10 @@ func Load() *Config {
 		},
 		CORS: CORSConfig{
 			AllowedOrigins: strings.Split(getEnv("CORS_ALLOWED_ORIGINS", "http://localhost:3000"), ","),
+		},
+		Auth: AuthConfig{
+			JWTSecret: getEnv("JWT_SECRET", "your-secret-key-change-this-in-production"),
+			JWTIssuer: getEnv("JWT_ISSUER", "synapse-api"),
 		},
 	}
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad16" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow16">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.32" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <rect width="16" height="16" rx="2.4" fill="url(#grad16)"/>
+  <text x="50%" y="10" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial, sans-serif" filter="url(#shadow16)">S</text>
+</svg>

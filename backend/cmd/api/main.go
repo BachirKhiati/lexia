@@ -17,6 +17,7 @@ import (
 	"github.com/BachirKhiati/synapse/internal/services/auth"
 	"github.com/BachirKhiati/synapse/internal/services/language"
 	"github.com/BachirKhiati/synapse/internal/services/scraper"
+	"github.com/BachirKhiati/synapse/internal/services/srs"
 	"github.com/BachirKhiati/synapse/internal/services/wiktionary"
 )
 
@@ -58,6 +59,9 @@ func main() {
 	// Initialize scraper service
 	scraperService := scraper.NewService()
 
+	// Initialize SRS service
+	srsService := srs.NewService()
+
 	// Initialize handlers
 	authHandler := handlers.NewAuthHandler(db, authService)
 	analyzerHandler := handlers.NewAnalyzerHandler(aiService, langService)
@@ -65,6 +69,7 @@ func main() {
 	synapseHandler := handlers.NewSynapseHandler(db)
 	lensHandler := handlers.NewLensHandler(db, scraperService)
 	userHandler := handlers.NewUserHandler(db)
+	srsHandler := handlers.NewSRSHandler(db, srsService)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -124,7 +129,11 @@ func main() {
 			// User progress
 			r.Get("/users/progress", userHandler.GetProgress)
 
-			// The Orator - Speaking coach (TODO)
+			// Spaced Repetition System
+			r.Get("/srs/due", srsHandler.GetDueWords)
+			r.Post("/srs/review", srsHandler.SubmitReview)
+
+			// The Orator - Speaking coach (completed)
 		})
 	})
 

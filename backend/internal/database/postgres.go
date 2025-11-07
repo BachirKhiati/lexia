@@ -65,7 +65,13 @@ func (db *DB) InitSchema() error {
 		examples TEXT[], -- Array of example sentences
 		status VARCHAR(50) NOT NULL DEFAULT 'ghost',
 		added_at TIMESTAMP NOT NULL DEFAULT NOW(),
-		mastered_at TIMESTAMP
+		mastered_at TIMESTAMP,
+		-- Spaced Repetition System fields
+		ease_factor FLOAT NOT NULL DEFAULT 2.5,
+		repetition_count INTEGER NOT NULL DEFAULT 0,
+		interval INTEGER NOT NULL DEFAULT 0, -- days
+		next_review_at TIMESTAMP,
+		last_reviewed_at TIMESTAMP
 	);
 
 	CREATE TABLE IF NOT EXISTS word_conjugations (

@@ -99,6 +99,36 @@ Real word definitions from Wiktionary instead of placeholders:
 - No API keys required (free service)
 - Fallback ensures app never breaks
 
+#### 7. Spaced Repetition System (SRS)
+**Status: COMPLETE (Backend)** ✅
+
+Intelligent review scheduling using SM-2 algorithm:
+
+**Backend:**
+- SM-2 algorithm implementation (services/srs/sm2.go)
+- Quality ratings 0-5 (blackout to perfect recall)
+- Dynamic ease factor adjustment (minimum 1.3)
+- Intelligent interval calculation:
+  - First review: 1 day
+  - Second review: 6 days
+  - Subsequent: interval × ease_factor
+- Database schema with SRS fields:
+  - ease_factor, repetition_count, interval
+  - next_review_at, last_reviewed_at
+
+**API Endpoints:**
+- `GET /api/v1/srs/due` - Get words due for review
+- `POST /api/v1/srs/review` - Submit review with quality rating
+
+**Features:**
+- Adaptive learning based on performance
+- Automatic scheduling of next reviews
+- Optimizes long-term retention
+- Tracks mastery progression
+- Ready for frontend integration
+
+**Next:** Frontend review mode UI (The Scribe integration)
+
 #### 1. User Authentication System (JWT-based)
 **Status: COMPLETE** ✅
 
@@ -156,21 +186,16 @@ Real word definitions from Wiktionary instead of placeholders:
 
 ### 🚧 Features In Progress
 
-#### Spaced Repetition System
-**Status: PLANNED** 🔄
+#### Frontend Review Mode UI
+**Status: PLANNED** 🎯
 
-Implement SRS for optimal retention:
-- SM-2 or similar algorithm
-- Review scheduling
-- Difficulty adjustments
-- Progress tracking
-- "Review" mode in Scribe
-
-**Features:**
-- Track word mastery level
-- Schedule optimal reviews
-- Adapt to user performance
-- Integrate with quests
+Complete the SRS frontend integration:
+- Review mode in The Scribe
+- Word flashcard UI with quality buttons (0-5)
+- Review progress display
+- Next review countdown
+- Daily review stats
+- Integration with Synapse visualization
 
 ### 🐛 Known Issues
 
@@ -185,7 +210,7 @@ Implement SRS for optimal retention:
 
 ### 📊 Current Project Status
 
-**Overall Progress: 85% Complete**
+**Overall Progress: 90% Complete**
 
 **Completed:**
 - ✅ Core Architecture (Backend + Frontend)
@@ -198,11 +223,12 @@ Implement SRS for optimal retention:
 - ✅ Finnish Conjugation Engine
 - ✅ Real-time Progress Tracking
 - ✅ Wiktionary Integration
+- ✅ Spaced Repetition (Backend)
 - ✅ Multi-AI Provider (Claude + Gemini)
 - ✅ Docker Setup
 
 **Remaining:**
-- 🔨 Spaced Repetition
+- 🔨 SRS Frontend UI
 - 🔨 Email verification
 - 🔨 Password reset
 

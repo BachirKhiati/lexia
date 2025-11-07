@@ -1,0 +1,95 @@
+import { Link } from 'react-router-dom';
+
+const Dashboard = () => {
+  return (
+    <div className="p-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">
+            Welcome to <span className="text-synapse-primary">Synapse</span>
+          </h1>
+          <p className="text-xl text-gray-400">
+            Your Interactive Language Universe. Don't just learn—explore.
+          </p>
+        </div>
+
+        {/* The 5 Modules */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* The Scribe */}
+          <Link to="/scribe" className="card hover:border-synapse-primary border-2 border-transparent transition-all duration-200 group">
+            <div className="text-4xl mb-3">✍️</div>
+            <h2 className="text-2xl font-bold mb-2 group-hover:text-synapse-primary transition-colors">
+              The Scribe
+            </h2>
+            <p className="text-gray-400">
+              Your guided workbench. Complete AI-generated quests and practice writing with instant feedback.
+            </p>
+          </Link>
+
+          {/* The Synapse */}
+          <Link to="/synapse" className="card hover:border-synapse-primary border-2 border-transparent transition-all duration-200 group">
+            <div className="text-4xl mb-3">🧠</div>
+            <h2 className="text-2xl font-bold mb-2 group-hover:text-synapse-primary transition-colors">
+              The Synapse
+            </h2>
+            <p className="text-gray-400">
+              Your knowledge mind map. Visualize what you know and watch your language network grow.
+            </p>
+          </Link>
+
+          {/* The Lens */}
+          <Link to="/lens" className="card hover:border-synapse-primary border-2 border-transparent transition-all duration-200 group">
+            <div className="text-4xl mb-3">🌍</div>
+            <h2 className="text-2xl font-bold mb-2 group-hover:text-synapse-primary transition-colors">
+              The Lens
+            </h2>
+            <p className="text-gray-400">
+              Import real-world content. Turn any article or video into an interactive learning experience.
+            </p>
+          </Link>
+
+          {/* The Orator */}
+          <Link to="/orator" className="card hover:border-synapse-primary border-2 border-transparent transition-all duration-200 group">
+            <div className="text-4xl mb-3">🗣️</div>
+            <h2 className="text-2xl font-bold mb-2 group-hover:text-synapse-primary transition-colors">
+              The Orator
+            </h2>
+            <p className="text-gray-400">
+              Your speaking coach. Practice pronunciation and have real conversations with AI.
+            </p>
+          </Link>
+        </div>
+
+        {/* The Learning Cycle */}
+        <div className="card bg-gradient-to-br from-synapse-primary/20 to-synapse-secondary/20 border-2 border-synapse-primary/50">
+          <h2 className="text-2xl font-bold mb-4">The Complete Learning Cycle</h2>
+          <div className="space-y-3 text-gray-300">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🌍</span>
+              <span><strong className="text-white">Discover:</strong> Read articles with The Lens and find new words</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🧠</span>
+              <span><strong className="text-white">Capture:</strong> Add words to your Synapse as "ghost nodes"</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">✍️</span>
+              <span><strong className="text-white">Practice:</strong> Complete quests to master your ghost words</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">✨</span>
+              <span><strong className="text-white">Master:</strong> Watch ghost nodes become solid as you learn</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🗣️</span>
+              <span><strong className="text-white">Speak:</strong> Practice conversations with The Orator</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

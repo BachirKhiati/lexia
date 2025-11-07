@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-synapse-background text-white font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-synapse-surface rounded-xl p-6 shadow-lg;
+  }
+
+  .btn-primary {
+    @apply bg-synapse-primary hover:bg-synapse-primary/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-synapse-secondary hover:bg-synapse-secondary/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply border-2 border-synapse-ghost hover:bg-synapse-ghost/10 text-synapse-ghost font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+  }
+
+  .input {
+    @apply bg-synapse-surface border-2 border-gray-700 focus:border-synapse-primary rounded-lg px-4 py-2 w-full outline-none transition-all duration-200;
+  }
+
+  .textarea {
+    @apply bg-synapse-surface border-2 border-gray-700 focus:border-synapse-primary rounded-lg px-4 py-3 w-full outline-none resize-none transition-all duration-200;
+  }
+}
+
+/* Word hover effect */
+.hoverable-word {
+  @apply relative cursor-pointer transition-colors duration-150;
+}
+
+.hoverable-word:hover {
+  @apply text-synapse-primary underline decoration-2 decoration-synapse-primary;
+}
+
+/* Loading animation */
+.loading-spinner {
+  @apply animate-spin rounded-full border-4 border-gray-700 border-t-synapse-primary h-12 w-12;
+}
+
+/* Success animation */
+.quest-success {
+  @apply animate-glow border-4 border-synapse-solid;
+}

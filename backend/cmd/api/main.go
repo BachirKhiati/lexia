@@ -74,16 +74,23 @@ func main() {
 	// Setup router
 	r := chi.NewRouter()
 
-	// Middleware
+	// Global middleware
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(middleware.SecurityHeaders)
+	r.Use(middleware.RequestSizeLimit(10 * 1024 * 1024)) // 10MB max request size
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   cfg.CORS.AllowedOrigins,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		AllowCredentials: true,
 		MaxAge:           300,
 	}))
+
+	// Rate limiters
+	standardLimit := middleware.StandardRateLimit()
+	strictLimit := middleware.StrictRateLimit()
+	generousLimit := middleware.GenerousRateLimit()
 
 	// Health check
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -92,8 +99,10 @@ func main() {
 
 	// API routes
 	r.Route("/api/v1", func(r chi.Router) {
-		// Public routes (no authentication required)
+		// Public routes (no authentication required) - strict rate limiting
 		r.Group(func(r chi.Router) {
+			r.Use(strictLimit.Limit)
+			r.Use(middleware.ValidateContentType("application/json"))
 			r.Post("/auth/register", authHandler.Register)
 			r.Post("/auth/login", authHandler.Login)
 		})
@@ -101,6 +110,7 @@ func main() {
 		// Protected routes (authentication required)
 		r.Group(func(r chi.Router) {
 			r.Use(middleware.Auth(authService))
+			r.Use(standardLimit.Limit)
 
 			// Auth endpoints
 			r.Get("/auth/me", authHandler.Me)

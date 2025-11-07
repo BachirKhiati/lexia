@@ -1,6 +1,6 @@
 {
-  "name": "Synapse - Language Learning",
-  "short_name": "Synapse",
+  "name": "Lexia - Language Learning",
+  "short_name": "Lexia",
   "description": "AI-powered language learning platform. Learn Finnish through interactive quests, mind maps, and spaced repetition.",
   "start_url": "/",
   "display": "standalone",

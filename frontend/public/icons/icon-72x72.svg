@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad72" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    <linearGradient id="bgGrad72" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
     </linearGradient>
-    <filter id="shadow72">
-      <feDropShadow dx="0" dy="1.44" stdDeviation="1.44" flood-opacity="0.3"/>
+    <linearGradient id="logoGrad72" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow72">
+      <feGaussianBlur stdDeviation="1.08" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
   </defs>
-  <rect width="72" height="72" rx="10.799999999999999" fill="url(#grad72)"/>
-  <text x="50%" y="48" text-anchor="middle" fill="white" font-size="39" font-weight="bold" font-family="Arial, sans-serif" filter="url(#shadow72)">S</text>
+
+  <!-- Background -->
+  <rect width="72" height="72" rx="12.959999999999999" fill="url(#bgGrad72)"/>
+
+  <!-- Lexia Logo: Modern "L" with connectivity nodes -->
+  <g transform="translate(14.4, 14.4)" filter="url(#glow72)">
+    <!-- Main L shape -->
+    <path d="M 10.8 6.48
+             L 10.8 36.72
+             L 32.400000000000006 36.72"
+          stroke="url(#logoGrad72)"
+          stroke-width="5.76"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"/>
+
+    <!-- Connection nodes (representing language connectivity) -->
+    <circle cx="10.8" cy="6.48" r="4.32" fill="#10b981"/>
+    <circle cx="10.8" cy="21.6" r="2.88" fill="#06b6d4"/>
+    <circle cx="10.8" cy="36.72" r="4.32" fill="#8b5cf6"/>
+    <circle cx="32.400000000000006" cy="36.72" r="4.32" fill="#10b981"/>
+
+    <!-- Accent line (suggesting text/language) -->
+    <path d="M 19.44 12.96
+             L 32.400000000000006 12.96"
+          stroke="#06b6d4"
+          stroke-width="2.88"
+          stroke-linecap="round"
+          opacity="0.6"/>
+  </g>
 </svg>

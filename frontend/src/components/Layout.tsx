@@ -43,9 +43,18 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen flex">
       {/* Sidebar */}
       <aside className="w-64 bg-synapse-surface border-r border-gray-800 p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-synapse-primary">Synapse</h1>
-          <p className="text-sm text-gray-400 mt-1">Interactive Language Universe</p>
+        <div className="mb-8 flex items-center gap-3">
+          <img
+            src="/icons/icon-72x72.svg"
+            alt="Lexia Logo"
+            className="w-12 h-12 flex-shrink-0"
+          />
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent">
+              Lexia
+            </h1>
+            <p className="text-sm text-gray-400 mt-1">Interactive Language Universe</p>
+          </div>
         </div>
 
         <nav className="space-y-2">

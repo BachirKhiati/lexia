@@ -123,6 +123,7 @@ func main() {
 	srsHandler := handlers.NewSRSHandler(db, srsService)
 	analyticsHandler := handlers.NewAnalyticsHandler(db)
 	healthHandler := handlers.NewHealthHandler(db)
+	exportHandler := handlers.NewExportHandler(db)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -213,6 +214,12 @@ func main() {
 
 			// System Statistics (protected - requires authentication)
 			r.Get("/system/stats", healthHandler.Stats)
+
+			// Export/Import - Data portability
+			r.Get("/export/json", exportHandler.ExportJSON)
+			r.Get("/export/csv", exportHandler.ExportCSV)
+			r.Post("/import/csv", exportHandler.ImportCSV)
+			r.Post("/import/json", exportHandler.ImportJSON)
 
 			// The Orator - Speaking coach (completed)
 		})

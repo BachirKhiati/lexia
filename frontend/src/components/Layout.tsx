@@ -20,6 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
     { path: '/lens', label: 'The Lens', icon: '🌍' },
     { path: '/orator', label: 'The Orator', icon: '🗣️' },
     { path: '/analytics', label: 'Analytics', icon: '📊' },
+    { path: '/export-import', label: 'Export/Import', icon: '💾' },
   ];
 
   // Fetch user progress on mount

@@ -12,6 +12,7 @@ const SynapsePage = lazy(() => import('./pages/SynapsePage'));
 const LensPage = lazy(() => import('./pages/LensPage'));
 const OratorPage = lazy(() => import('./pages/OratorPage'));
 const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
+const ExportImportPage = lazy(() => import('./pages/ExportImportPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 
@@ -106,6 +107,16 @@ function AppRoutes() {
           <ProtectedRoute>
             <Layout>
               <AnalyticsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/export-import"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ExportImportPage />
             </Layout>
           </ProtectedRoute>
         }

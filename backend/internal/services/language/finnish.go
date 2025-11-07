@@ -3,41 +3,60 @@ package language
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/BachirKhiati/synapse/internal/models"
+	"github.com/BachirKhiati/synapse/internal/services/wiktionary"
 )
 
 // Service handles language-specific operations
 type Service struct {
-	conjugator *VerbConjugator
+	conjugator       *VerbConjugator
+	wiktionaryService *wiktionary.Service
 }
 
-func NewService() *Service {
+func NewService(wiktionaryService *wiktionary.Service) *Service {
 	return &Service{
-		conjugator: NewVerbConjugator(),
+		conjugator:       NewVerbConjugator(),
+		wiktionaryService: wiktionaryService,
 	}
 }
 
 // AnalyzeWord performs deep analysis of a word
 func (s *Service) AnalyzeWord(ctx context.Context, word string, language string) (*models.AnalyzerResponse, error) {
-	// For now, simplified analysis
-	// In production, integrate with Wiktionary API for real definitions
-
+	// Initialize response with defaults
 	response := &models.AnalyzerResponse{
 		Word:         word,
 		Lemma:        word, // TODO: Proper lemmatization
 		Definition:   fmt.Sprintf("Definition of '%s'", word),
-		PartOfSpeech: "verb", // TODO: Detect actual part of speech
+		PartOfSpeech: "unknown",
 		Examples: []string{
 			fmt.Sprintf("Example sentence with %s", word),
-			fmt.Sprintf("Another example with %s", word),
 		},
 		AudioURL:  "",
 		InSynapse: false,
 	}
 
-	// If it looks like a Finnish verb (ends in common infinitive endings), conjugate it
+	// Try to fetch real definition from Wiktionary
+	if s.wiktionaryService != nil {
+		definition, partOfSpeech, examples, err := s.wiktionaryService.ExtractBestDefinition(word, language)
+		if err == nil && definition != "" {
+			// Successfully got definition from Wiktionary
+			response.Definition = definition
+			response.PartOfSpeech = partOfSpeech
+			if len(examples) > 0 {
+				response.Examples = examples
+			}
+			log.Printf("✅ Fetched definition from Wiktionary for '%s': %s", word, definition)
+		} else {
+			// Fallback to placeholder if Wiktionary fails
+			log.Printf("⚠️  Wiktionary lookup failed for '%s': %v (using fallback)", word, err)
+		}
+	}
+
+	// If it looks like a Finnish verb, conjugate it
 	if language == "finnish" && s.isLikelyFinnishVerb(word) {
+		response.PartOfSpeech = "verb" // Override if detected as verb
 		conjugations := s.conjugator.ConjugateVerb(word)
 
 		// Convert to models.WordConjugation

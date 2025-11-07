@@ -1,17 +1,19 @@
 module github.com/BachirKhiati/synapse
 
-go 1.21
+go 1.24.0
+
+toolchain go1.24.7
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/go-chi/chi/v5 v5.0.11
 	github.com/go-chi/cors v1.2.1
+	github.com/golang-jwt/jwt/v5 v5.3.0
+	github.com/google/generative-ai-go v0.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
 	github.com/redis/go-redis/v9 v9.4.0
-	github.com/google/generative-ai-go v0.6.0
-	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/PuerkitoBio/goquery v1.8.1
-	golang.org/x/crypto v0.18.0
+	golang.org/x/crypto v0.43.0
 	google.golang.org/api v0.162.0
 )
 

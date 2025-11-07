@@ -74,6 +74,31 @@ Dynamic sidebar statistics from actual database:
 - Automatic progress initialization
 - User-specific progress tracking
 
+#### 6. Wiktionary API Integration
+**Status: COMPLETE** ✅
+
+Real word definitions from Wiktionary instead of placeholders:
+
+**Backend:**
+- Created wiktionary service with MediaWiki REST API
+- Language-specific endpoints (fi.wiktionary.org for Finnish)
+- Graceful fallback to placeholder on API failure
+- Extracts: definition, part of speech, examples
+- 10-second timeout for reliability
+
+**Integration:**
+- Language service now uses Wiktionary for real definitions
+- Auto-detection of best definition
+- Combines Wiktionary data with Finnish conjugations
+- Logging for successful/failed lookups
+
+**Features:**
+- Real Finnish word definitions
+- Accurate part-of-speech detection
+- Native example sentences
+- No API keys required (free service)
+- Fallback ensures app never breaks
+
 #### 1. User Authentication System (JWT-based)
 **Status: COMPLETE** ✅
 
@@ -131,57 +156,7 @@ Dynamic sidebar statistics from actual database:
 
 ### 🚧 Features In Progress
 
-#### 3. Finnish Verb Conjugation Engine
-**Status: PLANNED** 🔨
-
-Finnish has complex verb conjugation with:
-- 6 verb types
-- 15+ tenses/moods
-- Consonant gradation
-- Vowel harmony
-
-**Plan:**
-- Create comprehensive conjugation rules
-- Build verb type classifier
-- Implement gradation logic
-- Add to Analyzer pop-up
-- Show full conjugation tables
-
-#### 4. Web Speech API (The Orator)
-**Status: PLANNED** 🎤
-
-Enable speaking practice with:
-- Browser Speech Recognition API
-- Pronunciation scoring
-- Real-time feedback
-- Role-play conversations
-- Progress tracking
-
-**Features:**
-- Record user speech
-- Compare to native pronunciation
-- AI-powered feedback
-- Speaking quests based on written quests
-- Conversation mode
-
-#### 5. Wiktionary API Integration
-**Status: PLANNED** 📚
-
-Replace placeholder word definitions:
-- Real Finnish definitions
-- Etymology information
-- IPA pronunciation
-- Usage notes
-- Related words
-- Proper conjugation data
-
-**Benefits:**
-- Accurate definitions
-- Native speaker quality
-- Free API (no cost)
-- Multilingual support
-
-#### 6. Spaced Repetition System
+#### Spaced Repetition System
 **Status: PLANNED** 🔄
 
 Implement SRS for optimal retention:
@@ -210,7 +185,7 @@ Implement SRS for optimal retention:
 
 ### 📊 Current Project Status
 
-**Overall Progress: 80% Complete**
+**Overall Progress: 85% Complete**
 
 **Completed:**
 - ✅ Core Architecture (Backend + Frontend)
@@ -222,11 +197,11 @@ Implement SRS for optimal retention:
 - ✅ User Authentication
 - ✅ Finnish Conjugation Engine
 - ✅ Real-time Progress Tracking
+- ✅ Wiktionary Integration
 - ✅ Multi-AI Provider (Claude + Gemini)
 - ✅ Docker Setup
 
 **Remaining:**
-- 🔨 Wiktionary Integration
 - 🔨 Spaced Repetition
 - 🔨 Email verification
 - 🔨 Password reset

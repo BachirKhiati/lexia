@@ -17,6 +17,7 @@ import (
 	"github.com/BachirKhiati/synapse/internal/services/auth"
 	"github.com/BachirKhiati/synapse/internal/services/language"
 	"github.com/BachirKhiati/synapse/internal/services/scraper"
+	"github.com/BachirKhiati/synapse/internal/services/wiktionary"
 )
 
 func main() {
@@ -48,8 +49,11 @@ func main() {
 	// Initialize auth service
 	authService := auth.NewService(cfg.Auth.JWTSecret, cfg.Auth.JWTIssuer)
 
+	// Initialize wiktionary service
+	wiktionaryService := wiktionary.NewService()
+
 	// Initialize language service
-	langService := language.NewService()
+	langService := language.NewService(wiktionaryService)
 
 	// Initialize scraper service
 	scraperService := scraper.NewService()

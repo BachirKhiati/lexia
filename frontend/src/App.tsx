@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 // Lazy load pages for code splitting and better performance
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -107,6 +108,7 @@ function App() {
     <Router>
       <AuthProvider>
         <AppRoutes />
+        <PWAInstallPrompt />
       </AuthProvider>
     </Router>
   );

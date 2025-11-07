@@ -77,6 +77,10 @@ Take your learning from text to speech:
 - ✅ **SSL/HTTPS**: Let's Encrypt integration
 - ✅ **Backup Strategy**: Automated database backups
 - ✅ **Monitoring**: Log aggregation and performance metrics
+- ✅ **PWA Support**: Progressive Web App with offline functionality
+- ✅ **Mobile Optimized**: Responsive design with touch gestures
+- ✅ **Service Worker**: Caching and offline mode
+- ✅ **Install Prompt**: Add to home screen on mobile devices
 
 ## 🚀 Tech Stack
 

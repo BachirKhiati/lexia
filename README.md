@@ -130,6 +130,7 @@ Take your learning from text to speech:
 4. **Open your browser**
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8080
+   - API Documentation (Swagger UI): http://localhost:8080/api/docs
    - Health check: http://localhost:8080/health
 
 That's it! 🎉
@@ -286,9 +287,31 @@ synapse/
 └── README.md            # This file
 ```
 
-## 📖 API Endpoints
+## 📖 API Documentation
 
-### Authentication
+### Interactive API Documentation (Swagger UI)
+
+**Swagger UI**: `http://localhost:8080/api/docs`
+
+The API includes interactive Swagger/OpenAPI documentation with:
+- 📚 Complete API reference with request/response schemas
+- 🧪 Try-it-out functionality to test endpoints
+- 🔐 Built-in authentication support
+- 📝 Detailed descriptions and examples
+
+**To regenerate Swagger docs after making changes:**
+```bash
+cd backend
+./generate-swagger.sh
+# OR manually:
+swag init -g cmd/api/main.go -o docs --parseDependency --parseInternal
+```
+
+For detailed API usage examples and code samples, see [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
+
+### API Endpoints
+
+#### Authentication
 - `POST /api/v1/auth/register` - Register new user
 - `POST /api/v1/auth/login` - Login and get JWT token
 - `GET /api/v1/auth/me` - Get current user info

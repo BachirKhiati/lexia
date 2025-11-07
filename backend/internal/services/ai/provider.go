@@ -16,9 +16,9 @@ type AIProvider interface {
 
 // Service manages multiple AI providers
 type Service struct {
-	claude  *ClaudeProvider
-	gemini  *GeminiProvider
-	default string
+	claude          *ClaudeProvider
+	gemini          *GeminiProvider
+	defaultProvider string
 }
 
 // NewService creates a new multi-provider AI service
@@ -46,16 +46,16 @@ func NewService(claudeAPIKey, geminiAPIKey, defaultProvider string) (*Service, e
 	}
 
 	return &Service{
-		claude:  claude,
-		gemini:  gemini,
-		default: defaultProvider,
+		claude:          claude,
+		gemini:          gemini,
+		defaultProvider: defaultProvider,
 	}, nil
 }
 
 // GetProvider returns the specified provider or default
 func (s *Service) GetProvider(name string) (AIProvider, error) {
 	if name == "" {
-		name = s.default
+		name = s.defaultProvider
 	}
 
 	switch name {

@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 
 	"github.com/BachirKhiati/synapse/internal/config"
 	"github.com/BachirKhiati/synapse/internal/database"
@@ -19,7 +20,57 @@ import (
 	"github.com/BachirKhiati/synapse/internal/services/scraper"
 	"github.com/BachirKhiati/synapse/internal/services/srs"
 	"github.com/BachirKhiati/synapse/internal/services/wiktionary"
+
+	_ "github.com/BachirKhiati/synapse/docs" // Import generated docs
 )
+
+// @title Synapse API
+// @version 1.0
+// @description API for Synapse - An innovative language learning platform using AI-powered techniques
+// @description
+// @description Features:
+// @description - 🎯 The Analyzer: Universal word analysis with definitions, conjugations, and examples
+// @description - ✍️ The Scribe: AI-generated writing quests for practice
+// @description - 🧠 The Synapse: Mind map visualization of learned words (Ghost → Liquid → Solid)
+// @description - 🔍 The Lens: Import and analyze content from web articles
+// @description - 🗣️ The Orator: Speaking coach with voice recognition
+// @description - 📚 Spaced Repetition System (SRS): Scientific memorization using SM-2 algorithm
+
+// @contact.name Synapse Support
+// @contact.url https://github.com/BachirKhiati/synapse/issues
+// @contact.email support@synapse.example.com
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /api/v1
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Type "Bearer" followed by a space and JWT token.
+
+// @tag.name Authentication
+// @tag.description User authentication and authorization endpoints
+
+// @tag.name Analyzer
+// @tag.description Universal word analysis and language learning tools
+
+// @tag.name Quests
+// @tag.description AI-generated writing quests (The Scribe)
+
+// @tag.name Synapse
+// @tag.description Mind map of learned words (Ghost → Liquid → Solid)
+
+// @tag.name Lens
+// @tag.description Content importer for web articles
+
+// @tag.name Progress
+// @tag.description User learning progress and statistics
+
+// @tag.name SRS
+// @tag.description Spaced Repetition System for word memorization
 
 func main() {
 	// Load configuration
@@ -96,6 +147,11 @@ func main() {
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
 	})
+
+	// Swagger UI
+	r.Get("/api/docs/*", httpSwagger.Handler(
+		httpSwagger.URL("/api/docs/doc.json"),
+	))
 
 	// API routes
 	r.Route("/api/v1", func(r chi.Router) {

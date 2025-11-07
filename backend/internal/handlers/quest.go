@@ -24,6 +24,17 @@ func NewQuestHandler(db *database.DB, aiService *ai.Service) *QuestHandler {
 }
 
 // GetUserQuests returns all quests for a user
+// @Summary Get user quests
+// @Description Retrieve all quests for a specific user
+// @Tags Quests
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param userID path int true "User ID"
+// @Success 200 {array} models.Quest "List of quests"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 500 {object} map[string]string "Database error"
+// @Router /users/{userID}/quests [get]
 func (h *QuestHandler) GetUserQuests(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "userID")
 
@@ -54,6 +65,17 @@ func (h *QuestHandler) GetUserQuests(w http.ResponseWriter, r *http.Request) {
 }
 
 // GenerateQuest creates a new AI-generated quest
+// @Summary Generate new quest
+// @Description Generate a new AI-powered writing quest using user's ghost words
+// @Tags Quests
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param userID path int true "User ID"
+// @Success 200 {object} models.Quest "Generated quest"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 500 {object} map[string]string "Quest generation failed"
+// @Router /users/{userID}/quests/generate [post]
 func (h *QuestHandler) GenerateQuest(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "userID")
 	userIDInt, _ := strconv.Atoi(userID)
@@ -115,6 +137,19 @@ func (h *QuestHandler) GenerateQuest(w http.ResponseWriter, r *http.Request) {
 }
 
 // ValidateQuest validates user's quest submission
+// @Summary Validate quest submission
+// @Description Validate user's written text for a quest using AI feedback
+// @Tags Quests
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param request body models.QuestValidationRequest true "Quest validation data"
+// @Success 200 {object} models.QuestValidationResponse "Validation result with feedback"
+// @Failure 400 {object} map[string]string "Invalid request"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 404 {object} map[string]string "Quest not found"
+// @Failure 500 {object} map[string]string "Validation failed"
+// @Router /users/{userID}/quests/validate [post]
 func (h *QuestHandler) ValidateQuest(w http.ResponseWriter, r *http.Request) {
 	var req models.QuestValidationRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

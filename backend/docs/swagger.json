@@ -1,0 +1,943 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for Synapse - An innovative language learning platform using AI-powered techniques\n\nFeatures:\n- 🎯 The Analyzer: Universal word analysis with definitions, conjugations, and examples\n- ✍️ The Scribe: AI-generated writing quests for practice\n- 🧠 The Synapse: Mind map visualization of learned words (Ghost → Liquid → Solid)\n- 🔍 The Lens: Import and analyze content from web articles\n- 🗣️ The Orator: Speaking coach with voice recognition\n- 📚 Spaced Repetition System (SRS): Scientific memorization using SM-2 algorithm",
+        "title": "Synapse API",
+        "contact": {
+            "name": "Synapse Support",
+            "url": "https://github.com/BachirKhiati/synapse/issues",
+            "email": "support@synapse.example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/analyze": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get comprehensive analysis of a word including definition, part of speech, examples, and conjugations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Analyzer"
+                ],
+                "summary": "Analyze a word",
+                "parameters": [
+                    {
+                        "description": "Word to analyze",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.AnalyzerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Word analysis",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.AnalyzerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Analysis failed",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "description": "Authenticate with email and password to receive a JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "parameters": [
+                    {
+                        "description": "Login credentials",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_handlers.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handlers.AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get the authenticated user's profile information",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get current user",
+                "responses": {
+                    "200": {
+                        "description": "User profile",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handlers.User"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Generate a new JWT token from an existing valid token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh JWT token",
+                "responses": {
+                    "200": {
+                        "description": "New token",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to generate token",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "Create a new user account with email, username, and password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "Registration details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_handlers.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/internal_handlers.AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request or validation failed",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Email or username already exists",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/srs/due": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get words that are due for spaced repetition review",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SRS"
+                ],
+                "summary": "Get due words for review",
+                "responses": {
+                    "200": {
+                        "description": "List of words due for review",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.Word"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch words",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/srs/review": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Submit a review for a word and update its SRS parameters using SM-2 algorithm",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SRS"
+                ],
+                "summary": "Submit word review",
+                "parameters": [
+                    {
+                        "description": "Review data with quality rating (0-5)",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.ReviewRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated word with next review date",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.ReviewResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request or quality value",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Word not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update word",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userID}/quests": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve all quests for a specific user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quests"
+                ],
+                "summary": "Get user quests",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of quests",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.Quest"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Database error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userID}/quests/generate": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Generate a new AI-powered writing quest using user's ghost words",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quests"
+                ],
+                "summary": "Generate new quest",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "userID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Generated quest",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.Quest"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Quest generation failed",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userID}/quests/validate": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Validate user's written text for a quest using AI feedback",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quests"
+                ],
+                "summary": "Validate quest submission",
+                "parameters": [
+                    {
+                        "description": "Quest validation data",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.QuestValidationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Validation result with feedback",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.QuestValidationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Quest not found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Validation failed",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_BachirKhiati_synapse_internal_models.AnalyzerRequest": {
+            "type": "object",
+            "properties": {
+                "context": {
+                    "description": "Optional sentence context",
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.AnalyzerResponse": {
+            "type": "object",
+            "properties": {
+                "audio_url": {
+                    "type": "string"
+                },
+                "conjugations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.WordConjugation"
+                    }
+                },
+                "definition": {
+                    "type": "string"
+                },
+                "examples": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "in_synapse": {
+                    "description": "Is this word already in user's mind map?",
+                    "type": "boolean"
+                },
+                "lemma": {
+                    "type": "string"
+                },
+                "part_of_speech": {
+                    "type": "string"
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.Quest": {
+            "type": "object",
+            "properties": {
+                "completed_at": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "difficulty": {
+                    "description": "beginner, intermediate, advanced",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "solution": {
+                    "description": "The \"Glimpse Solution\"",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "pending, in_progress, completed",
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.QuestValidationRequest": {
+            "type": "object",
+            "properties": {
+                "quest_id": {
+                    "type": "integer"
+                },
+                "user_text": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.QuestValidationResponse": {
+            "type": "object",
+            "properties": {
+                "feedback": {
+                    "description": "Socratic guidance",
+                    "type": "string"
+                },
+                "is_valid": {
+                    "type": "boolean"
+                },
+                "new_words": {
+                    "description": "Words used correctly for first time",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.ReviewRequest": {
+            "type": "object",
+            "properties": {
+                "quality": {
+                    "description": "0-5 (SM-2 quality rating)",
+                    "type": "integer"
+                },
+                "word_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.ReviewResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "next_interval": {
+                    "description": "days until next review",
+                    "type": "integer"
+                },
+                "word": {
+                    "$ref": "#/definitions/github_com_BachirKhiati_synapse_internal_models.Word"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.Word": {
+            "type": "object",
+            "properties": {
+                "added_at": {
+                    "type": "string"
+                },
+                "definition": {
+                    "type": "string"
+                },
+                "ease_factor": {
+                    "description": "Spaced Repetition System fields",
+                    "type": "number"
+                },
+                "examples": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "interval": {
+                    "description": "days",
+                    "type": "integer"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "last_reviewed_at": {
+                    "type": "string"
+                },
+                "lemma": {
+                    "description": "Root form",
+                    "type": "string"
+                },
+                "mastered_at": {
+                    "type": "string"
+                },
+                "next_review_at": {
+                    "type": "string"
+                },
+                "part_of_speech": {
+                    "description": "noun, verb, adjective, etc.",
+                    "type": "string"
+                },
+                "repetition_count": {
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "ghost (discovered), solid (mastered)",
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_BachirKhiati_synapse_internal_models.WordConjugation": {
+            "type": "object",
+            "properties": {
+                "form": {
+                    "description": "The conjugated form",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "person": {
+                    "description": "1sg, 2sg, 3sg, 1pl, 2pl, 3pl",
+                    "type": "string"
+                },
+                "tense": {
+                    "description": "present, past, perfect, etc.",
+                    "type": "string"
+                },
+                "word_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal_handlers.AuthResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/internal_handlers.User"
+                }
+            }
+        },
+        "internal_handlers.LoginRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_handlers.RegisterRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "language": {
+                    "description": "Target language to learn",
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_handlers.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Type \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "tags": [
+        {
+            "description": "User authentication and authorization endpoints",
+            "name": "Authentication"
+        },
+        {
+            "description": "Universal word analysis and language learning tools",
+            "name": "Analyzer"
+        },
+        {
+            "description": "AI-generated writing quests (The Scribe)",
+            "name": "Quests"
+        },
+        {
+            "description": "Mind map of learned words (Ghost → Liquid → Solid)",
+            "name": "Synapse"
+        },
+        {
+            "description": "Content importer for web articles",
+            "name": "Lens"
+        },
+        {
+            "description": "User learning progress and statistics",
+            "name": "Progress"
+        },
+        {
+            "description": "Spaced Repetition System for word memorization",
+            "name": "SRS"
+        }
+    ]
+}

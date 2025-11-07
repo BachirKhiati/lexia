@@ -47,6 +47,17 @@ type User struct {
 }
 
 // Register creates a new user account
+// @Summary Register a new user
+// @Description Create a new user account with email, username, and password
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param request body RegisterRequest true "Registration details"
+// @Success 201 {object} AuthResponse "User created successfully"
+// @Failure 400 {object} map[string]string "Invalid request or validation failed"
+// @Failure 409 {object} map[string]string "Email or username already exists"
+// @Failure 500 {object} map[string]string "Internal server error"
+// @Router /auth/register [post]
 func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 	var req RegisterRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -127,6 +138,17 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 // Login authenticates a user and returns a JWT token
+// @Summary Login user
+// @Description Authenticate with email and password to receive a JWT token
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param request body LoginRequest true "Login credentials"
+// @Success 200 {object} AuthResponse "Login successful"
+// @Failure 400 {object} map[string]string "Invalid request"
+// @Failure 401 {object} map[string]string "Invalid credentials"
+// @Failure 500 {object} map[string]string "Internal server error"
+// @Router /auth/login [post]
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -192,6 +214,16 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 // Me returns the current authenticated user's information
+// @Summary Get current user
+// @Description Get the authenticated user's profile information
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} User "User profile"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 404 {object} map[string]string "User not found"
+// @Router /auth/me [get]
 func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 	// User info is already in context from middleware
 	claims, ok := r.Context().Value("user").(*auth.Claims)
@@ -218,6 +250,16 @@ func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 }
 
 // RefreshToken generates a new token from an existing valid token
+// @Summary Refresh JWT token
+// @Description Generate a new JWT token from an existing valid token
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} map[string]string "New token"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 500 {object} map[string]string "Failed to generate token"
+// @Router /auth/refresh [post]
 func (h *AuthHandler) RefreshToken(w http.ResponseWriter, r *http.Request) {
 	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {

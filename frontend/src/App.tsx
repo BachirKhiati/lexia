@@ -1,13 +1,16 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
-import Dashboard from './pages/Dashboard';
-import ScribePage from './pages/ScribePage';
-import SynapsePage from './pages/SynapsePage';
-import LensPage from './pages/LensPage';
-import OratorPage from './pages/OratorPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+
+// Lazy load pages for code splitting and better performance
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const ScribePage = lazy(() => import('./pages/ScribePage'));
+const SynapsePage = lazy(() => import('./pages/SynapsePage'));
+const LensPage = lazy(() => import('./pages/LensPage'));
+const OratorPage = lazy(() => import('./pages/OratorPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -28,9 +31,17 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-synapse-background">
+    <div className="loading-spinner" />
+  </div>
+);
+
 function AppRoutes() {
   return (
-    <Routes>
+    <Suspense fallback={<LoadingFallback />}>
+      <Routes>
       {/* Public routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
@@ -87,6 +98,7 @@ function AppRoutes() {
         }
       />
     </Routes>
+    </Suspense>
   );
 }
 

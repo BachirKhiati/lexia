@@ -128,6 +128,7 @@ func main() {
 	// Global middleware
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(middleware.Compress(5)) // gzip compression level 5
 	r.Use(middleware.SecurityHeaders)
 	r.Use(middleware.RequestSizeLimit(10 * 1024 * 1024)) // 10MB max request size
 	r.Use(cors.Handler(cors.Options{

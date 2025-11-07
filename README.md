@@ -43,12 +43,40 @@ Turn the internet into your textbook:
 - **Discover & Learn**: Find new words, add to Synapse, get quests for them
 - **Authentic Content**: Learn from real Finnish content, not textbooks
 
-### 🗣️ The Orator - Speaking Coach *(Coming Soon)*
+### 🗣️ The Orator - Speaking Coach ✅
 Take your learning from text to speech:
-- **Pronunciation Practice**: Record yourself and get AI feedback
-- **AI Conversations**: Role-play real scenarios in Finnish
-- **Speaking Quests**: Practice speaking what you've written
+- **Pronunciation Practice**: Record yourself and get scored (Levenshtein distance)
+- **AI Conversations**: Real-time conversations with speech recognition
+- **Web Speech API**: Browser-based speech-to-text and text-to-speech
+- **Finnish Voice**: Native pronunciation with adjustable speed
 - **Progress Tracking**: See your speaking improve over time
+
+## ✨ Key Features
+
+### 🎯 Learning System
+- ✅ **Spaced Repetition System (SRS)**: SM-2 algorithm for optimal review scheduling
+- ✅ **Finnish Verb Conjugation**: Complete 6-type system with vowel harmony
+- ✅ **Real Word Definitions**: Wiktionary API integration for authentic Finnish
+- ✅ **Progress Tracking**: Real-time statistics on words mastered, quests completed
+- ✅ **Multi-AI Support**: Claude and Gemini for diverse AI capabilities
+
+### 🔐 Authentication & Security
+- ✅ **JWT Authentication**: Secure token-based auth with bcrypt
+- ✅ **Protected Routes**: Automatic redirects for unauthenticated users
+- ✅ **User Profiles**: Personalized learning experience per user
+
+### 🎤 Speech Features
+- ✅ **Pronunciation Practice**: Browser-based speech recognition
+- ✅ **AI Conversations**: Real-time voice chat with AI
+- ✅ **Pronunciation Scoring**: Levenshtein distance algorithm
+- ✅ **No API Keys Needed**: Uses Web Speech API
+
+### 🚀 Production Ready
+- ✅ **Docker Deployment**: Complete production configuration
+- ✅ **Health Checks**: Automated monitoring and alerting
+- ✅ **SSL/HTTPS**: Let's Encrypt integration
+- ✅ **Backup Strategy**: Automated database backups
+- ✅ **Monitoring**: Log aggregation and performance metrics
 
 ## 🚀 Tech Stack
 
@@ -143,28 +171,82 @@ npm run dev
 
 Frontend will start on `http://localhost:3000`
 
+## 🚀 Production Deployment
+
+Synapse is **production-ready** with complete deployment infrastructure!
+
+### Quick Deploy
+
+```bash
+# 1. Configure production environment
+cp backend/.env.production.example backend/.env.production
+# Edit backend/.env.production with your secrets
+
+# 2. Deploy with Docker
+docker compose -f docker-compose.prod.yml up -d
+
+# 3. Set up SSL (Let's Encrypt)
+sudo certbot --nginx -d yourdomain.com
+
+# 4. Configure monitoring and backups
+# See DEPLOYMENT.md for complete guide
+```
+
+### 📚 Deployment Documentation
+
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Complete production deployment guide
+  - Prerequisites and server setup
+  - Environment configuration
+  - Database setup and migrations
+  - Nginx + SSL/HTTPS configuration
+  - Security checklist
+  - Backup and restore procedures
+  - Troubleshooting
+
+- **[DATABASE_MIGRATIONS.md](DATABASE_MIGRATIONS.md)** - Database migration guide
+  - Schema documentation
+  - Migration strategies
+  - Rollback procedures
+  - Best practices
+
+- **[MONITORING.md](MONITORING.md)** - Monitoring and logging setup
+  - Health checks
+  - Log aggregation
+  - Alerting (Email/Slack/PagerDuty)
+  - Performance metrics
+  - Error tracking with Sentry
+
+### Features
+
+✅ Production-ready Docker configuration
+✅ Automated health checks
+✅ SSL/HTTPS with Let's Encrypt
+✅ Log rotation and management
+✅ Automated backups
+✅ Monitoring and alerting
+✅ Security best practices
+✅ Zero-downtime updates
+
 ## 🔑 API Keys Setup
 
 You'll need API keys from:
 
-1. **Claude API** (Anthropic)
+1. **Claude API** (Anthropic) - **Required**
    - Sign up at: https://console.anthropic.com
-   - Used for: Quest generation, Socratic feedback
+   - Used for: Quest generation, Socratic feedback, word analysis
 
-2. **Gemini API** (Google)
+2. **Gemini API** (Google) - **Required**
    - Sign up at: https://ai.google.dev
-   - Used for: Translation, grammar analysis
-
-3. **OpenAI API** (Optional, for Orator module)
-   - Sign up at: https://platform.openai.com
-   - Used for: Whisper speech-to-text
+   - Used for: Translation, grammar analysis, alternative AI provider
 
 Add these to your `.env` file:
 ```bash
-CLAUDE_API_KEY=your_key_here
-GEMINI_API_KEY=your_key_here
-OPENAI_API_KEY=your_key_here
+CLAUDE_API_KEY=sk-ant-your-key-here
+GEMINI_API_KEY=AIza-your-key-here
+DEFAULT_AI_PROVIDER=claude
 ```
+
+**Note:** The Orator (speaking coach) uses the **Web Speech API** built into modern browsers, so no additional API keys are needed for speech features!
 
 ## 🗂️ Project Structure
 
@@ -206,6 +288,12 @@ synapse/
 
 ## 📖 API Endpoints
 
+### Authentication
+- `POST /api/v1/auth/register` - Register new user
+- `POST /api/v1/auth/login` - Login and get JWT token
+- `GET /api/v1/auth/me` - Get current user info
+- `POST /api/v1/auth/refresh` - Refresh JWT token
+
 ### Analyzer
 - `POST /api/v1/analyze` - Analyze a word (definition, conjugations, examples)
 
@@ -217,6 +305,17 @@ synapse/
 ### Synapse (Knowledge Graph)
 - `GET /api/v1/users/:id/synapse` - Get user's mind map
 - `POST /api/v1/users/:id/synapse/words` - Add word to Synapse
+
+### The Lens (Content Importer)
+- `POST /api/v1/lens/import` - Import article from URL
+- `GET /api/v1/lens/articles` - Get user's imported articles
+
+### User Progress
+- `GET /api/v1/users/progress` - Get user's learning statistics
+
+### Spaced Repetition System (SRS)
+- `GET /api/v1/srs/due` - Get words due for review
+- `POST /api/v1/srs/review` - Submit review with quality rating (0-5)
 
 ## 🎨 Design Philosophy
 

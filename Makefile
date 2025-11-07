@@ -6,7 +6,7 @@
 # Configuration
 VM_IP ?= 94.237.80.109
 SSH_USER ?= root
-APP_DIR = /opt/synapse
+APP_DIR = /opt/lexia
 
 # Default target
 help:
@@ -70,7 +70,7 @@ deploy-manual:
 
 seed:
 	@echo "🌱 Seeding database on VM..."
-	@ssh $(SSH_USER)@$(VM_IP) 'cd $(APP_DIR) && docker exec synapse-backend ./synapse-seed'
+	@ssh $(SSH_USER)@$(VM_IP) 'cd $(APP_DIR) && docker exec lexia-backend ./lexia-seed'
 
 seed-local:
 	@echo "🌱 Seeding local database..."
@@ -78,14 +78,14 @@ seed-local:
 
 db-backup:
 	@echo "💾 Backing up database on VM..."
-	@ssh $(SSH_USER)@$(VM_IP) 'cd $(APP_DIR) && docker exec synapse-postgres pg_dump -U synapse synapse | gzip > backups/backup-$$(date +%Y%m%d-%H%M%S).sql.gz'
+	@ssh $(SSH_USER)@$(VM_IP) 'cd $(APP_DIR) && docker exec lexia-postgres pg_dump -U lexia synapse | gzip > backups/backup-$$(date +%Y%m%d-%H%M%S).sql.gz'
 	@echo "✅ Backup created in $(APP_DIR)/backups/"
 
 db-restore:
 	@echo "⚠️  This will restore the latest backup. Are you sure? [y/N]"
 	@read -r response; \
 	if [ "$$response" = "y" ]; then \
-		ssh $(SSH_USER)@$(VM_IP) 'cd $(APP_DIR)/backups && gunzip < $$(ls -t backup-*.sql.gz | head -1) | docker exec -i synapse-postgres psql -U synapse synapse'; \
+		ssh $(SSH_USER)@$(VM_IP) 'cd $(APP_DIR)/backups && gunzip < $$(ls -t backup-*.sql.gz | head -1) | docker exec -i lexia-postgres psql -U lexia synapse'; \
 		echo "✅ Database restored"; \
 	else \
 		echo "❌ Cancelled"; \
@@ -93,7 +93,7 @@ db-restore:
 
 db-shell:
 	@echo "🗄️  Connecting to PostgreSQL..."
-	@ssh $(SSH_USER)@$(VM_IP) 'docker exec -it synapse-postgres psql -U synapse -d synapse'
+	@ssh $(SSH_USER)@$(VM_IP) 'docker exec -it lexia-postgres psql -U lexia -d lexia'
 
 # ============================================================================
 # Monitoring
@@ -109,11 +109,11 @@ logs:
 
 logs-backend:
 	@echo "📋 Viewing backend logs (Ctrl+C to exit)..."
-	@ssh $(SSH_USER)@$(VM_IP) 'docker logs -f synapse-backend'
+	@ssh $(SSH_USER)@$(VM_IP) 'docker logs -f lexia-backend'
 
 logs-db:
 	@echo "📋 Viewing database logs (Ctrl+C to exit)..."
-	@ssh $(SSH_USER)@$(VM_IP) 'docker logs -f synapse-postgres'
+	@ssh $(SSH_USER)@$(VM_IP) 'docker logs -f lexia-postgres'
 
 status:
 	@echo "📊 Checking container status..."
@@ -177,8 +177,8 @@ dev:
 
 build:
 	@echo "🔨 Building backend..."
-	@cd backend && go build -o ../bin/synapse-api ./cmd/api
-	@cd backend && go build -o ../bin/synapse-seed ./cmd/seed
+	@cd backend && go build -o ../bin/lexia-api ./cmd/api
+	@cd backend && go build -o ../bin/lexia-seed ./cmd/seed
 	@echo "✅ Backend built"
 	@echo ""
 	@echo "🔨 Building frontend..."
@@ -195,7 +195,7 @@ test:
 clean:
 	@echo "🧹 Cleaning build artifacts..."
 	@rm -rf bin/
-	@rm -rf backend/synapse-api backend/synapse-seed
+	@rm -rf backend/lexia-api backend/lexia-seed
 	@rm -rf frontend/dist
 	@rm -rf frontend/node_modules/.vite
 	@echo "✅ Clean complete"
@@ -255,7 +255,7 @@ troubleshoot:
 	@ssh $(SSH_USER)@$(VM_IP) 'docker ps -a'
 	@echo ""
 	@echo "3. Recent Backend Logs:"
-	@ssh $(SSH_USER)@$(VM_IP) 'docker logs --tail 50 synapse-backend'
+	@ssh $(SSH_USER)@$(VM_IP) 'docker logs --tail 50 lexia-backend'
 	@echo ""
 	@echo "4. Disk Space:"
 	@ssh $(SSH_USER)@$(VM_IP) 'df -h'

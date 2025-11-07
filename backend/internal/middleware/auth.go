@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/BachirKhiati/synapse/internal/services/auth"
+	"github.com/BachirKhiati/lexia/internal/services/auth"
 )
 
 type contextKey string

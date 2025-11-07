@@ -39,7 +39,10 @@ const LoginPage = () => {
       <div className="max-w-md w-full">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-synapse-primary mb-2">🧠 Synapse</h1>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-16 h-16" />
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent">Lexia</h1>
+          </div>
           <p className="text-xl text-gray-400">Your Interactive Language Universe</p>
         </div>
 

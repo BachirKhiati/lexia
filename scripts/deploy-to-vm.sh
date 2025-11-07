@@ -9,7 +9,7 @@ set -e  # Exit on any error
 # Configuration
 VM_IP="${1:-94.237.80.109}"
 SSH_USER="${2:-root}"
-APP_DIR="/opt/synapse"
+APP_DIR="/opt/lexia"
 LOCAL_DIR="/home/user/lexia"
 
 # Colors for output
@@ -324,7 +324,7 @@ echo "  Email:     demo@synapse.app"
 echo "  Password:  Demo1234"
 echo ""
 echo "📋 Next Steps:"
-echo "  1. Seed demo data: ssh $SSH_USER@$VM_IP 'cd $APP_DIR && docker exec synapse-backend ./synapse-seed'"
+echo "  1. Seed demo data: ssh $SSH_USER@$VM_IP 'cd $APP_DIR && docker exec lexia-backend ./synapse-seed'"
 echo "  2. Setup SSL (if you have a domain): ssh $SSH_USER@$VM_IP 'certbot --nginx -d yourdomain.com'"
 echo "  3. Configure firewall: ssh $SSH_USER@$VM_IP 'ufw allow 22/tcp && ufw allow 80/tcp && ufw allow 443/tcp && ufw --force enable'"
 echo "  4. Setup backups: See DEPLOY_TO_VM.md Step 13"

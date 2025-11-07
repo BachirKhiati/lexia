@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/BachirKhiati/synapse/internal/database"
+	"github.com/BachirKhiati/lexia/internal/database"
 )
 
 type UserHandler struct {

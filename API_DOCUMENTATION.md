@@ -738,6 +738,6 @@ print(progress)
 ## Support
 
 For issues, questions, or contributions:
-- **GitHub Issues**: https://github.com/BachirKhiati/synapse/issues
+- **GitHub Issues**: https://github.com/BachirKhiati/lexia/issues
 - **Documentation**: See [README.md](README.md)
 - **Contributing**: See [CONTRIBUTING.md](CONTRIBUTING.md)

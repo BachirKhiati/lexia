@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/BachirKhiati/synapse/internal/models"
-	"github.com/BachirKhiati/synapse/internal/services/ai"
-	"github.com/BachirKhiati/synapse/internal/services/language"
+	"github.com/BachirKhiati/lexia/internal/models"
+	"github.com/BachirKhiati/lexia/internal/services/ai"
+	"github.com/BachirKhiati/lexia/internal/services/language"
 )
 
 type AnalyzerHandler struct {

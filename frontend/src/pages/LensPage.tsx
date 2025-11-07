@@ -92,7 +92,7 @@ const LensPage = () => {
 
             <div className="mt-4 p-3 bg-synapse-primary/20 rounded-lg border border-synapse-primary">
               <p className="text-sm text-gray-300">
-                💡 <strong>Pro tip:</strong> Click on any word to analyze it. Add unknown words to your Synapse to
+                💡 <strong>Pro tip:</strong> Click on any word to analyze it. Add unknown words to your knowledge graph to
                 create quests for them!
               </p>
             </div>

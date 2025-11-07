@@ -13,7 +13,7 @@ const Dashboard = () => {
         <div className="mb-8 flex items-start justify-between">
           <div>
             <h1 className="text-4xl font-bold mb-2">
-              Welcome to <span className="text-synapse-primary">Synapse</span>
+              Welcome to <span className="bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent font-bold">Lexia</span>
             </h1>
             <p className="text-xl text-gray-400">
               Your Interactive Language Universe. Don't just learn—explore.
@@ -91,7 +91,7 @@ const Dashboard = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-2xl">🧠</span>
-              <span><strong className="text-white">Capture:</strong> Add words to your Synapse as "ghost nodes"</span>
+              <span><strong className="text-white">Capture:</strong> Add words to your knowledge graph as "ghost nodes"</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-2xl">✍️</span>

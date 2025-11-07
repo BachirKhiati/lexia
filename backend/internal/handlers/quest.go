@@ -6,9 +6,9 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/BachirKhiati/synapse/internal/database"
-	"github.com/BachirKhiati/synapse/internal/models"
-	"github.com/BachirKhiati/synapse/internal/services/ai"
+	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/models"
+	"github.com/BachirKhiati/lexia/internal/services/ai"
 )
 
 type QuestHandler struct {

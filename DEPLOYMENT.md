@@ -61,7 +61,7 @@ docker compose version
 ```bash
 # Clone to your server
 git clone https://github.com/YOUR_USERNAME/synapse.git
-cd synapse
+cd lexia
 
 # Create production branch
 git checkout -b production
@@ -583,7 +583,7 @@ docker system prune -a
 ### Pull Latest Changes
 
 ```bash
-cd synapse
+cd lexia
 
 # Pull updates
 git pull origin production

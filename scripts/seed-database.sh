@@ -16,11 +16,11 @@ if [ -f /.dockerenv ]; then
     ./synapse-seed
 else
     # Check if Docker container is running
-    if docker ps | grep -q synapse-backend; then
+    if docker ps | grep -q lexia-backend; then
         echo "Running seeder in Docker container..."
-        docker exec synapse-backend ./synapse-seed
+        docker exec lexia-backend ./synapse-seed
     else
-        echo "❌ Error: synapse-backend container not found"
+        echo "❌ Error: lexia-backend container not found"
         echo ""
         echo "Options:"
         echo "  1. Start the backend: docker-compose -f docker-compose.prod.yml up -d"

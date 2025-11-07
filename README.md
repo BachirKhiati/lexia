@@ -1,8 +1,8 @@
-# 🧠 Synapse
+# 🧠 Lexia
 
 **Your Interactive Language Universe. Don't just learn—explore.**
 
-Synapse is an AI-powered language learning workbench that transforms passive learning into active creation. Built for learners who want to truly master a language through exploration, not memorization.
+Lexia is an AI-powered language learning workbench that transforms passive learning into active creation. Built for learners who want to truly master a language through exploration, not memorization.
 
 ---
 
@@ -24,7 +24,7 @@ make help
 
 ## 🌟 Core Concept
 
-Synapse creates a complete learning ecosystem where **every piece of text is alive**—hoverable, explorable, and connected to your personal knowledge graph. Learn through a natural cycle:
+Lexia creates a complete learning ecosystem where **every piece of text is alive**—hoverable, explorable, and connected to your personal knowledge graph. Learn through a natural cycle:
 
 **Quest → Create → Glimpse → Analyze → Master**
 
@@ -51,14 +51,14 @@ The magic that makes everything explorable:
   - Example sentences
   - Full conjugation table (critical for Finnish!)
   - Pronunciation audio
-  - One-click "Add to Synapse"
+  - One-click "Add to Knowledge Graph"
 - Works on quests, solutions, imported articles, and your own writing
 
 ### 🌍 The Lens - Real-World Content Importer
 Turn the internet into your textbook:
 - **Import any URL**: Articles, blogs, YouTube videos
 - **Instant Interactivity**: Every word becomes analyzable
-- **Discover & Learn**: Find new words, add to Synapse, get quests for them
+- **Discover & Learn**: Find new words, add to your knowledge graph, get quests for them
 - **Authentic Content**: Learn from real Finnish content, not textbooks
 
 ### 🗣️ The Orator - Speaking Coach ✅
@@ -154,8 +154,8 @@ Take your learning from text to speech:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/BachirKhiati/synapse.git
-   cd synapse
+   git clone https://github.com/BachirKhiati/lexia.git
+   cd lexia
    ```
 
 2. **Set up environment variables**
@@ -192,7 +192,7 @@ cp .env.example .env
 # Edit .env with your configuration
 
 # Run database migrations (make sure PostgreSQL is running)
-# psql -U postgres -c "CREATE DATABASE synapse_db;"
+# psql -U postgres -c "CREATE DATABASE lexia_db;"
 
 # Start the server
 go run cmd/api/main.go
@@ -216,7 +216,7 @@ Frontend will start on `http://localhost:3000`
 
 ## 🚀 Production Deployment
 
-Synapse is **production-ready** with complete deployment infrastructure!
+Lexia is **production-ready** with complete deployment infrastructure!
 
 ### Quick Deploy
 
@@ -294,7 +294,7 @@ DEFAULT_AI_PROVIDER=claude
 ## 🗂️ Project Structure
 
 ```
-synapse/
+lexia/
 ├── backend/                # Go backend
 │   ├── cmd/
 │   │   └── api/           # Main application entry
@@ -367,9 +367,9 @@ For detailed API usage examples and code samples, see [API_DOCUMENTATION.md](API
 - `POST /api/v1/users/:id/quests/generate` - Generate new quest
 - `POST /api/v1/users/:id/quests/validate` - Validate quest submission
 
-### Synapse (Knowledge Graph)
+### Knowledge Graph (The Synapse)
 - `GET /api/v1/users/:id/synapse` - Get user's mind map
-- `POST /api/v1/users/:id/synapse/words` - Add word to Synapse
+- `POST /api/v1/users/:id/synapse/words` - Add word to knowledge graph
 
 ### The Lens (Content Importer)
 - `POST /api/v1/lens/import` - Import article from URL
@@ -444,4 +444,4 @@ MIT License - feel free to use this project for learning or building your own la
 
 **Made with ❤️ for language learners who want to truly explore, not just memorize.**
 
-🧠 **Start your journey. Build your Synapse.**
+🧠 **Start your journey. Build your knowledge with Lexia.**

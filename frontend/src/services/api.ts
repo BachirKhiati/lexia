@@ -102,4 +102,17 @@ export const getUserArticles = async (): Promise<Article[]> => {
   return data;
 };
 
+// User Progress API
+export interface UserProgress {
+  words_mastered: number;
+  quests_completed: number;
+  streak_days: number;
+  last_active_at: string;
+}
+
+export const getUserProgress = async (): Promise<UserProgress> => {
+  const { data } = await api.get('/users/progress');
+  return data;
+};
+
 export default api;

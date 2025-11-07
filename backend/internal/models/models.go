@@ -40,6 +40,12 @@ type Word struct {
 	Status       string    `json:"status"` // ghost (discovered), solid (mastered)
 	AddedAt      time.Time `json:"added_at"`
 	MasteredAt   *time.Time `json:"mastered_at,omitempty"`
+	// Spaced Repetition System fields
+	EaseFactor      float64    `json:"ease_factor"`
+	RepetitionCount int        `json:"repetition_count"`
+	Interval        int        `json:"interval"` // days
+	NextReviewAt    *time.Time `json:"next_review_at,omitempty"`
+	LastReviewedAt  *time.Time `json:"last_reviewed_at,omitempty"`
 }
 
 // WordConjugation stores verb conjugations (critical for Finnish!)
@@ -137,4 +143,17 @@ type MindMapLink struct {
 type MindMapData struct {
 	Nodes []MindMapNode `json:"nodes"`
 	Links []MindMapLink `json:"links"`
+}
+
+// ReviewRequest is the payload for submitting a word review
+type ReviewRequest struct {
+	WordID  int `json:"word_id"`
+	Quality int `json:"quality"` // 0-5 (SM-2 quality rating)
+}
+
+// ReviewResponse returns the updated word with new SRS parameters
+type ReviewResponse struct {
+	Word         *Word  `json:"word"`
+	NextInterval int    `json:"next_interval"` // days until next review
+	Message      string `json:"message"`
 }

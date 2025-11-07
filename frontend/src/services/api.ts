@@ -84,4 +84,22 @@ export const addWordToSynapse = async (
   return data;
 };
 
+// Lens API - Article Import
+export interface Article {
+  id: number;
+  title: string;
+  content: string;
+  url: string;
+}
+
+export const importArticle = async (url: string, language: string): Promise<Article> => {
+  const { data } = await api.post('/lens/import', { url, language });
+  return data;
+};
+
+export const getUserArticles = async (): Promise<Article[]> => {
+  const { data } = await api.get('/lens/articles');
+  return data;
+};
+
 export default api;

@@ -16,6 +16,7 @@ import (
 	"github.com/BachirKhiati/synapse/internal/services/ai"
 	"github.com/BachirKhiati/synapse/internal/services/auth"
 	"github.com/BachirKhiati/synapse/internal/services/language"
+	"github.com/BachirKhiati/synapse/internal/services/scraper"
 )
 
 func main() {
@@ -50,11 +51,15 @@ func main() {
 	// Initialize language service
 	langService := language.NewService()
 
+	// Initialize scraper service
+	scraperService := scraper.NewService()
+
 	// Initialize handlers
 	authHandler := handlers.NewAuthHandler(db, authService)
 	analyzerHandler := handlers.NewAnalyzerHandler(aiService, langService)
 	questHandler := handlers.NewQuestHandler(db, aiService)
 	synapseHandler := handlers.NewSynapseHandler(db)
+	lensHandler := handlers.NewLensHandler(db, scraperService)
 
 	// Setup router
 	r := chi.NewRouter()
@@ -107,7 +112,10 @@ func main() {
 				r.Post("/words", synapseHandler.AddWord)
 			})
 
-			// The Lens - Content importer (TODO)
+			// The Lens - Content importer
+			r.Post("/lens/import", lensHandler.ImportArticle)
+			r.Get("/lens/articles", lensHandler.GetUserArticles)
+
 			// The Orator - Speaking coach (TODO)
 		})
 	})

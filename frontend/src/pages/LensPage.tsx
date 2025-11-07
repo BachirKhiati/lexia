@@ -1,38 +1,31 @@
 import { useState } from 'react';
 import HoverableText from '../components/Analyzer/HoverableText';
 import { useAuth } from '../contexts/AuthContext';
+import { importArticle } from '../services/api';
 
 const LensPage = () => {
   const { user } = useAuth();
   const userId = user?.id || 1;
+  const language = user?.language || 'finnish';
   const [url, setUrl] = useState('');
-  const [content, setContent] = useState('');
+  const [article, setArticle] = useState<{ title: string; content: string } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleImport = async () => {
     if (!url.trim()) return;
 
     setLoading(true);
+    setError('');
     try {
-      // TODO: Implement actual article import API
-      // For now, using placeholder
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      setContent(`
-        This is placeholder content from the imported article.
-        In a production version, this would:
-        1. Fetch the actual URL content
-        2. Extract the main text from HTML
-        3. Clean and format it
-        4. Make every word hoverable with the Analyzer
-
-        For example, if you imported a Finnish news article about "teknologia" (technology),
-        you could hover over any word to see its definition, examples, and conjugations.
-
-        Try clicking on any word in this text to see the Analyzer in action!
-      `);
-    } catch (error) {
-      console.error('Import failed:', error);
+      const importedArticle = await importArticle(url, language);
+      setArticle({
+        title: importedArticle.title,
+        content: importedArticle.content,
+      });
+      setUrl(''); // Clear URL input after successful import
+    } catch (err: any) {
+      setError(err.response?.data || 'Failed to import article. Please check the URL and try again.');
     } finally {
       setLoading(false);
     }
@@ -55,12 +48,19 @@ const LensPage = () => {
         <div className="card mb-8">
           <h2 className="text-2xl font-bold mb-4">Import Content</h2>
 
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-200 text-sm">
+              {error}
+            </div>
+          )}
+
           <div className="flex gap-3 mb-4">
             <input
               type="url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="Paste URL (article, blog post, or YouTube video)"
+              onKeyPress={(e) => e.key === 'Enter' && handleImport()}
+              placeholder="Paste URL (article, blog post, Wikipedia...)"
               className="input flex-1"
             />
             <button onClick={handleImport} disabled={loading || !url.trim()} className="btn-primary">
@@ -69,22 +69,25 @@ const LensPage = () => {
           </div>
 
           <p className="text-sm text-gray-400">
-            Supported: News articles, blog posts, Wikipedia, YouTube (with transcripts)
+            ✨ Paste any article URL and we'll extract the main content for you!
           </p>
         </div>
 
         {/* Imported content */}
-        {content && (
+        {article && (
           <div className="card">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold">Imported Article</h2>
-              <button onClick={() => setContent('')} className="text-gray-400 hover:text-white">
+              <div>
+                <h2 className="text-2xl font-bold">{article.title}</h2>
+                <p className="text-sm text-gray-400 mt-1">Click any word to analyze it!</p>
+              </div>
+              <button onClick={() => setArticle(null)} className="text-gray-400 hover:text-white">
                 Clear
               </button>
             </div>
 
             <div className="bg-synapse-background rounded-lg p-6">
-              <HoverableText text={content} language="finnish" userId={userId} className="text-gray-300 leading-relaxed" />
+              <HoverableText text={article.content} language={language} userId={userId} className="text-gray-300 leading-relaxed" />
             </div>
 
             <div className="mt-4 p-3 bg-synapse-primary/20 rounded-lg border border-synapse-primary">
@@ -97,7 +100,7 @@ const LensPage = () => {
         )}
 
         {/* Empty state */}
-        {!content && !loading && (
+        {!article && !loading && (
           <div className="card text-center">
             <div className="text-6xl mb-4">🌍</div>
             <h2 className="text-2xl font-bold mb-2">No Content Imported Yet</h2>

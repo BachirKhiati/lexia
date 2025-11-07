@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import ErrorAlert from '../components/ErrorAlert';
+import { getAuthErrorMessage, parseApiError } from '../utils/errorMessages';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -8,18 +10,25 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [errorDetails, setErrorDetails] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setErrorDetails('');
     setLoading(true);
 
     try {
       await login(email, password);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data || 'Invalid email or password');
+      const errorMessage = getAuthErrorMessage(err);
+      const apiError = parseApiError(err);
+      setError(errorMessage);
+      if (apiError.details && apiError.details !== errorMessage) {
+        setErrorDetails(apiError.details);
+      }
     } finally {
       setLoading(false);
     }
@@ -39,9 +48,12 @@ const LoginPage = () => {
           <h2 className="text-2xl font-bold mb-6 text-white">Welcome Back</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-200 text-sm">
-              {error}
-            </div>
+            <ErrorAlert
+              message={error}
+              details={errorDetails}
+              onDismiss={() => setError('')}
+              className="mb-4"
+            />
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">

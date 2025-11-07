@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import ErrorAlert from '../components/ErrorAlert';
+import { getAuthErrorMessage, parseApiError, getValidationMessage } from '../utils/errorMessages';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -10,14 +12,26 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [language, setLanguage] = useState('finnish');
   const [error, setError] = useState('');
+  const [errorDetails, setErrorDetails] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setErrorDetails('');
 
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+    // Client-side validation
+    const passwordValidation = getValidationMessage('password', password);
+    if (passwordValidation) {
+      setError('Password requirements not met');
+      setErrorDetails(passwordValidation);
+      return;
+    }
+
+    const usernameValidation = getValidationMessage('username', username);
+    if (usernameValidation) {
+      setError('Invalid username');
+      setErrorDetails(usernameValidation);
       return;
     }
 
@@ -27,7 +41,12 @@ const RegisterPage = () => {
       await register(email, username, password, language);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data || 'Failed to create account');
+      const errorMessage = getAuthErrorMessage(err);
+      const apiError = parseApiError(err);
+      setError(errorMessage);
+      if (apiError.details && apiError.details !== errorMessage) {
+        setErrorDetails(apiError.details);
+      }
     } finally {
       setLoading(false);
     }
@@ -47,9 +66,12 @@ const RegisterPage = () => {
           <h2 className="text-2xl font-bold mb-6 text-white">Create Account</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-200 text-sm">
-              {error}
-            </div>
+            <ErrorAlert
+              message={error}
+              details={errorDetails}
+              onDismiss={() => setError('')}
+              className="mb-4"
+            />
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">

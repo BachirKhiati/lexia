@@ -22,6 +22,18 @@ func NewAnalyzerHandler(aiService *ai.Service, langService *language.Service) *A
 }
 
 // AnalyzeWord handles the universal pop-up analyzer requests
+// @Summary Analyze a word
+// @Description Get comprehensive analysis of a word including definition, part of speech, examples, and conjugations
+// @Tags Analyzer
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param request body models.AnalyzerRequest true "Word to analyze"
+// @Success 200 {object} models.AnalyzerResponse "Word analysis"
+// @Failure 400 {object} map[string]string "Invalid request"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 500 {object} map[string]string "Analysis failed"
+// @Router /analyze [post]
 func (h *AnalyzerHandler) AnalyzeWord(w http.ResponseWriter, r *http.Request) {
 	var req models.AnalyzerRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

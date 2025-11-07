@@ -24,6 +24,16 @@ func NewSRSHandler(db *database.DB, srsService *srs.Service) *SRSHandler {
 }
 
 // GetDueWords returns words that are due for review
+// @Summary Get due words for review
+// @Description Get words that are due for spaced repetition review
+// @Tags SRS
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {array} models.Word "List of words due for review"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 500 {object} map[string]string "Failed to fetch words"
+// @Router /srs/due [get]
 func (h *SRSHandler) GetDueWords(w http.ResponseWriter, r *http.Request) {
 	// Get user ID from context (set by auth middleware)
 	userID, ok := r.Context().Value("user_id").(int)
@@ -83,6 +93,19 @@ func (h *SRSHandler) GetDueWords(w http.ResponseWriter, r *http.Request) {
 }
 
 // SubmitReview processes a word review and updates SRS parameters
+// @Summary Submit word review
+// @Description Submit a review for a word and update its SRS parameters using SM-2 algorithm
+// @Tags SRS
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param request body models.ReviewRequest true "Review data with quality rating (0-5)"
+// @Success 200 {object} models.ReviewResponse "Updated word with next review date"
+// @Failure 400 {object} map[string]string "Invalid request or quality value"
+// @Failure 401 {object} map[string]string "Unauthorized"
+// @Failure 404 {object} map[string]string "Word not found"
+// @Failure 500 {object} map[string]string "Failed to update word"
+// @Router /srs/review [post]
 func (h *SRSHandler) SubmitReview(w http.ResponseWriter, r *http.Request) {
 	// Get user ID from context
 	userID, ok := r.Context().Value("user_id").(int)

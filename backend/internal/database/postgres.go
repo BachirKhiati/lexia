@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/lib/pq"
 	"github.com/BachirKhiati/synapse/internal/config"
@@ -22,6 +23,11 @@ func NewPostgres(cfg config.DatabaseConfig) (*DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
+
+	// Configure connection pool for optimal performance
+	db.SetMaxOpenConns(25)                 // Maximum number of open connections
+	db.SetMaxIdleConns(25)                 // Maximum number of idle connections
+	db.SetConnMaxLifetime(5 * time.Minute) // Maximum lifetime of a connection
 
 	if err := db.Ping(); err != nil {
 		return nil, fmt.Errorf("failed to ping database: %w", err)
@@ -115,9 +121,14 @@ func (db *DB) InitSchema() error {
 	-- Indexes for performance
 	CREATE INDEX IF NOT EXISTS idx_words_user_id ON words(user_id);
 	CREATE INDEX IF NOT EXISTS idx_words_status ON words(status);
+	CREATE INDEX IF NOT EXISTS idx_words_user_status ON words(user_id, status);
+	CREATE INDEX IF NOT EXISTS idx_words_next_review ON words(user_id, next_review_at) WHERE next_review_at IS NOT NULL;
 	CREATE INDEX IF NOT EXISTS idx_quests_user_id ON quests(user_id);
 	CREATE INDEX IF NOT EXISTS idx_quests_status ON quests(status);
+	CREATE INDEX IF NOT EXISTS idx_quests_user_status ON quests(user_id, status);
 	CREATE INDEX IF NOT EXISTS idx_word_relations_user_id ON word_relations(user_id);
+	CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+	CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
 	`
 
 	_, err := db.Exec(schema)

@@ -1,0 +1,620 @@
+basePath: /api/v1
+definitions:
+  github_com_BachirKhiati_synapse_internal_models.AnalyzerRequest:
+    properties:
+      context:
+        description: Optional sentence context
+        type: string
+      language:
+        type: string
+      word:
+        type: string
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.AnalyzerResponse:
+    properties:
+      audio_url:
+        type: string
+      conjugations:
+        items:
+          $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.WordConjugation'
+        type: array
+      definition:
+        type: string
+      examples:
+        items:
+          type: string
+        type: array
+      in_synapse:
+        description: Is this word already in user's mind map?
+        type: boolean
+      lemma:
+        type: string
+      part_of_speech:
+        type: string
+      word:
+        type: string
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.Quest:
+    properties:
+      completed_at:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      difficulty:
+        description: beginner, intermediate, advanced
+        type: string
+      id:
+        type: integer
+      solution:
+        description: The "Glimpse Solution"
+        type: string
+      status:
+        description: pending, in_progress, completed
+        type: string
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.QuestValidationRequest:
+    properties:
+      quest_id:
+        type: integer
+      user_text:
+        type: string
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.QuestValidationResponse:
+    properties:
+      feedback:
+        description: Socratic guidance
+        type: string
+      is_valid:
+        type: boolean
+      new_words:
+        description: Words used correctly for first time
+        items:
+          type: string
+        type: array
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.ReviewRequest:
+    properties:
+      quality:
+        description: 0-5 (SM-2 quality rating)
+        type: integer
+      word_id:
+        type: integer
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.ReviewResponse:
+    properties:
+      message:
+        type: string
+      next_interval:
+        description: days until next review
+        type: integer
+      word:
+        $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.Word'
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.Word:
+    properties:
+      added_at:
+        type: string
+      definition:
+        type: string
+      ease_factor:
+        description: Spaced Repetition System fields
+        type: number
+      examples:
+        items:
+          type: string
+        type: array
+      id:
+        type: integer
+      interval:
+        description: days
+        type: integer
+      language:
+        type: string
+      last_reviewed_at:
+        type: string
+      lemma:
+        description: Root form
+        type: string
+      mastered_at:
+        type: string
+      next_review_at:
+        type: string
+      part_of_speech:
+        description: noun, verb, adjective, etc.
+        type: string
+      repetition_count:
+        type: integer
+      status:
+        description: ghost (discovered), solid (mastered)
+        type: string
+      user_id:
+        type: integer
+      word:
+        type: string
+    type: object
+  github_com_BachirKhiati_synapse_internal_models.WordConjugation:
+    properties:
+      form:
+        description: The conjugated form
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      person:
+        description: 1sg, 2sg, 3sg, 1pl, 2pl, 3pl
+        type: string
+      tense:
+        description: present, past, perfect, etc.
+        type: string
+      word_id:
+        type: integer
+    type: object
+  internal_handlers.AuthResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/internal_handlers.User'
+    type: object
+  internal_handlers.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  internal_handlers.RegisterRequest:
+    properties:
+      email:
+        type: string
+      language:
+        description: Target language to learn
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  internal_handlers.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      language:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@synapse.example.com
+    name: Synapse Support
+    url: https://github.com/BachirKhiati/synapse/issues
+  description: "API for Synapse - An innovative language learning platform using AI-powered
+    techniques\n\nFeatures:\n- \U0001F3AF The Analyzer: Universal word analysis with
+    definitions, conjugations, and examples\n- ✍️ The Scribe: AI-generated writing
+    quests for practice\n- \U0001F9E0 The Synapse: Mind map visualization of learned
+    words (Ghost → Liquid → Solid)\n- \U0001F50D The Lens: Import and analyze content
+    from web articles\n- \U0001F5E3️ The Orator: Speaking coach with voice recognition\n-
+    \U0001F4DA Spaced Repetition System (SRS): Scientific memorization using SM-2
+    algorithm"
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Synapse API
+  version: "1.0"
+paths:
+  /analyze:
+    post:
+      consumes:
+      - application/json
+      description: Get comprehensive analysis of a word including definition, part
+        of speech, examples, and conjugations
+      parameters:
+      - description: Word to analyze
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.AnalyzerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Word analysis
+          schema:
+            $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.AnalyzerResponse'
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Analysis failed
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Analyze a word
+      tags:
+      - Analyzer
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate with email and password to receive a JWT token
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/internal_handlers.AuthResponse'
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Invalid credentials
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login user
+      tags:
+      - Authentication
+  /auth/me:
+    get:
+      consumes:
+      - application/json
+      description: Get the authenticated user's profile information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User profile
+          schema:
+            $ref: '#/definitions/internal_handlers.User'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: User not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get current user
+      tags:
+      - Authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Generate a new JWT token from an existing valid token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: New token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to generate token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Refresh JWT token
+      tags:
+      - Authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account with email, username, and password
+      parameters:
+      - description: Registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/internal_handlers.AuthResponse'
+        "400":
+          description: Invalid request or validation failed
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Email or username already exists
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - Authentication
+  /srs/due:
+    get:
+      consumes:
+      - application/json
+      description: Get words that are due for spaced repetition review
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of words due for review
+          schema:
+            items:
+              $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.Word'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to fetch words
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get due words for review
+      tags:
+      - SRS
+  /srs/review:
+    post:
+      consumes:
+      - application/json
+      description: Submit a review for a word and update its SRS parameters using
+        SM-2 algorithm
+      parameters:
+      - description: Review data with quality rating (0-5)
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.ReviewRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated word with next review date
+          schema:
+            $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.ReviewResponse'
+        "400":
+          description: Invalid request or quality value
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Word not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to update word
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Submit word review
+      tags:
+      - SRS
+  /users/{userID}/quests:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all quests for a specific user
+      parameters:
+      - description: User ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of quests
+          schema:
+            items:
+              $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.Quest'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Database error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get user quests
+      tags:
+      - Quests
+  /users/{userID}/quests/generate:
+    post:
+      consumes:
+      - application/json
+      description: Generate a new AI-powered writing quest using user's ghost words
+      parameters:
+      - description: User ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Generated quest
+          schema:
+            $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.Quest'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Quest generation failed
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Generate new quest
+      tags:
+      - Quests
+  /users/{userID}/quests/validate:
+    post:
+      consumes:
+      - application/json
+      description: Validate user's written text for a quest using AI feedback
+      parameters:
+      - description: Quest validation data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.QuestValidationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Validation result with feedback
+          schema:
+            $ref: '#/definitions/github_com_BachirKhiati_synapse_internal_models.QuestValidationResponse'
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Quest not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Validation failed
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Validate quest submission
+      tags:
+      - Quests
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
+tags:
+- description: User authentication and authorization endpoints
+  name: Authentication
+- description: Universal word analysis and language learning tools
+  name: Analyzer
+- description: AI-generated writing quests (The Scribe)
+  name: Quests
+- description: Mind map of learned words (Ghost → Liquid → Solid)
+  name: Synapse
+- description: Content importer for web articles
+  name: Lens
+- description: User learning progress and statistics
+  name: Progress
+- description: Spaced Repetition System for word memorization
+  name: SRS

@@ -4,6 +4,24 @@
 
 Synapse is an AI-powered language learning workbench that transforms passive learning into active creation. Built for learners who want to truly master a language through exploration, not memorization.
 
+---
+
+## 🚀 Quick Deploy
+
+**Deploy to production in one command:**
+```bash
+make deploy
+```
+
+**See all commands:**
+```bash
+make help
+```
+
+**Quick reference:** See `QUICK_COMMANDS.md`
+
+---
+
 ## 🌟 Core Concept
 
 Synapse creates a complete learning ecosystem where **every piece of text is alive**—hoverable, explorable, and connected to your personal knowledge graph. Learn through a natural cycle:
@@ -64,6 +82,9 @@ Take your learning from text to speech:
 - ✅ **JWT Authentication**: Secure token-based auth with bcrypt
 - ✅ **Protected Routes**: Automatic redirects for unauthenticated users
 - ✅ **User Profiles**: Personalized learning experience per user
+- ✅ **Rate Limiting**: Three-tier system (strict/standard/generous)
+- ✅ **Security Headers**: XSS, clickjacking, MIME-sniffing protection
+- ✅ **Request Validation**: Size limits and content-type checking
 
 ### 🎤 Speech Features
 - ✅ **Pronunciation Practice**: Browser-based speech recognition
@@ -71,12 +92,33 @@ Take your learning from text to speech:
 - ✅ **Pronunciation Scoring**: Levenshtein distance algorithm
 - ✅ **No API Keys Needed**: Uses Web Speech API
 
+### 📊 Analytics & Insights
+- ✅ **Learning Dashboard**: Comprehensive statistics and visualizations
+- ✅ **Progress Charts**: Words and quests over time (7/30/90 days)
+- ✅ **Word Distribution**: Part of speech analysis
+- ✅ **Challenging Words**: Identify difficult vocabulary with ease factors
+- ✅ **Streak Tracking**: Current and longest learning streaks
+- ✅ **Performance Metrics**: Average ease factor, total reviews
+
+### 🏗️ Enterprise Infrastructure
+- ✅ **CI/CD Pipeline**: GitHub Actions for backend, frontend, and Docker
+- ✅ **Automated Testing**: 70%+ coverage with Jest and Go testing
+- ✅ **API Documentation**: Interactive Swagger UI at `/api/docs`
+- ✅ **Performance Optimization**: Connection pooling, gzip compression, code splitting
+- ✅ **Contributing Guidelines**: Comprehensive docs for contributors
+- ✅ **Security Scanning**: Trivy for container vulnerabilities
+- ✅ **Code Quality**: golangci-lint, ESLint, TypeScript strict mode
+
 ### 🚀 Production Ready
 - ✅ **Docker Deployment**: Complete production configuration
 - ✅ **Health Checks**: Automated monitoring and alerting
 - ✅ **SSL/HTTPS**: Let's Encrypt integration
 - ✅ **Backup Strategy**: Automated database backups
 - ✅ **Monitoring**: Log aggregation and performance metrics
+- ✅ **PWA Support**: Progressive Web App with offline functionality
+- ✅ **Mobile Optimized**: Responsive design with touch gestures
+- ✅ **Service Worker**: Caching and offline mode
+- ✅ **Install Prompt**: Add to home screen on mobile devices
 
 ## 🚀 Tech Stack
 
@@ -130,6 +172,7 @@ Take your learning from text to speech:
 4. **Open your browser**
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8080
+   - API Documentation (Swagger UI): http://localhost:8080/api/docs
    - Health check: http://localhost:8080/health
 
 That's it! 🎉
@@ -286,9 +329,31 @@ synapse/
 └── README.md            # This file
 ```
 
-## 📖 API Endpoints
+## 📖 API Documentation
 
-### Authentication
+### Interactive API Documentation (Swagger UI)
+
+**Swagger UI**: `http://localhost:8080/api/docs`
+
+The API includes interactive Swagger/OpenAPI documentation with:
+- 📚 Complete API reference with request/response schemas
+- 🧪 Try-it-out functionality to test endpoints
+- 🔐 Built-in authentication support
+- 📝 Detailed descriptions and examples
+
+**To regenerate Swagger docs after making changes:**
+```bash
+cd backend
+./generate-swagger.sh
+# OR manually:
+swag init -g cmd/api/main.go -o docs --parseDependency --parseInternal
+```
+
+For detailed API usage examples and code samples, see [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
+
+### API Endpoints
+
+#### Authentication
 - `POST /api/v1/auth/register` - Register new user
 - `POST /api/v1/auth/login` - Login and get JWT token
 - `GET /api/v1/auth/me` - Get current user info

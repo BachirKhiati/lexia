@@ -2,7 +2,53 @@
 
 ## [Unreleased] - 2025-01-XX
 
-### ✅ Major Features Completed
+### ✅ Major Features Completed (Latest)
+
+#### 3. Finnish Verb Conjugation Engine
+**Status: COMPLETE** ✅
+
+- Complete 6-type Finnish verb system
+- Present, past, and conditional tenses
+- All 6 persons (1sg, 2sg, 3sg, 1pl, 2pl, 3pl)
+- Vowel harmony rules
+- Automatic verb type detection
+- Stem extraction algorithms
+- Real conjugations in Analyzer pop-up
+- Unit tests for all verb types
+
+**Verb Types Supported:**
+- Type 1: -A/Ä (sanoa, puhua)
+- Type 2: -DA (syödä, juoda)
+- Type 3: -LA/-NA/-RA/-STA (tulla, mennä)
+- Type 4: -ATA/-ÄTÄ (haluta, pelätä)
+- Type 5: -ITA/-ITÄ (tarvita)
+- Type 6: -ETA/-ETÄ (vanheta)
+
+#### 4. Web Speech API (The Orator)
+**Status: COMPLETE** ✅
+
+Complete speaking practice module with:
+
+**Pronunciation Practice:**
+- Speech recognition (Finnish + other languages)
+- Text-to-speech for native pronunciation
+- Levenshtein distance scoring
+- 100-point scoring system
+- Visual feedback (green/yellow/red)
+- Common verb practice
+
+**Conversation Mode:**
+- Real-time AI conversations
+- Speech-to-text input
+- Voice responses
+- Message history
+- Topic-based practice
+
+**Custom Hooks:**
+- useSpeechRecognition
+- useSpeechSynthesis
+- Browser compatibility checks
+- Error handling
 
 #### 1. User Authentication System (JWT-based)
 **Status: COMPLETE** ✅

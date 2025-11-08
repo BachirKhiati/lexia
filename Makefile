@@ -1,7 +1,7 @@
 # Synapse Language Learning App - Makefile
 # Simple commands for deployment and management
 
-.PHONY: help deploy health seed logs status restart stop start update ssh perf test build clean
+.PHONY: help deploy health seed logs status restart stop start update ssh perf test build clean dev dev-rebuild dev-clean
 
 # Configuration
 VM_IP ?= 94.237.80.109
@@ -42,6 +42,9 @@ help:
 	@echo ""
 	@echo "💻 Local Development:"
 	@echo "  make dev             - Start local development"
+	@echo "  make dev BUILD=1     - Rebuild containers (keeps database)"
+	@echo "  make dev-rebuild     - Rebuild from scratch (keeps database)"
+	@echo "  make dev-clean       - Clean rebuild (deletes database!)"
 	@echo "  make build           - Build backend & frontend locally"
 	@echo "  make test            - Run tests"
 	@echo "  make clean           - Clean build artifacts"
@@ -168,10 +171,44 @@ ssh:
 
 dev:
 	@echo "💻 Starting local development..."
+ifdef BUILD
+	@echo "🔨 Forcing rebuild (keeping database)..."
+	@docker-compose down
+	@docker-compose build --no-cache
+	@docker-compose up -d --force-recreate
+else
 	@docker-compose up -d
+endif
 	@echo "✅ Services started"
 	@echo ""
-	@echo "Frontend: http://localhost:5173"
+	@echo "Frontend: http://localhost:3000"
+	@echo "Backend:  http://localhost:8080"
+	@echo "API Docs: http://localhost:8080/api/docs/index.html"
+	@echo ""
+	@echo "💡 Tip: Use 'make dev BUILD=1' to force rebuild"
+
+dev-rebuild:
+	@echo "🔨 Rebuilding everything from scratch (keeping database)..."
+	@docker-compose down
+	@docker-compose build --no-cache
+	@docker-compose up -d --force-recreate
+	@echo "✅ Services rebuilt and started"
+	@echo ""
+	@echo "Frontend: http://localhost:3000"
+	@echo "Backend:  http://localhost:8080"
+	@echo "API Docs: http://localhost:8080/api/docs/index.html"
+
+dev-clean:
+	@echo "🧹 Cleaning EVERYTHING including database..."
+	@echo "⚠️  This will delete all data! Press Ctrl+C to cancel, Enter to continue..."
+	@read confirmation
+	@docker-compose down -v
+	@docker volume prune -f
+	@docker-compose build --no-cache
+	@docker-compose up -d --force-recreate
+	@echo "✅ Everything rebuilt from scratch"
+	@echo ""
+	@echo "Frontend: http://localhost:3000"
 	@echo "Backend:  http://localhost:8080"
 	@echo "API Docs: http://localhost:8080/api/docs/index.html"
 

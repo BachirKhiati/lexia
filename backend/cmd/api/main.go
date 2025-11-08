@@ -10,23 +10,23 @@ import (
 	"github.com/go-chi/cors"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
-	"github.com/BachirKhiati/synapse/internal/config"
-	"github.com/BachirKhiati/synapse/internal/database"
-	"github.com/BachirKhiati/synapse/internal/handlers"
-	"github.com/BachirKhiati/synapse/internal/middleware"
-	"github.com/BachirKhiati/synapse/internal/services/ai"
-	"github.com/BachirKhiati/synapse/internal/services/auth"
-	"github.com/BachirKhiati/synapse/internal/services/language"
-	"github.com/BachirKhiati/synapse/internal/services/scraper"
-	"github.com/BachirKhiati/synapse/internal/services/srs"
-	"github.com/BachirKhiati/synapse/internal/services/wiktionary"
+	"github.com/BachirKhiati/lexia/internal/config"
+	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/handlers"
+	"github.com/BachirKhiati/lexia/internal/middleware"
+	"github.com/BachirKhiati/lexia/internal/services/ai"
+	"github.com/BachirKhiati/lexia/internal/services/auth"
+	"github.com/BachirKhiati/lexia/internal/services/language"
+	"github.com/BachirKhiati/lexia/internal/services/scraper"
+	"github.com/BachirKhiati/lexia/internal/services/srs"
+	"github.com/BachirKhiati/lexia/internal/services/wiktionary"
 
-	_ "github.com/BachirKhiati/synapse/docs" // Import generated docs
+	_ "github.com/BachirKhiati/lexia/docs" // Import generated docs
 )
 
-// @title Synapse API
+// @title Lexia API
 // @version 1.0
-// @description API for Synapse - An innovative language learning platform using AI-powered techniques
+// @description API for Lexia - An innovative language learning platform using AI-powered techniques
 // @description
 // @description Features:
 // @description - 🎯 The Analyzer: Universal word analysis with definitions, conjugations, and examples
@@ -36,9 +36,9 @@ import (
 // @description - 🗣️ The Orator: Speaking coach with voice recognition
 // @description - 📚 Spaced Repetition System (SRS): Scientific memorization using SM-2 algorithm
 
-// @contact.name Synapse Support
-// @contact.url https://github.com/BachirKhiati/synapse/issues
-// @contact.email support@synapse.example.com
+// @contact.name Lexia Support
+// @contact.url https://github.com/BachirKhiati/lexia/issues
+// @contact.email support@lexia.app
 
 // @license.name MIT
 // @license.url https://opensource.org/licenses/MIT

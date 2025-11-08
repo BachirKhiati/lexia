@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/BachirKhiati/synapse/internal/database"
-	"github.com/BachirKhiati/synapse/internal/models"
-	"github.com/BachirKhiati/synapse/internal/services/srs"
+	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/models"
+	"github.com/BachirKhiati/lexia/internal/services/srs"
 )
 
 type SRSHandler struct {

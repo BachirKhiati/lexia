@@ -63,7 +63,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USER=synapse
 DB_PASSWORD=synapse_dev_password
-DB_NAME=synapse_db
+DB_NAME=lexia_db
 
 # JWT (generate with: openssl rand -base64 32)
 JWT_SECRET=local-dev-secret-change-in-production
@@ -208,7 +208,7 @@ make perf
 make db-shell
 
 # Or directly
-docker exec -it synapse-postgres psql -U synapse -d synapse_db
+docker exec -it synapse-postgres psql -U synapse -d lexia_db
 ```
 
 ### Common SQL Queries
@@ -243,13 +243,13 @@ make seed-local
 ### Backup Local Data
 
 ```bash
-docker exec synapse-postgres pg_dump -U synapse synapse_db > backup-local.sql
+docker exec synapse-postgres pg_dump -U synapse lexia_db > backup-local.sql
 ```
 
 ### Restore Local Data
 
 ```bash
-cat backup-local.sql | docker exec -i synapse-postgres psql -U synapse synapse_db
+cat backup-local.sql | docker exec -i synapse-postgres psql -U synapse lexia_db
 ```
 
 ---
@@ -347,7 +347,7 @@ npm install
 # Wrong answers should reset it
 
 # Check in database:
-docker exec -it synapse-postgres psql -U synapse -d synapse_db -c \
+docker exec -it synapse-postgres psql -U synapse -d lexia_db -c \
   "SELECT word, ease_factor, interval, next_review FROM words WHERE user_id = 1;"
 ```
 

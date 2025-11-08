@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/BachirKhiati/synapse/internal/database"
+	"github.com/BachirKhiati/lexia/internal/database"
 )
 
 type HealthHandler struct {

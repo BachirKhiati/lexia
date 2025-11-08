@@ -6,7 +6,7 @@ import (
 	"time"
 
 	_ "github.com/lib/pq"
-	"github.com/BachirKhiati/synapse/internal/config"
+	"github.com/BachirKhiati/lexia/internal/config"
 )
 
 type DB struct {

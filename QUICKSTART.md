@@ -13,8 +13,8 @@ Before you begin, ensure you have:
 
 ```bash
 # If you haven't cloned yet
-git clone https://github.com/BachirKhiati/synapse.git
-cd synapse
+git clone https://github.com/BachirKhiati/lexia.git
+cd lexia
 ```
 
 ## Step 2: Set Up API Keys

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/BachirKhiati/synapse/internal/database"
-	"github.com/BachirKhiati/synapse/internal/services/auth"
+	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/services/auth"
 )
 
 type AnalyticsHandler struct {

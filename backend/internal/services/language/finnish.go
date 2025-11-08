@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/BachirKhiati/synapse/internal/models"
-	"github.com/BachirKhiati/synapse/internal/services/wiktionary"
+	"github.com/BachirKhiati/lexia/internal/models"
+	"github.com/BachirKhiati/lexia/internal/services/wiktionary"
 )
 
 // Service handles language-specific operations

@@ -94,7 +94,7 @@ export default function PWAInstallPrompt() {
 
           <div className="flex-1 min-w-0">
             <h3 className="text-sm font-semibold text-synapse-text mb-1">
-              Install Synapse
+              Install Lexia
             </h3>
             <p className="text-xs text-synapse-text-secondary mb-3">
               Add to your home screen for quick access and offline learning

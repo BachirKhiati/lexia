@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/BachirKhiati/synapse/internal/database"
-	"github.com/BachirKhiati/synapse/internal/models"
+	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/models"
 )
 
 type SynapseHandler struct {

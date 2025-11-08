@@ -64,7 +64,7 @@ const SynapsePage = () => {
           <div className="absolute inset-0 flex items-center justify-center bg-synapse-background rounded-xl">
             <div className="text-center">
               <div className="text-6xl mb-4">🧠</div>
-              <h2 className="text-2xl font-bold mb-2">Your Synapse is Empty</h2>
+              <h2 className="text-2xl font-bold mb-2">Your Knowledge Graph is Empty</h2>
               <p className="text-gray-400 mb-4">
                 Start by importing content with The Lens or completing quests in The Scribe!
               </p>

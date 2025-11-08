@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/BachirKhiati/synapse/internal/database"
-	"github.com/BachirKhiati/synapse/internal/middleware"
-	"github.com/BachirKhiati/synapse/internal/services/scraper"
+	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/middleware"
+	"github.com/BachirKhiati/lexia/internal/services/scraper"
 )
 
 type LensHandler struct {

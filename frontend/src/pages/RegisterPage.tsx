@@ -57,7 +57,10 @@ const RegisterPage = () => {
       <div className="max-w-md w-full">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-synapse-primary mb-2">🧠 Synapse</h1>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-16 h-16" />
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent">Lexia</h1>
+          </div>
           <p className="text-xl text-gray-400">Start Your Language Journey</p>
         </div>
 
@@ -142,7 +145,7 @@ const RegisterPage = () => {
         {/* Info */}
         <div className="mt-6 p-4 bg-synapse-primary/10 rounded-lg border border-synapse-primary">
           <p className="text-sm text-gray-300 text-center">
-            By creating an account, you'll get access to all Synapse features including AI-powered quests, your
+            By creating an account, you'll get access to all Lexia features including AI-powered quests, your
             personal knowledge graph, and more!
           </p>
         </div>

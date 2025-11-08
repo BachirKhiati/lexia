@@ -4,17 +4,17 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
-    container_name: synapse-postgres
+    container_name: lexia-postgres
     environment:
-      POSTGRES_USER: synapse
+      POSTGRES_USER: lexia
       POSTGRES_PASSWORD: synapse_dev_password
-      POSTGRES_DB: synapse_db
+      POSTGRES_DB: lexia_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U synapse"]
+      test: ["CMD-SHELL", "pg_isready -U lexia"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -38,7 +38,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: synapse-backend
+    container_name: lexia-backend
     ports:
       - "8080:8080"
     environment:
@@ -70,7 +70,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    container_name: synapse-frontend
+    container_name: lexia-frontend
     ports:
       - "3000:3000"
     environment:

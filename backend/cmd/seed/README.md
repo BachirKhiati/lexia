@@ -218,9 +218,9 @@ For production data:
 ## Technical Details
 
 ### Dependencies
-- `github.com/BachirKhiati/synapse/internal/config`
-- `github.com/BachirKhiati/synapse/internal/database`
-- `github.com/BachirKhiati/synapse/internal/services/auth`
+- `github.com/BachirKhiati/lexia/internal/config`
+- `github.com/BachirKhiati/lexia/internal/database`
+- `github.com/BachirKhiati/lexia/internal/services/auth`
 - `golang.org/x/crypto/bcrypt`
 
 ### Database Tables Used

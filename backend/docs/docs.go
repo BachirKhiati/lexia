@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Synapse Support",
-            "url": "https://github.com/BachirKhiati/synapse/issues",
+            "url": "https://github.com/BachirKhiati/lexia/issues",
             "email": "support@synapse.example.com"
         },
         "license": {

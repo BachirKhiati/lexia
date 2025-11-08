@@ -43,7 +43,7 @@ We provide an automated setup script that handles everything:
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/synapse.git
-cd synapse
+cd lexia
 ./dev-setup.sh
 ```
 
@@ -66,10 +66,10 @@ If you prefer to set up manually, see the [README.md](README.md) for detailed in
 # Fork the repository on GitHub
 # Then clone your fork
 git clone https://github.com/YOUR_USERNAME/synapse.git
-cd synapse
+cd lexia
 
 # Add upstream remote
-git remote add upstream https://github.com/BachirKhiati/synapse.git
+git remote add upstream https://github.com/BachirKhiati/lexia.git
 ```
 
 ### 2. Create a Branch

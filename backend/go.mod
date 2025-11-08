@@ -1,4 +1,4 @@
-module github.com/BachirKhiati/synapse
+module github.com/BachirKhiati/lexia
 
 go 1.25
 

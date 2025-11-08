@@ -21,6 +21,8 @@ const LoginPage = () => {
 
     try {
       await login(email, password);
+      // Small delay to ensure localStorage is synced before navigation
+      await new Promise(resolve => setTimeout(resolve, 100));
       navigate('/');
     } catch (err: any) {
       const errorMessage = getAuthErrorMessage(err);

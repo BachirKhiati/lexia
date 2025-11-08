@@ -1,12 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API for Synapse - An innovative language learning platform using AI-powered techniques\n\nFeatures:\n- 🎯 The Analyzer: Universal word analysis with definitions, conjugations, and examples\n- ✍️ The Scribe: AI-generated writing quests for practice\n- 🧠 The Synapse: Mind map visualization of learned words (Ghost → Liquid → Solid)\n- 🔍 The Lens: Import and analyze content from web articles\n- 🗣️ The Orator: Speaking coach with voice recognition\n- 📚 Spaced Repetition System (SRS): Scientific memorization using SM-2 algorithm",
-        "title": "Synapse API",
+        "description": "API for Lexia - An innovative language learning platform using AI-powered techniques\n\nFeatures:\n- 🎯 The Analyzer: Universal word analysis with definitions, conjugations, and examples\n- ✍️ The Scribe: AI-generated writing quests for practice\n- 🧠 The Synapse: Mind map visualization of learned words (Ghost → Liquid → Solid)\n- 🔍 The Lens: Import and analyze content from web articles\n- 🗣️ The Orator: Speaking coach with voice recognition\n- 📚 Spaced Repetition System (SRS): Scientific memorization using SM-2 algorithm",
+        "title": "Lexia API",
         "contact": {
-            "name": "Synapse Support",
-            "url": "https://github.com/BachirKhiati/synapse/issues",
-            "email": "support@synapse.example.com"
+            "name": "Lexia Support",
+            "url": "https://github.com/BachirKhiati/lexia/issues",
+            "email": "support@lexia.app"
         },
         "license": {
             "name": "MIT",

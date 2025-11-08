@@ -75,7 +75,7 @@
     },
     {
       "name": "Mind Map",
-      "short_name": "Synapse",
+      "short_name": "Mind Map",
       "description": "View your knowledge graph",
       "url": "/synapse",
       "icons": [

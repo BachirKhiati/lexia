@@ -18,9 +18,9 @@ interface OnboardingModalProps {
 
 const ONBOARDING_STEPS: OnboardingStep[] = [
   {
-    title: 'Welcome to Synapse!',
+    title: 'Welcome to Lexia!',
     description:
-      'Synapse is your AI-powered language learning companion. Learn Finnish through interactive quests, mind maps, and spaced repetition. Let us show you around!',
+      'Lexia is your AI-powered language learning companion. Learn Finnish through interactive quests, mind maps, and spaced repetition. Let us show you around!',
     icon: '🧠',
   },
   {
@@ -72,7 +72,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     title: 'Spaced Repetition',
     description:
-      'Synapse uses the SM-2 algorithm to schedule reviews at optimal intervals. Review words when they\'re about to be forgotten for maximum retention. Check your dashboard for due reviews!',
+      'Lexia uses the SM-2 algorithm to schedule reviews at optimal intervals. Review words when they\'re about to be forgotten for maximum retention. Check your dashboard for due reviews!',
     icon: '🔄',
   },
   {

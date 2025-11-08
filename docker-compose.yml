@@ -56,6 +56,8 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEFAULT_AI_PROVIDER=claude
       - CORS_ALLOWED_ORIGINS=http://localhost:3000
+      - JWT_SECRET=change-this-to-a-secure-random-string-in-production
+      - JWT_ISSUER=lexia-api
     depends_on:
       postgres:
         condition: service_healthy

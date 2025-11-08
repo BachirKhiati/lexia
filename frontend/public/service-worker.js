@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'synapse-v1';
-const RUNTIME_CACHE = 'synapse-runtime';
+const CACHE_NAME = 'lexia-v1';
+const RUNTIME_CACHE = 'lexia-runtime';
 
 // Assets to cache on install
 const STATIC_CACHE_URLS = [
@@ -111,7 +111,7 @@ self.addEventListener('fetch', (event) => {
 // Handle push notifications (future feature)
 self.addEventListener('push', (event) => {
   const data = event.data ? event.data.json() : {};
-  const title = data.title || 'Synapse';
+  const title = data.title || 'Lexia';
   const options = {
     body: data.body || 'You have words due for review!',
     icon: '/icons/icon-192x192.png',

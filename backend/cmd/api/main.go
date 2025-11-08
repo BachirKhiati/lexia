@@ -227,7 +227,7 @@ func main() {
 
 	// Start server
 	addr := fmt.Sprintf(":%s", cfg.Server.Port)
-	log.Printf("🚀 Synapse server starting on %s", addr)
+	log.Printf("🚀 Lexia server starting on %s", addr)
 	log.Printf("📚 Learning language: %s", cfg.Language.DefaultLanguage)
 	log.Printf("🤖 AI Provider: %s", cfg.AI.DefaultProvider)
 

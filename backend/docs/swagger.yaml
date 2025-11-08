@@ -196,10 +196,10 @@ definitions:
 host: localhost:8080
 info:
   contact:
-    email: support@synapse.example.com
-    name: Synapse Support
-    url: https://github.com/BachirKhiati/synapse/issues
-  description: "API for Synapse - An innovative language learning platform using AI-powered
+    email: support@lexia.app
+    name: Lexia Support
+    url: https://github.com/BachirKhiati/lexia/issues
+  description: "API for Lexia - An innovative language learning platform using AI-powered
     techniques\n\nFeatures:\n- \U0001F3AF The Analyzer: Universal word analysis with
     definitions, conjugations, and examples\n- ✍️ The Scribe: AI-generated writing
     quests for practice\n- \U0001F9E0 The Synapse: Mind map visualization of learned
@@ -210,7 +210,7 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  title: Synapse API
+  title: Lexia API
   version: "1.0"
 paths:
   /analyze:

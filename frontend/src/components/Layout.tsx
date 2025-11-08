@@ -26,6 +26,13 @@ const Layout = ({ children }: LayoutProps) => {
   // Fetch user progress on mount
   useEffect(() => {
     const fetchProgress = async () => {
+      // Double-check token exists before fetching
+      const token = localStorage.getItem('synapse_token');
+      if (!token) {
+        console.warn('[Layout] No token found, skipping progress fetch');
+        return;
+      }
+
       try {
         const data = await getUserProgress();
         setProgress(data);

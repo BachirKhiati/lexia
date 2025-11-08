@@ -39,6 +39,8 @@ const RegisterPage = () => {
 
     try {
       await register(email, username, password, language);
+      // Small delay to ensure localStorage is synced before navigation
+      await new Promise(resolve => setTimeout(resolve, 100));
       navigate('/');
     } catch (err: any) {
       const errorMessage = getAuthErrorMessage(err);

@@ -3,9 +3,11 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/middleware"
 )
 
 type UserHandler struct {
@@ -25,12 +27,16 @@ type UserProgress struct {
 
 // GetProgress returns the current user's learning progress stats
 func (h *UserHandler) GetProgress(w http.ResponseWriter, r *http.Request) {
-	// Get user ID from context (set by auth middleware)
-	userID, ok := r.Context().Value("user_id").(int)
+	// Get user claims from context (set by auth middleware)
+	claims, ok := middleware.GetUserFromContext(r)
 	if !ok {
+		log.Printf("[UserHandler] Failed to get user from context")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
+
+	userID := claims.UserID
+	log.Printf("[UserHandler] Fetching progress for user %d (%s)", userID, claims.Email)
 
 	var progress UserProgress
 

@@ -43,85 +43,39 @@ const LoadingFallback = () => (
 );
 
 function AppRoutes() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <LoadingFallback />;
+  }
+
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
-      {/* Public routes */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+        {/* Public routes */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-      {/* Protected routes */}
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/scribe"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ScribePage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/synapse"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <SynapsePage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/lens"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <LensPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/orator"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <OratorPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/analytics"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <AnalyticsPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/export-import"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ExportImportPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+        {/* Protected routes - Layout wraps all protected routes */}
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/scribe" element={<ScribePage />} />
+                  <Route path="/synapse" element={<SynapsePage />} />
+                  <Route path="/lens" element={<LensPage />} />
+                  <Route path="/orator" element={<OratorPage />} />
+                  <Route path="/analytics" element={<AnalyticsPage />} />
+                  <Route path="/export-import" element={<ExportImportPage />} />
+                </Routes>
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </Suspense>
   );
 }

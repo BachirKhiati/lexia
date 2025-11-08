@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: lexia
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: lexia
+      POSTGRES_DB: lexia_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backups:/backups

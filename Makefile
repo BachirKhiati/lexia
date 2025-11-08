@@ -96,7 +96,7 @@ db-restore:
 
 db-shell:
 	@echo "🗄️  Connecting to PostgreSQL..."
-	@ssh $(SSH_USER)@$(VM_IP) 'docker exec -it lexia-postgres psql -U lexia -d lexia'
+	@ssh $(SSH_USER)@$(VM_IP) 'docker exec -it lexia-postgres psql -U lexia -d lexia_db'
 
 # ============================================================================
 # Monitoring

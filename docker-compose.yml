@@ -7,7 +7,7 @@ services:
     container_name: lexia-postgres
     environment:
       POSTGRES_USER: lexia
-      POSTGRES_PASSWORD: synapse_dev_password
+      POSTGRES_PASSWORD: lexia_dev_password
       POSTGRES_DB: lexia_db
     ports:
       - "5432:5432"
@@ -22,7 +22,7 @@ services:
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: synapse-redis
+    container_name: lexia-redis
     ports:
       - "6379:6379"
     volumes:
@@ -46,9 +46,9 @@ services:
       - ENVIRONMENT=development
       - DB_HOST=postgres
       - DB_PORT=5432
-      - DB_USER=synapse
-      - DB_PASSWORD=synapse_dev_password
-      - DB_NAME=synapse_db
+      - DB_USER=lexia
+      - DB_PASSWORD=lexia_dev_password
+      - DB_NAME=lexia_db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CLAUDE_API_KEY=${CLAUDE_API_KEY}

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"database/sql"
 	"encoding/json"
 	"net/http"
 	"runtime"
@@ -167,14 +166,12 @@ func (h *HealthHandler) Stats(w http.ResponseWriter, r *http.Request) {
 		Status: "unknown",
 	}
 
-	// Use type assertion to access the underlying *sql.DB
-	if sqlDB, ok := h.db.DB.(*sql.DB); ok {
-		stats := sqlDB.Stats()
-		dbStats.OpenConnections = stats.OpenConnections
-		dbStats.InUse = stats.InUse
-		dbStats.Idle = stats.Idle
-		dbStats.Status = "connected"
-	}
+	// Access stats directly since database.DB embeds *sql.DB
+	stats := h.db.Stats()
+	dbStats.OpenConnections = stats.OpenConnections
+	dbStats.InUse = stats.InUse
+	dbStats.Idle = stats.Idle
+	dbStats.Status = "connected"
 
 	response := SystemStats{
 		Uptime:        time.Since(h.startTime).String(),

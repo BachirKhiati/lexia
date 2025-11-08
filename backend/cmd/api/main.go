@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	chimiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
@@ -129,9 +129,9 @@ func main() {
 	r := chi.NewRouter()
 
 	// Global middleware
-	r.Use(middleware.Logger)
-	r.Use(middleware.Recoverer)
-	r.Use(middleware.Compress(5)) // gzip compression level 5
+	r.Use(chimiddleware.Logger)
+	r.Use(chimiddleware.Recoverer)
+	r.Use(chimiddleware.Compress(5)) // gzip compression level 5
 	r.Use(middleware.SecurityHeaders)
 	r.Use(middleware.RequestSizeLimit(10 * 1024 * 1024)) // 10MB max request size
 	r.Use(cors.Handler(cors.Options{
@@ -145,7 +145,7 @@ func main() {
 	// Rate limiters
 	standardLimit := middleware.StandardRateLimit()
 	strictLimit := middleware.StrictRateLimit()
-	generousLimit := middleware.GenerousRateLimit()
+	// generousLimit := middleware.GenerousRateLimit() // Unused for now
 
 	// Health and monitoring endpoints (no authentication required)
 	r.Get("/health", healthHandler.Health)

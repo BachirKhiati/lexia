@@ -63,7 +63,7 @@ func (h *SRSHandler) GetDueWords(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	var words []models.Word
-	for rows.Scan() {
+	for rows.Next() {
 		var word models.Word
 		var examples sql.NullString
 

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { analyticsService, type LearningStats, type ChallengingWords } from '../services/analytics';
+import { analyticsService } from '../services/analytics';
 import { StatCardSkeleton, ListSkeleton } from '../components/Skeletons';
 
 export default function AnalyticsPage() {

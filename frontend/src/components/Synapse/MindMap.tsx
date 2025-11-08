@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { MindMapData, MindMapNode, MindMapLink } from '../../types';
+import { MindMapData, MindMapNode } from '../../types';
 
 interface MindMapProps {
   data: MindMapData;
@@ -64,7 +64,7 @@ const MindMap = ({ data, onNodeClick }: MindMapProps) => {
           .on('drag', dragged)
           .on('end', dragended)
       )
-      .on('click', (event, d) => {
+      .on('click', (_event, d) => {
         if (onNodeClick) onNodeClick(d);
       });
 

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserQuests, generateQuest } from '../services/api';
 import QuestCard from '../components/Scribe/QuestCard';

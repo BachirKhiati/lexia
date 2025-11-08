@@ -58,7 +58,7 @@ const ConversationMode = ({ language, topic = 'daily life' }: ConversationModePr
     }
   };
 
-  const generateAIResponse = (userInput: string, lang: string): string => {
+  const generateAIResponse = (_userInput: string, lang: string): string => {
     // Simplified AI response (in production, use your AI service)
     if (lang === 'finnish') {
       const responses = [

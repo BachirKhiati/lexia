@@ -8,7 +8,7 @@ export default function ExportImportPage() {
 
   const handleExportJSON = async () => {
     try {
-      const token = localStorage.getItem('synapse_token');
+      const token = localStorage.getItem('lexia_token');
       const response = await fetch('/api/v1/export/json', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ export default function ExportImportPage() {
 
   const handleExportCSV = async () => {
     try {
-      const token = localStorage.getItem('synapse_token');
+      const token = localStorage.getItem('lexia_token');
       const response = await fetch('/api/v1/export/csv', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export default function ExportImportPage() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const token = localStorage.getItem('synapse_token');
+      const token = localStorage.getItem('lexia_token');
       const response = await fetch('/api/v1/import/csv', {
         method: 'POST',
         headers: {
@@ -94,7 +94,7 @@ export default function ExportImportPage() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const token = localStorage.getItem('synapse_token');
+      const token = localStorage.getItem('lexia_token');
       const response = await fetch('/api/v1/import/json', {
         method: 'POST',
         headers: {

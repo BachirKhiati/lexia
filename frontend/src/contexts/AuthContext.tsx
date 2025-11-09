@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Load token from localStorage on mount
   useEffect(() => {
-    const storedToken = localStorage.getItem('synapse_token');
+    const storedToken = localStorage.getItem('lexia_token');
     if (storedToken) {
       setToken(storedToken);
       fetchUser(storedToken);
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(response.data);
     } catch (error) {
       // Token invalid, clear it
-      localStorage.removeItem('synapse_token');
+      localStorage.removeItem('lexia_token');
       setToken(null);
     } finally {
       setLoading(false);
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // Save token FIRST before setting state
-    localStorage.setItem('synapse_token', newToken);
+    localStorage.setItem('lexia_token', newToken);
     console.log('Token saved to localStorage:', newToken.substring(0, 20) + '...');
     setToken(newToken);
     setUser(userData);
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // Save token FIRST before setting state
-    localStorage.setItem('synapse_token', newToken);
+    localStorage.setItem('lexia_token', newToken);
     console.log('Token saved to localStorage:', newToken.substring(0, 20) + '...');
     setToken(newToken);
     setUser(userData);
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('synapse_token');
+    localStorage.removeItem('lexia_token');
   };
 
   return (

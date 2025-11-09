@@ -3,10 +3,12 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 	"strings"
 
 	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/middleware"
 	"github.com/BachirKhiati/lexia/internal/services/auth"
 )
 
@@ -226,11 +228,14 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 // @Router /auth/me [get]
 func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 	// User info is already in context from middleware
-	claims, ok := r.Context().Value("user").(*auth.Claims)
+	claims, ok := middleware.GetUserFromContext(r)
 	if !ok {
+		log.Printf("[AuthHandler] Failed to get user from context for /auth/me")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
+
+	log.Printf("[AuthHandler] /auth/me for user %d (%s)", claims.UserID, claims.Email)
 
 	// Get full user details
 	var user User
@@ -261,8 +266,9 @@ func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} map[string]string "Failed to generate token"
 // @Router /auth/refresh [post]
 func (h *AuthHandler) RefreshToken(w http.ResponseWriter, r *http.Request) {
-	claims, ok := r.Context().Value("user").(*auth.Claims)
+	claims, ok := middleware.GetUserFromContext(r)
 	if !ok {
+		log.Printf("[AuthHandler] Failed to get user from context for /auth/refresh")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}

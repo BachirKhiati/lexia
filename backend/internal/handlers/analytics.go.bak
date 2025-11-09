@@ -3,11 +3,13 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/BachirKhiati/lexia/internal/database"
 	"github.com/BachirKhiati/lexia/internal/middleware"
+	"github.com/BachirKhiati/lexia/internal/services/auth"
 )
 
 type AnalyticsHandler struct {
@@ -79,7 +81,7 @@ type ChallengingWords struct {
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /analytics/stats [get]
 func (h *AnalyticsHandler) GetLearningStats(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -204,7 +206,7 @@ func (h *AnalyticsHandler) GetLearningStats(w http.ResponseWriter, r *http.Reque
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /analytics/words-over-time [get]
 func (h *AnalyticsHandler) GetWordsOverTime(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -254,7 +256,7 @@ func (h *AnalyticsHandler) GetWordsOverTime(w http.ResponseWriter, r *http.Reque
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /analytics/quests-over-time [get]
 func (h *AnalyticsHandler) GetQuestsOverTime(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -303,7 +305,7 @@ func (h *AnalyticsHandler) GetQuestsOverTime(w http.ResponseWriter, r *http.Requ
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /analytics/words-by-pos [get]
 func (h *AnalyticsHandler) GetWordsByPartOfSpeech(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -349,7 +351,7 @@ func (h *AnalyticsHandler) GetWordsByPartOfSpeech(w http.ResponseWriter, r *http
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /analytics/challenging-words [get]
 func (h *AnalyticsHandler) GetChallengingWords(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return

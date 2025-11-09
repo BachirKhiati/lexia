@@ -18,7 +18,7 @@ const api = axios.create({
 
 // Add auth token to requests
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('synapse_token');
+  const token = localStorage.getItem('lexia_token');
   console.log('[API] Request to:', config.url);
   console.log('[API] Token from localStorage:', token ? token.substring(0, 20) + '...' : 'NO TOKEN');
   if (token) {
@@ -36,7 +36,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expired or invalid
-      localStorage.removeItem('synapse_token');
+      localStorage.removeItem('lexia_token');
       window.location.href = '/login';
     }
     return Promise.reject(error);

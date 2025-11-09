@@ -3,10 +3,12 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/BachirKhiati/lexia/internal/database"
+	"github.com/BachirKhiati/lexia/internal/middleware"
 	"github.com/BachirKhiati/lexia/internal/models"
 	"github.com/BachirKhiati/lexia/internal/services/srs"
 )
@@ -35,12 +37,15 @@ func NewSRSHandler(db *database.DB, srsService *srs.Service) *SRSHandler {
 // @Failure 500 {object} map[string]string "Failed to fetch words"
 // @Router /srs/due [get]
 func (h *SRSHandler) GetDueWords(w http.ResponseWriter, r *http.Request) {
-	// Get user ID from context (set by auth middleware)
-	userID, ok := r.Context().Value("user_id").(int)
+	// Get user claims from context (set by auth middleware)
+	claims, ok := middleware.GetUserFromContext(r)
 	if !ok {
+		log.Printf("[SRSHandler] Failed to get user from context for /srs/due")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
+
+	userID := claims.UserID
 
 	// Query words due for review
 	query := `
@@ -107,12 +112,15 @@ func (h *SRSHandler) GetDueWords(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} map[string]string "Failed to update word"
 // @Router /srs/review [post]
 func (h *SRSHandler) SubmitReview(w http.ResponseWriter, r *http.Request) {
-	// Get user ID from context
-	userID, ok := r.Context().Value("user_id").(int)
+	// Get user claims from context
+	claims, ok := middleware.GetUserFromContext(r)
 	if !ok {
+		log.Printf("[SRSHandler] Failed to get user from context for /srs/review")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
+
+	userID := claims.UserID
 
 	var req models.ReviewRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

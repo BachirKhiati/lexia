@@ -6,13 +6,12 @@ import (
 	"fmt"
 	"strings"
 
-	"google.golang.org/api/option"
-	"github.com/google/generative-ai-go/genai"
+	"google.golang.org/genai"
 )
 
 type GeminiProvider struct {
 	client *genai.Client
-	model  *genai.GenerativeModel
+	model  string
 }
 
 func NewGeminiProvider(apiKey string) (*GeminiProvider, error) {
@@ -21,50 +20,113 @@ func NewGeminiProvider(apiKey string) (*GeminiProvider, error) {
 	}
 
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(apiKey))
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		APIKey:  apiKey,
+		Backend: genai.BackendGeminiAPI,
+	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create Gemini client: %w", err)
 	}
 
-	model := client.GenerativeModel("gemini-1.5-flash")
-	model.SetTemperature(0.7)
-	model.SetMaxOutputTokens(1024)
-
 	return &GeminiProvider{
 		client: client,
-		model:  model,
+		model:  "gemini-2.0-flash-exp", // Using Gemini 2.0 Flash experimental
 	}, nil
 }
 
 func (g *GeminiProvider) callGemini(ctx context.Context, prompt string) (string, error) {
-	resp, err := g.model.GenerateContent(ctx, genai.Text(prompt))
+	// Create content with the prompt
+	parts := []*genai.Part{
+		{Text: prompt},
+	}
+
+	content := []*genai.Content{
+		{Parts: parts},
+	}
+
+	// Configure generation parameters
+	config := &genai.GenerateContentConfig{
+		Temperature:    genai.Ptr(float32(0.7)),
+		MaxOutputTokens: 1024,
+	}
+
+	// Call Gemini API
+	resp, err := g.client.Models.GenerateContent(ctx, g.model, content, config)
 	if err != nil {
 		return "", fmt.Errorf("Gemini API error: %w", err)
 	}
 
-	if len(resp.Candidates) == 0 || len(resp.Candidates[0].Content.Parts) == 0 {
+	// Debug logging
+	fmt.Printf("[GEMINI DEBUG] Model: %s\n", g.model)
+	fmt.Printf("[GEMINI DEBUG] Prompt length: %d chars\n", len(prompt))
+
+	// Extract text from response
+	text := resp.Text()
+	if text == "" {
 		return "", fmt.Errorf("empty response from Gemini")
 	}
 
-	return fmt.Sprintf("%v", resp.Candidates[0].Content.Parts[0]), nil
+	fmt.Printf("[GEMINI DEBUG] Response length: %d chars\n", len(text))
+	fmt.Printf("[GEMINI DEBUG] Response preview: %s\n", truncate(text, 200))
+
+	// Strip markdown code blocks if present
+	text = stripMarkdownCodeBlocks(text)
+
+	return text, nil
+}
+
+func truncate(s string, maxLen int) string {
+	if len(s) <= maxLen {
+		return s
+	}
+	return s[:maxLen] + "..."
+}
+
+func stripMarkdownCodeBlocks(text string) string {
+	// Remove markdown code blocks like ```json ... ``` or ``` ... ```
+	text = strings.TrimSpace(text)
+
+	// Check if it starts with ```json or ```
+	if strings.HasPrefix(text, "```json") {
+		text = strings.TrimPrefix(text, "```json")
+		text = strings.TrimSpace(text)
+	} else if strings.HasPrefix(text, "```") {
+		text = strings.TrimPrefix(text, "```")
+		text = strings.TrimSpace(text)
+	}
+
+	// Remove trailing ```
+	if strings.HasSuffix(text, "```") {
+		text = strings.TrimSuffix(text, "```")
+		text = strings.TrimSpace(text)
+	}
+
+	return text
 }
 
 func (g *GeminiProvider) GenerateQuest(ctx context.Context, userLevel string, language string, ghostWords []string) (string, error) {
-	ghostWordsStr := strings.Join(ghostWords, ", ")
+	var wordRequirement string
+	if len(ghostWords) > 0 {
+		ghostWordsStr := strings.Join(ghostWords, ", ")
+		wordRequirement = fmt.Sprintf("2. Try to use some of these vocabulary words: %s", ghostWordsStr)
+	} else {
+		wordRequirement = "2. Choose appropriate vocabulary for the learner's level"
+	}
 
 	prompt := fmt.Sprintf(`You are a language teacher for %s. Generate a short learning quest for a %s level learner.
 
 The quest should:
-1. Be specific and actionable
-2. Use these words: %s
+1. Be specific and actionable (e.g., "Write 3 sentences about your weekend")
+%s
 3. Be appropriate for their level
+4. Be achievable in 5-10 minutes
 
-Return ONLY valid JSON:
+Return ONLY valid JSON with no markdown formatting:
 {
   "title": "Quest title",
   "description": "Quest instructions",
   "solution": "One example solution"
-}`, language, userLevel, ghostWordsStr)
+}`, language, userLevel, wordRequirement)
 
 	return g.callGemini(ctx, prompt)
 }
@@ -133,5 +195,6 @@ Return valid JSON:
 }
 
 func (g *GeminiProvider) Close() error {
-	return g.client.Close()
+	// New SDK doesn't require explicit close
+	return nil
 }

@@ -19,9 +19,9 @@ const SynapsePage = () => {
   };
 
   const stats = {
-    total: mindMapData?.nodes.length || 0,
-    solid: mindMapData?.nodes.filter((n) => n.status === 'solid').length || 0,
-    ghost: mindMapData?.nodes.filter((n) => n.status === 'ghost').length || 0,
+    total: mindMapData?.nodes?.length || 0,
+    solid: mindMapData?.nodes?.filter((n) => n.status === 'solid')?.length || 0,
+    ghost: mindMapData?.nodes?.filter((n) => n.status === 'ghost')?.length || 0,
   };
 
   return (
@@ -58,7 +58,7 @@ const SynapsePage = () => {
           <div className="absolute inset-0 flex items-center justify-center bg-synapse-background rounded-xl">
             <div className="loading-spinner" />
           </div>
-        ) : mindMapData && mindMapData.nodes.length > 0 ? (
+        ) : mindMapData && mindMapData.nodes && mindMapData.nodes.length > 0 ? (
           <MindMap data={mindMapData} onNodeClick={handleNodeClick} />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-synapse-background rounded-xl">

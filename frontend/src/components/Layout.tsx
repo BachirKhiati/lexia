@@ -27,7 +27,7 @@ const Layout = ({ children }: LayoutProps) => {
   useEffect(() => {
     const fetchProgress = async () => {
       // Double-check token exists before fetching
-      const token = localStorage.getItem('synapse_token');
+      const token = localStorage.getItem('lexia_token');
       if (!token) {
         console.warn('[Layout] No token found, skipping progress fetch');
         return;

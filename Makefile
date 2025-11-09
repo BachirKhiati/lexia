@@ -1,4 +1,4 @@
-# Synapse Language Learning App - Makefile
+# Lexia Language Learning App - Makefile
 # Simple commands for deployment and management
 
 .PHONY: help deploy health seed logs status restart stop start update ssh perf test build clean dev dev-rebuild dev-clean
@@ -11,7 +11,7 @@ APP_DIR = /opt/lexia
 # Default target
 help:
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║  Synapse - Make Commands              ║"
+	@echo "║  Lexia - Make Commands                ║"
 	@echo "╚════════════════════════════════════════╝"
 	@echo ""
 	@echo "🚀 Deployment:"
@@ -41,8 +41,8 @@ help:
 	@echo "  make ssh             - SSH into VM"
 	@echo ""
 	@echo "💻 Local Development:"
-	@echo "  make dev             - Start local development"
-	@echo "  make dev BUILD=1     - Rebuild containers (keeps database)"
+	@echo "  make dev             - Start dev (Backend in Docker, Frontend local)"
+	@echo "  make dev BUILD=1     - Force rebuild backend (keeps database)"
 	@echo "  make dev-rebuild     - Rebuild from scratch (keeps database)"
 	@echo "  make dev-clean       - Clean rebuild (deletes database!)"
 	@echo "  make build           - Build backend & frontend locally"
@@ -171,32 +171,36 @@ ssh:
 
 dev:
 	@echo "💻 Starting local development..."
+	@echo "   Backend + DBs: Docker"
+	@echo "   Frontend: Local (no Docker caching issues!)"
+	@echo ""
 ifdef BUILD
-	@echo "🔨 Forcing rebuild (keeping database)..."
+	@echo "🔨 Forcing rebuild..."
 	@docker-compose down
-	@docker-compose build --no-cache
-	@docker-compose up -d --force-recreate
+	@docker-compose build --no-cache backend
+	@docker-compose up -d postgres redis backend
 else
-	@docker-compose up -d
+	@docker-compose stop frontend 2>/dev/null || true
+	@docker-compose up -d postgres redis backend
 endif
-	@echo "✅ Services started"
+	@echo "✅ Docker services started"
 	@echo ""
-	@echo "Frontend: http://localhost:3000"
-	@echo "Backend:  http://localhost:8080"
-	@echo "API Docs: http://localhost:8080/api/docs/index.html"
+	@echo "🚀 Starting frontend locally..."
+	@echo "   Press Ctrl+C to stop"
 	@echo ""
-	@echo "💡 Tip: Use 'make dev BUILD=1' to force rebuild"
+	@cd frontend && npm run dev
 
 dev-rebuild:
 	@echo "🔨 Rebuilding everything from scratch (keeping database)..."
 	@docker-compose down
-	@docker-compose build --no-cache
-	@docker-compose up -d --force-recreate
-	@echo "✅ Services rebuilt and started"
+	@docker-compose build --no-cache backend
+	@docker-compose up -d postgres redis backend
+	@echo "✅ Docker services rebuilt and started"
 	@echo ""
-	@echo "Frontend: http://localhost:3000"
-	@echo "Backend:  http://localhost:8080"
-	@echo "API Docs: http://localhost:8080/api/docs/index.html"
+	@echo "🚀 Starting frontend locally..."
+	@echo "   Press Ctrl+C to stop"
+	@echo ""
+	@cd frontend && npm run dev
 
 dev-clean:
 	@echo "🧹 Cleaning EVERYTHING including database..."
@@ -204,13 +208,14 @@ dev-clean:
 	@read confirmation
 	@docker-compose down -v
 	@docker volume prune -f
-	@docker-compose build --no-cache
-	@docker-compose up -d --force-recreate
+	@docker-compose build --no-cache backend
+	@docker-compose up -d postgres redis backend
 	@echo "✅ Everything rebuilt from scratch"
 	@echo ""
-	@echo "Frontend: http://localhost:3000"
-	@echo "Backend:  http://localhost:8080"
-	@echo "API Docs: http://localhost:8080/api/docs/index.html"
+	@echo "🚀 Starting frontend locally..."
+	@echo "   Press Ctrl+C to stop"
+	@echo ""
+	@cd frontend && npm run dev
 
 build:
 	@echo "🔨 Building backend..."

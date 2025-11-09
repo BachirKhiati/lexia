@@ -4,11 +4,13 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
 	"github.com/BachirKhiati/lexia/internal/database"
 	"github.com/BachirKhiati/lexia/internal/middleware"
+	"github.com/BachirKhiati/lexia/internal/services/auth"
 )
 
 type ExportHandler struct {
@@ -71,7 +73,7 @@ type ProgressExport struct {
 // @Failure 401 {object} map[string]string "Unauthorized"
 // @Router /export/json [get]
 func (h *ExportHandler) ExportJSON(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -99,7 +101,7 @@ func (h *ExportHandler) ExportJSON(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} map[string]string "Unauthorized"
 // @Router /export/csv [get]
 func (h *ExportHandler) ExportCSV(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -154,7 +156,7 @@ func (h *ExportHandler) ExportCSV(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} map[string]string "Unauthorized"
 // @Router /import/csv [post]
 func (h *ExportHandler) ImportCSV(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -260,7 +262,7 @@ func (h *ExportHandler) ImportCSV(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} map[string]string "Unauthorized"
 // @Router /import/json [post]
 func (h *ExportHandler) ImportJSON(w http.ResponseWriter, r *http.Request) {
-	claims, ok := middleware.GetUserFromContext(r)
+	claims, ok := r.Context().Value("user").(*auth.Claims)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return

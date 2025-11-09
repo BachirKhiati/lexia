@@ -10,7 +10,7 @@ interface OnboardingContextType {
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(undefined);
 
-const ONBOARDING_STORAGE_KEY = 'synapse_onboarding_completed';
+const ONBOARDING_STORAGE_KEY = 'lexia_onboarding_completed';
 
 export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
   const [showOnboarding, setShowOnboarding] = useState(false);

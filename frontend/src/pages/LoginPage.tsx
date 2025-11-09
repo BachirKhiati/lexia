@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 import ErrorAlert from '../components/ErrorAlert';
 import { getAuthErrorMessage, parseApiError } from '../utils/errorMessages';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,6 +25,7 @@ const LoginPage = () => {
       await login(email, password);
       // Small delay to ensure localStorage is synced before navigation
       await new Promise(resolve => setTimeout(resolve, 100));
+      toast.success('Welcome back!', 'You\'ve successfully logged in.');
       navigate('/');
     } catch (err: any) {
       const errorMessage = getAuthErrorMessage(err);
@@ -31,6 +34,7 @@ const LoginPage = () => {
       if (apiError.details && apiError.details !== errorMessage) {
         setErrorDetails(apiError.details);
       }
+      toast.error('Login Failed', errorMessage);
     } finally {
       setLoading(false);
     }

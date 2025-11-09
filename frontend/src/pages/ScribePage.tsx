@@ -2,11 +2,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserQuests, generateQuest } from '../services/api';
 import QuestCard from '../components/Scribe/QuestCard';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 
 const ScribePage = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const userId = user?.id || 1;
+  const toast = useToast();
 
   const { data: quests, isLoading } = useQuery({
     queryKey: ['quests', userId],
@@ -17,6 +19,10 @@ const ScribePage = () => {
     mutationFn: () => generateQuest(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quests', userId] });
+      toast.success('Quest Generated!', 'A new quest has been created for you. Let\'s master some words!');
+    },
+    onError: () => {
+      toast.error('Failed to Generate Quest', 'Please try again in a moment.');
     },
   });
 
@@ -25,6 +31,7 @@ const ScribePage = () => {
 
   const handleQuestComplete = () => {
     queryClient.invalidateQueries({ queryKey: ['quests', userId] });
+    toast.success('Quest Completed! 🎉', 'Amazing work! You\'ve mastered new words.');
   };
 
   return (

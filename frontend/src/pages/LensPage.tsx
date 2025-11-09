@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import HoverableText from '../components/Analyzer/HoverableText';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 import { importArticle } from '../services/api';
 
 const LensPage = () => {
   const { user } = useAuth();
   const userId = user?.id || 1;
   const language = user?.language || 'finnish';
+  const toast = useToast();
   const [url, setUrl] = useState('');
   const [article, setArticle] = useState<{ title: string; content: string } | null>(null);
   const [loading, setLoading] = useState(false);
@@ -24,8 +26,11 @@ const LensPage = () => {
         content: importedArticle.content,
       });
       setUrl(''); // Clear URL input after successful import
+      toast.success('Article Imported!', 'Click on any word to analyze it and add it to your vocabulary.');
     } catch (err: any) {
-      setError(err.response?.data || 'Failed to import article. Please check the URL and try again.');
+      const errorMsg = err.response?.data || 'Failed to import article. Please check the URL and try again.';
+      setError(errorMsg);
+      toast.error('Import Failed', errorMsg);
     } finally {
       setLoading(false);
     }

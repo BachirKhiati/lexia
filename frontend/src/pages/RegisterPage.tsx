@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 import ErrorAlert from '../components/ErrorAlert';
 import { getAuthErrorMessage, parseApiError, getValidationMessage } from '../utils/errorMessages';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +27,7 @@ const RegisterPage = () => {
     if (passwordValidation) {
       setError('Password requirements not met');
       setErrorDetails(passwordValidation);
+      toast.warning('Password requirements not met', passwordValidation);
       return;
     }
 
@@ -32,6 +35,7 @@ const RegisterPage = () => {
     if (usernameValidation) {
       setError('Invalid username');
       setErrorDetails(usernameValidation);
+      toast.warning('Invalid username', usernameValidation);
       return;
     }
 
@@ -41,6 +45,7 @@ const RegisterPage = () => {
       await register(email, username, password, language);
       // Small delay to ensure localStorage is synced before navigation
       await new Promise(resolve => setTimeout(resolve, 100));
+      toast.success('Welcome to Lexia! 🎉', 'Your account has been created successfully.');
       navigate('/');
     } catch (err: any) {
       const errorMessage = getAuthErrorMessage(err);
@@ -49,6 +54,7 @@ const RegisterPage = () => {
       if (apiError.details && apiError.details !== errorMessage) {
         setErrorDetails(apiError.details);
       }
+      toast.error('Registration Failed', errorMessage);
     } finally {
       setLoading(false);
     }

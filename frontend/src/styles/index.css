@@ -7,10 +7,16 @@
     @apply bg-lexia-background text-lexia-text font-sans antialiased;
     /* Smooth scrolling for elegant UX */
     scroll-behavior: smooth;
+    /* Smooth theme transitions */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    @apply bg-lexia-dark-background text-lexia-dark-text;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-lexia-text;
+    @apply font-bold text-lexia-text dark:text-lexia-dark-text;
   }
 
   /* Custom scrollbar styling */
@@ -20,7 +26,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-lexia-surface;
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -35,7 +41,7 @@
 @layer components {
   /* Card Components */
   .card {
-    @apply bg-lexia-surface rounded-2xl p-6 shadow-elegant border border-lexia-border transition-all duration-300;
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface rounded-2xl p-6 shadow-elegant border border-lexia-border dark:border-lexia-dark-border transition-all duration-300;
   }
 
   .card:hover {
@@ -43,7 +49,7 @@
   }
 
   .card-flat {
-    @apply bg-lexia-surface rounded-2xl p-6 border border-lexia-border;
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface rounded-2xl p-6 border border-lexia-border dark:border-lexia-dark-border;
   }
 
   /* Button Components - Bright & Elegant */
@@ -78,26 +84,26 @@
 
   /* Input Components */
   .input {
-    @apply bg-lexia-surface border-2 border-lexia-border
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface border-2 border-lexia-border dark:border-lexia-dark-border
            focus:border-lexia-primary focus:ring-2 focus:ring-lexia-primary/20
            rounded-xl px-4 py-3 w-full outline-none
-           transition-all duration-200 text-lexia-text
-           placeholder:text-lexia-text-tertiary;
+           transition-all duration-200 text-lexia-text dark:text-lexia-dark-text
+           placeholder:text-lexia-text-tertiary dark:placeholder:text-lexia-dark-text-tertiary;
   }
 
   .textarea {
-    @apply bg-lexia-surface border-2 border-lexia-border
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface border-2 border-lexia-border dark:border-lexia-dark-border
            focus:border-lexia-primary focus:ring-2 focus:ring-lexia-primary/20
            rounded-xl px-4 py-3 w-full outline-none resize-none
-           transition-all duration-200 text-lexia-text
-           placeholder:text-lexia-text-tertiary;
+           transition-all duration-200 text-lexia-text dark:text-lexia-dark-text
+           placeholder:text-lexia-text-tertiary dark:placeholder:text-lexia-dark-text-tertiary;
   }
 
   .select {
-    @apply bg-lexia-surface border-2 border-lexia-border
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface border-2 border-lexia-border dark:border-lexia-dark-border
            focus:border-lexia-primary focus:ring-2 focus:ring-lexia-primary/20
            rounded-xl px-4 py-3 w-full outline-none
-           transition-all duration-200 text-lexia-text cursor-pointer;
+           transition-all duration-200 text-lexia-text dark:text-lexia-dark-text cursor-pointer;
   }
 
   /* Badge Components */

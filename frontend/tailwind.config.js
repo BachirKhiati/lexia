@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
       colors: {
@@ -37,17 +38,28 @@ export default {
           learning: '#FFB347',      // In progress
           mastered: '#10D98E',      // Complete
 
-          // Surfaces
+          // Surfaces - Light theme
           background: '#FAFBFF',
           surface: '#FFFFFF',
           'surface-hover': '#F5F7FF',
           border: '#E5E7EB',
 
-          // Text
+          // Text - Light theme
           text: '#1F2937',
           'text-secondary': '#6B7280',
           'text-tertiary': '#9CA3AF',
           'text-inverse': '#FFFFFF',
+
+          // Dark theme colors
+          dark: {
+            background: '#0F172A',      // Slate 900
+            surface: '#1E293B',         // Slate 800
+            'surface-hover': '#334155', // Slate 700
+            border: '#475569',          // Slate 600
+            text: '#F1F5F9',           // Slate 100
+            'text-secondary': '#CBD5E1', // Slate 300
+            'text-tertiary': '#94A3B8',  // Slate 400
+          },
         },
         // Keep legacy synapse colors for gradual migration
         synapse: {

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserProgress, UserProgress } from '../services/api';
 import { Menu, X } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 interface LayoutProps {
   children: ReactNode;
@@ -54,17 +55,17 @@ const Layout = ({ children }: LayoutProps) => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex bg-lexia-background">
+    <div className="min-h-screen flex bg-lexia-background dark:bg-lexia-dark-background transition-colors duration-300">
       {/* Mobile Menu Toggle Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-lexia-surface rounded-xl shadow-glow-sm border border-lexia-border hover:bg-lexia-surface-hover transition-all"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-lexia-surface dark:bg-lexia-dark-surface rounded-xl shadow-glow-sm border border-lexia-border dark:border-lexia-dark-border hover:bg-lexia-surface-hover dark:hover:bg-lexia-dark-surface-hover transition-all"
         aria-label="Toggle menu"
       >
         {isMobileMenuOpen ? (
-          <X className="w-6 h-6 text-lexia-text" />
+          <X className="w-6 h-6 text-lexia-text dark:text-lexia-dark-text" />
         ) : (
-          <Menu className="w-6 h-6 text-lexia-text" />
+          <Menu className="w-6 h-6 text-lexia-text dark:text-lexia-dark-text" />
         )}
       </button>
 
@@ -79,12 +80,12 @@ const Layout = ({ children }: LayoutProps) => {
       {/* Sidebar - Bright & Elegant */}
       <aside className={`
         fixed lg:static inset-y-0 left-0 z-40
-        w-72 bg-lexia-surface border-r border-lexia-border p-6 shadow-lg
-        transform transition-transform duration-300 ease-in-out
+        w-72 bg-lexia-surface dark:bg-lexia-dark-surface border-r border-lexia-border dark:border-lexia-dark-border p-6 shadow-lg
+        transform transition-all duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Logo Section */}
-        <div className="mb-8 flex items-center gap-3 pb-6 border-b border-lexia-border">
+        <div className="mb-8 flex items-center gap-3 pb-6 border-b border-lexia-border dark:border-lexia-dark-border">
           <div className="relative">
             <img
               src="/icons/icon-72x72.svg"
@@ -110,7 +111,7 @@ const Layout = ({ children }: LayoutProps) => {
               className={`group flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden ${
                 location.pathname === item.path
                   ? 'text-lexia-text-inverse shadow-glow-md'
-                  : 'text-lexia-text hover:bg-lexia-surface-hover'
+                  : 'text-lexia-text dark:text-lexia-dark-text hover:bg-lexia-surface-hover dark:hover:bg-lexia-dark-surface-hover'
               }`}
             >
               {/* Gradient background for active item */}
@@ -132,26 +133,26 @@ const Layout = ({ children }: LayoutProps) => {
         </nav>
 
         {/* Learning Stats - Colorful Cards */}
-        <div className="mt-8 p-5 bg-gradient-to-br from-lexia-surface to-lexia-surface-hover rounded-2xl border border-lexia-border shadow-md">
-          <h3 className="text-sm font-bold text-lexia-text mb-4 flex items-center gap-2">
+        <div className="mt-8 p-5 bg-gradient-to-br from-lexia-surface to-lexia-surface-hover dark:from-lexia-dark-surface dark:to-lexia-dark-surface-hover rounded-2xl border border-lexia-border dark:border-lexia-dark-border shadow-md">
+          <h3 className="text-sm font-bold text-lexia-text dark:text-lexia-dark-text mb-4 flex items-center gap-2">
             <span className="text-lg">📈</span>
             Your Progress
           </h3>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-lexia-text-secondary">Words Mastered</span>
+              <span className="text-sm text-lexia-text-secondary dark:text-lexia-dark-text-secondary">Words Mastered</span>
               <span className="text-lg font-bold bg-gradient-success bg-clip-text text-transparent">
                 {progress ? progress.words_mastered : '...'}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-lexia-text-secondary">Quests Completed</span>
+              <span className="text-sm text-lexia-text-secondary dark:text-lexia-dark-text-secondary">Quests Completed</span>
               <span className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
                 {progress ? progress.quests_completed : '...'}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-lexia-text-secondary">Streak</span>
+              <span className="text-sm text-lexia-text-secondary dark:text-lexia-dark-text-secondary">Streak</span>
               <span className="text-lg font-bold text-lexia-warning flex items-center gap-1">
                 {progress ? progress.streak_days : '...'} 🔥
               </span>
@@ -171,10 +172,15 @@ const Layout = ({ children }: LayoutProps) => {
           </p>
         </div>
 
+        {/* Theme Toggle */}
+        <div className="mt-4">
+          <ThemeToggle />
+        </div>
+
         {/* User Info & Logout - Clean Card */}
-        <div className="mt-4 p-4 bg-lexia-surface-hover rounded-2xl border border-lexia-border">
-          <p className="text-xs text-lexia-text-secondary mb-1 font-medium">Logged in as</p>
-          <p className="text-base text-lexia-text font-bold mb-3">{user?.username}</p>
+        <div className="mt-4 p-4 bg-lexia-surface-hover dark:bg-lexia-dark-surface-hover rounded-2xl border border-lexia-border dark:border-lexia-dark-border">
+          <p className="text-xs text-lexia-text-secondary dark:text-lexia-dark-text-secondary mb-1 font-medium">Logged in as</p>
+          <p className="text-base text-lexia-text dark:text-lexia-dark-text font-bold mb-3">{user?.username}</p>
           <button
             onClick={() => {
               logout();
@@ -189,7 +195,7 @@ const Layout = ({ children }: LayoutProps) => {
       </aside>
 
       {/* Main Content - Light & Airy */}
-      <main className="flex-1 overflow-y-auto bg-lexia-background w-full lg:w-auto">
+      <main className="flex-1 overflow-y-auto bg-lexia-background dark:bg-lexia-dark-background w-full lg:w-auto transition-colors duration-300">
         <div className="lg:hidden h-16"></div> {/* Spacer for mobile menu button */}
         {children}
       </main>

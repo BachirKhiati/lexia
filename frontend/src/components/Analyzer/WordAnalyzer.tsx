@@ -13,6 +13,7 @@ interface WordAnalyzerProps {
 const WordAnalyzer = ({ word, language, position, onClose, userId }: WordAnalyzerProps) => {
   const [analysis, setAnalysis] = useState<AnalyzerResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [addingToSynapse, setAddingToSynapse] = useState(false);
 
   useEffect(() => {
@@ -20,8 +21,10 @@ const WordAnalyzer = ({ word, language, position, onClose, userId }: WordAnalyze
       try {
         const data = await analyzeWord(word, language);
         setAnalysis(data);
+        setError(null);
       } catch (error) {
         console.error('Failed to analyze word:', error);
+        setError('Unable to find definition for this word. Please try another word or check back later.');
       } finally {
         setLoading(false);
       }
@@ -87,6 +90,14 @@ const WordAnalyzer = ({ word, language, position, onClose, userId }: WordAnalyze
           <div className="flex items-center justify-center py-8">
             <div className="loading-spinner" />
           </div>
+        ) : error ? (
+          <div className="text-center py-8">
+            <div className="text-6xl mb-4">📚</div>
+            <p className="text-gray-400 mb-2">{error}</p>
+            <p className="text-sm text-gray-500">
+              Word: <span className="font-mono text-white">{word}</span>
+            </p>
+          </div>
         ) : analysis ? (
           <>
             {/* Word header */}
@@ -103,28 +114,36 @@ const WordAnalyzer = ({ word, language, position, onClose, userId }: WordAnalyze
               </div>
               <p className="text-sm text-gray-400">
                 <span className="font-semibold">Root:</span> {analysis.lemma}
-                {' • '}
-                <span className="italic">{analysis.part_of_speech}</span>
+                {analysis.part_of_speech && (
+                  <>
+                    {' • '}
+                    <span className="italic">{analysis.part_of_speech}</span>
+                  </>
+                )}
               </p>
             </div>
 
             {/* Definition */}
-            <div className="mb-4">
-              <h4 className="text-sm font-semibold text-gray-400 mb-1">Definition</h4>
-              <p className="text-white">{analysis.definition}</p>
-            </div>
+            {analysis.definition && (
+              <div className="mb-4">
+                <h4 className="text-sm font-semibold text-gray-400 mb-1">Definition</h4>
+                <p className="text-white">{analysis.definition}</p>
+              </div>
+            )}
 
             {/* Examples */}
-            <div className="mb-4">
-              <h4 className="text-sm font-semibold text-gray-400 mb-2">How to Use</h4>
-              <ul className="space-y-2">
-                {analysis.examples.map((example, idx) => (
-                  <li key={idx} className="text-sm text-gray-300 pl-4 border-l-2 border-synapse-primary">
-                    "{example}"
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {analysis.examples && analysis.examples.length > 0 && (
+              <div className="mb-4">
+                <h4 className="text-sm font-semibold text-gray-400 mb-2">How to Use</h4>
+                <ul className="space-y-2">
+                  {analysis.examples.map((example, idx) => (
+                    <li key={idx} className="text-sm text-gray-300 pl-4 border-l-2 border-synapse-primary">
+                      "{example}"
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Conjugations */}
             {analysis.conjugations && analysis.conjugations.length > 0 && (
@@ -154,9 +173,7 @@ const WordAnalyzer = ({ word, language, position, onClose, userId }: WordAnalyze
               {analysis.in_synapse ? '✓ In Your Synapse' : addingToSynapse ? 'Adding...' : '+ Add to Synapse'}
             </button>
           </>
-        ) : (
-          <p className="text-gray-400 text-center py-8">Failed to analyze word</p>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -9,35 +9,40 @@ import (
 	"github.com/BachirKhiati/lexia/internal/services/wiktionary"
 )
 
-// Service handles language-specific operations
-type Service struct {
-	conjugator       *VerbConjugator
-	wiktionaryService *wiktionary.Service
+// AIService is the interface for AI-based word definitions
+type AIService interface {
+	GetWordDefinition(ctx context.Context, word string, language string) (definition string, partOfSpeech string, examples []string, err error)
 }
 
-func NewService(wiktionaryService *wiktionary.Service) *Service {
+// Service handles language-specific operations
+type Service struct {
+	conjugator        *VerbConjugator
+	wiktionaryService *wiktionary.Service
+	aiService         AIService
+}
+
+func NewService(wiktionaryService *wiktionary.Service, aiService AIService) *Service {
 	return &Service{
-		conjugator:       NewVerbConjugator(),
+		conjugator:        NewVerbConjugator(),
 		wiktionaryService: wiktionaryService,
+		aiService:         aiService,
 	}
 }
 
 // AnalyzeWord performs deep analysis of a word
 func (s *Service) AnalyzeWord(ctx context.Context, word string, language string) (*models.AnalyzerResponse, error) {
-	// Initialize response with defaults
+	// Initialize response
 	response := &models.AnalyzerResponse{
-		Word:         word,
-		Lemma:        word, // TODO: Proper lemmatization
-		Definition:   fmt.Sprintf("Definition of '%s'", word),
-		PartOfSpeech: "unknown",
-		Examples: []string{
-			fmt.Sprintf("Example sentence with %s", word),
-		},
+		Word:      word,
+		Lemma:     word, // TODO: Proper lemmatization
 		AudioURL:  "",
 		InSynapse: false,
 	}
 
-	// Try to fetch real definition from Wiktionary
+	// Track if we successfully got a definition
+	gotDefinition := false
+
+	// Try to fetch real definition from Wiktionary first
 	if s.wiktionaryService != nil {
 		definition, partOfSpeech, examples, err := s.wiktionaryService.ExtractBestDefinition(word, language)
 		if err == nil && definition != "" {
@@ -47,11 +52,34 @@ func (s *Service) AnalyzeWord(ctx context.Context, word string, language string)
 			if len(examples) > 0 {
 				response.Examples = examples
 			}
+			gotDefinition = true
 			log.Printf("✅ Fetched definition from Wiktionary for '%s': %s", word, definition)
 		} else {
-			// Fallback to placeholder if Wiktionary fails
-			log.Printf("⚠️  Wiktionary lookup failed for '%s': %v (using fallback)", word, err)
+			// Wiktionary failed - log but continue to AI fallback
+			log.Printf("⚠️  Wiktionary lookup failed for '%s': %v (trying AI fallback)", word, err)
 		}
+	}
+
+	// If Wiktionary failed, try AI as fallback
+	if !gotDefinition && s.aiService != nil {
+		definition, partOfSpeech, examples, err := s.aiService.GetWordDefinition(ctx, word, language)
+		if err == nil && definition != "" {
+			response.Definition = definition
+			response.PartOfSpeech = partOfSpeech
+			if len(examples) > 0 {
+				response.Examples = examples
+			}
+			gotDefinition = true
+			log.Printf("✅ Fetched definition from AI for '%s': %s", word, definition)
+		} else {
+			// AI also failed
+			log.Printf("⚠️  AI lookup also failed for '%s': %v", word, err)
+		}
+	}
+
+	// If both Wiktionary and AI failed, return error instead of placeholder data
+	if !gotDefinition {
+		return nil, fmt.Errorf("unable to find definition for '%s' - both Wiktionary and AI sources failed", word)
 	}
 
 	// If it looks like a Finnish verb, conjugate it

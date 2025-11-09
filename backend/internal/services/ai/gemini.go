@@ -194,6 +194,44 @@ Return valid JSON:
 	return result, nil
 }
 
+func (g *GeminiProvider) GetWordDefinition(ctx context.Context, word string, language string) (definition string, partOfSpeech string, examples []string, err error) {
+	prompt := fmt.Sprintf(`You are a dictionary for %s language. Provide a definition for the word "%s".
+
+Return ONLY valid JSON with no markdown formatting:
+{
+  "definition": "Clear, concise definition in English",
+  "part_of_speech": "noun/verb/adjective/etc",
+  "examples": ["Example sentence 1", "Example sentence 2"]
+}
+
+Guidelines:
+- definition: A single clear sentence explaining what the word means
+- part_of_speech: The word's grammatical category (noun, verb, adjective, adverb, etc.)
+- examples: 2-3 realistic example sentences showing how to use the word in context`, language, word)
+
+	response, err := g.callGemini(ctx, prompt)
+	if err != nil {
+		return "", "", nil, fmt.Errorf("failed to get AI definition: %w", err)
+	}
+
+	var result struct {
+		Definition   string   `json:"definition"`
+		PartOfSpeech string   `json:"part_of_speech"`
+		Examples     []string `json:"examples"`
+	}
+
+	if err := json.Unmarshal([]byte(response), &result); err != nil {
+		return "", "", nil, fmt.Errorf("failed to parse AI definition response: %w", err)
+	}
+
+	// Validate we got meaningful data
+	if result.Definition == "" {
+		return "", "", nil, fmt.Errorf("AI returned empty definition")
+	}
+
+	return result.Definition, result.PartOfSpeech, result.Examples, nil
+}
+
 func (g *GeminiProvider) Close() error {
 	// New SDK doesn't require explicit close
 	return nil

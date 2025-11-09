@@ -12,6 +12,7 @@ type AIProvider interface {
 	GenerateSocraticFeedback(ctx context.Context, userText string, language string) (string, error)
 	Translate(ctx context.Context, text string, fromLang string, toLang string) (string, error)
 	AnalyzeGrammar(ctx context.Context, text string, language string) (map[string]interface{}, error)
+	GetWordDefinition(ctx context.Context, word string, language string) (definition string, partOfSpeech string, examples []string, err error)
 }
 
 // Service manages multiple AI providers
@@ -122,4 +123,17 @@ func (s *Service) AnalyzeGrammar(ctx context.Context, text string, language stri
 		}
 	}
 	return provider.AnalyzeGrammar(ctx, text, language)
+}
+
+// GetWordDefinition uses Gemini (fast and good for dictionary lookups)
+func (s *Service) GetWordDefinition(ctx context.Context, word string, language string) (definition string, partOfSpeech string, examples []string, err error) {
+	provider, err := s.GetProvider("gemini")
+	if err != nil {
+		// Fallback to Claude
+		provider, err = s.GetProvider("claude")
+		if err != nil {
+			return "", "", nil, err
+		}
+	}
+	return provider.GetWordDefinition(ctx, word, language)
 }

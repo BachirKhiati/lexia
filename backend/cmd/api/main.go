@@ -104,8 +104,8 @@ func main() {
 	// Initialize wiktionary service
 	wiktionaryService := wiktionary.NewService()
 
-	// Initialize language service
-	langService := language.NewService(wiktionaryService)
+	// Initialize language service (with AI fallback)
+	langService := language.NewService(wiktionaryService, aiService)
 
 	// Initialize scraper service
 	scraperService := scraper.NewService()

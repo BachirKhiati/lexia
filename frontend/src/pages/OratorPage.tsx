@@ -26,7 +26,7 @@ const OratorPage = () => {
           <h1 className="text-4xl font-bold mb-2">
             🗣️ <span className="text-synapse-primary">The Orator</span>
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-lexia-text-secondary">
             Your speaking coach. Practice pronunciation and have real conversations!
           </p>
         </div>
@@ -37,8 +37,8 @@ const OratorPage = () => {
             onClick={() => setMode('pronunciation')}
             className={`flex-1 py-4 rounded-lg font-semibold transition-all duration-200 ${
               mode === 'pronunciation'
-                ? 'bg-synapse-primary text-white shadow-lg'
-                : 'bg-synapse-surface text-gray-400 hover:bg-synapse-background'
+                ? 'bg-synapse-primary text-lexia-text shadow-lg'
+                : 'bg-lexia-surface text-lexia-text-secondary hover:bg-lexia-background'
             }`}
           >
             🎤 Pronunciation Practice
@@ -47,8 +47,8 @@ const OratorPage = () => {
             onClick={() => setMode('conversation')}
             className={`flex-1 py-4 rounded-lg font-semibold transition-all duration-200 ${
               mode === 'conversation'
-                ? 'bg-synapse-primary text-white shadow-lg'
-                : 'bg-synapse-surface text-gray-400 hover:bg-synapse-background'
+                ? 'bg-synapse-primary text-lexia-text shadow-lg'
+                : 'bg-lexia-surface text-lexia-text-secondary hover:bg-lexia-background'
             }`}
           >
             💬 Conversation Mode
@@ -68,8 +68,8 @@ const OratorPage = () => {
                     onClick={() => setPracticeWord(word)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                       practiceWord === word
-                        ? 'bg-synapse-primary text-white'
-                        : 'bg-synapse-background text-gray-300 hover:bg-synapse-surface'
+                        ? 'bg-synapse-primary text-lexia-text'
+                        : 'bg-lexia-background text-lexia-text hover:bg-lexia-surface'
                     }`}
                   >
                     {word}
@@ -88,7 +88,7 @@ const OratorPage = () => {
         {/* Info Card */}
         <div className="mt-6 p-4 bg-synapse-primary/10 rounded-lg border border-synapse-primary">
           <h4 className="font-semibold mb-2">💡 Tips for Better Results:</h4>
-          <ul className="text-sm text-gray-300 space-y-1">
+          <ul className="text-sm text-lexia-text space-y-1">
             <li>• Speak clearly and at a natural pace</li>
             <li>• Use a good microphone in a quiet environment</li>
             <li>• Allow microphone access when prompted</li>

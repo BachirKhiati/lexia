@@ -154,7 +154,7 @@ export default function ExportImportPage() {
           {/* Export JSON */}
           <button
             onClick={handleExportJSON}
-            className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors group"
+            className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors group"
           >
             <FileJson className="w-8 h-8 text-synapse-accent flex-shrink-0" />
             <div className="text-left">
@@ -170,7 +170,7 @@ export default function ExportImportPage() {
           {/* Export CSV */}
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors group"
+            className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors group"
           >
             <FileSpreadsheet className="w-8 h-8 text-synapse-accent flex-shrink-0" />
             <div className="text-left">
@@ -197,7 +197,7 @@ export default function ExportImportPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Import CSV */}
-          <label className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors cursor-pointer group">
+          <label className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors cursor-pointer group">
             <FileSpreadsheet className="w-8 h-8 text-synapse-accent flex-shrink-0" />
             <div className="text-left flex-1">
               <div className="font-semibold text-synapse-text group-hover:text-synapse-accent transition-colors">
@@ -217,7 +217,7 @@ export default function ExportImportPage() {
           </label>
 
           {/* Import JSON */}
-          <label className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors cursor-pointer group">
+          <label className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors cursor-pointer group">
             <FileJson className="w-8 h-8 text-synapse-accent flex-shrink-0" />
             <div className="text-left flex-1">
               <div className="font-semibold text-synapse-text group-hover:text-synapse-accent transition-colors">
@@ -238,7 +238,7 @@ export default function ExportImportPage() {
         </div>
 
         {/* CSV Format Guide */}
-        <div className="mt-6 bg-synapse-background border border-synapse-border rounded-lg p-4">
+        <div className="mt-6 bg-lexia-background border border-synapse-border rounded-lg p-4">
           <h3 className="font-semibold mb-2 text-synapse-text">CSV Format</h3>
           <p className="text-sm text-synapse-text-secondary mb-2">
             Your CSV file should have the following columns (header row required):
@@ -319,7 +319,7 @@ export default function ExportImportPage() {
       )}
 
       {/* Info Section */}
-      <div className="bg-synapse-background border border-synapse-border rounded-lg p-6">
+      <div className="bg-lexia-background border border-synapse-border rounded-lg p-6">
         <h3 className="font-semibold mb-3 text-synapse-text">Data Privacy</h3>
         <ul className="space-y-2 text-sm text-synapse-text-secondary">
           <li className="flex items-start gap-2">

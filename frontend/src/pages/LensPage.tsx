@@ -39,7 +39,7 @@ const LensPage = () => {
           <h1 className="text-4xl font-bold mb-2">
             🌍 <span className="text-synapse-primary">The Lens</span>
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-lexia-text-secondary">
             Import real-world content and turn it into an interactive learning experience.
           </p>
         </div>
@@ -68,7 +68,7 @@ const LensPage = () => {
             </button>
           </div>
 
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-lexia-text-secondary">
             ✨ Paste any article URL and we'll extract the main content for you!
           </p>
         </div>
@@ -79,19 +79,19 @@ const LensPage = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h2 className="text-2xl font-bold">{article.title}</h2>
-                <p className="text-sm text-gray-400 mt-1">Click any word to analyze it!</p>
+                <p className="text-sm text-lexia-text-secondary mt-1">Click any word to analyze it!</p>
               </div>
-              <button onClick={() => setArticle(null)} className="text-gray-400 hover:text-white">
+              <button onClick={() => setArticle(null)} className="text-lexia-text-secondary hover:text-lexia-text">
                 Clear
               </button>
             </div>
 
-            <div className="bg-synapse-background rounded-lg p-6">
-              <HoverableText text={article.content} language={language} userId={userId} className="text-gray-300 leading-relaxed" />
+            <div className="bg-lexia-background rounded-lg p-6">
+              <HoverableText text={article.content} language={language} userId={userId} className="text-lexia-text leading-relaxed" />
             </div>
 
             <div className="mt-4 p-3 bg-synapse-primary/20 rounded-lg border border-synapse-primary">
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-lexia-text">
                 💡 <strong>Pro tip:</strong> Click on any word to analyze it. Add unknown words to your knowledge graph to
                 create quests for them!
               </p>
@@ -104,7 +104,7 @@ const LensPage = () => {
           <div className="card text-center">
             <div className="text-6xl mb-4">🌍</div>
             <h2 className="text-2xl font-bold mb-2">No Content Imported Yet</h2>
-            <p className="text-gray-400">
+            <p className="text-lexia-text-secondary">
               Paste a URL above to import content and make it interactive!
             </p>
           </div>

@@ -199,7 +199,7 @@ export default function AnalyticsPage() {
                         {item.count}
                       </span>
                     </div>
-                    <div className="h-2 bg-synapse-background rounded-full overflow-hidden">
+                    <div className="h-2 bg-lexia-background rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-synapse-accent to-green-600"
                         style={{
@@ -245,7 +245,7 @@ export default function AnalyticsPage() {
             {challengingWords.map((word) => (
               <div
                 key={word.word}
-                className="bg-synapse-background rounded-lg p-4 border border-synapse-border"
+                className="bg-lexia-background rounded-lg p-4 border border-synapse-border"
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
@@ -328,7 +328,7 @@ function ProgressBar({ label, value, max, color }: ProgressBarProps) {
           {value} ({percentage.toFixed(0)}%)
         </span>
       </div>
-      <div className="h-3 bg-synapse-background rounded-full overflow-hidden">
+      <div className="h-3 bg-lexia-background rounded-full overflow-hidden">
         <div
           className={`h-full ${colorClasses[color]} transition-all duration-500`}
           style={{ width: `${percentage}%` }}

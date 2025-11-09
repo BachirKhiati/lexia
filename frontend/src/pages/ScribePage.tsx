@@ -35,7 +35,7 @@ const ScribePage = () => {
           <h1 className="text-4xl font-bold mb-2">
             ✍️ <span className="text-synapse-primary">The Scribe</span>
           </h1>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-lexia-text-secondary">
             Your guided writing workbench. Complete quests to master new words.
           </p>
         </div>
@@ -47,14 +47,14 @@ const ScribePage = () => {
           </div>
         ) : activeQuest ? (
           <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-white">Current Quest</h2>
+            <h2 className="text-2xl font-bold mb-4 text-lexia-text">Current Quest</h2>
             <QuestCard quest={activeQuest} userId={userId} onComplete={handleQuestComplete} />
           </div>
         ) : (
           <div className="card mb-8 text-center">
             <div className="text-6xl mb-4">🎯</div>
             <h2 className="text-2xl font-bold mb-2">No Active Quest</h2>
-            <p className="text-gray-400 mb-6">Generate a new quest to continue your learning journey!</p>
+            <p className="text-lexia-text-secondary mb-6">Generate a new quest to continue your learning journey!</p>
             <button
               onClick={() => generateQuestMutation.mutate()}
               disabled={generateQuestMutation.isPending}
@@ -68,7 +68,7 @@ const ScribePage = () => {
         {/* Completed Quests */}
         {completedQuests.length > 0 && (
           <div>
-            <h2 className="text-2xl font-bold mb-4 text-white">
+            <h2 className="text-2xl font-bold mb-4 text-lexia-text">
               Completed Quests ({completedQuests.length})
             </h2>
             <div className="space-y-4">
@@ -76,8 +76,8 @@ const ScribePage = () => {
                 <div key={quest.id} className="card opacity-60">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-bold text-white">{quest.title}</h3>
-                      <p className="text-sm text-gray-400">
+                      <h3 className="text-lg font-bold text-lexia-text">{quest.title}</h3>
+                      <p className="text-sm text-lexia-text-secondary">
                         Completed {new Date(quest.completed_at!).toLocaleDateString()}
                       </p>
                     </div>

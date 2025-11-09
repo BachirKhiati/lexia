@@ -37,33 +37,48 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-synapse-background">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lexia-background via-lexia-surface-hover to-lexia-background">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-lexia-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-lexia-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-lexia-accent/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+      </div>
+
+      <div className="max-w-md w-full relative z-10 px-4">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-16 h-16" />
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent">Lexia</h1>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="relative">
+              <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-20 h-20 drop-shadow-2xl" />
+              <div className="absolute inset-0 bg-gradient-primary opacity-30 blur-2xl rounded-full"></div>
+            </div>
+            <h1 className="text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
+              Lexia
+            </h1>
           </div>
-          <p className="text-xl text-gray-400">Your Interactive Language Universe</p>
+          <p className="text-xl text-lexia-text-secondary font-medium">
+            Your Interactive Language Universe
+          </p>
         </div>
 
         {/* Login Card */}
         <div className="card">
-          <h2 className="text-2xl font-bold mb-6 text-white">Welcome Back</h2>
+          <h2 className="text-3xl font-bold mb-2 text-lexia-text">Welcome Back</h2>
+          <p className="text-lexia-text-secondary mb-6">Sign in to continue your learning journey</p>
 
           {error && (
             <ErrorAlert
               message={error}
               details={errorDetails}
               onDismiss={() => setError('')}
-              className="mb-4"
+              className="mb-6"
             />
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-semibold text-gray-400 mb-2">Email</label>
+              <label className="block text-sm font-bold text-lexia-text mb-2">Email Address</label>
               <input
                 type="email"
                 value={email}
@@ -75,7 +90,7 @@ const LoginPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-400 mb-2">Password</label>
+              <label className="block text-sm font-bold text-lexia-text mb-2">Password</label>
               <input
                 type="password"
                 value={password}
@@ -86,24 +101,51 @@ const LoginPage = () => {
               />
             </div>
 
-            <button type="submit" disabled={loading} className="btn-primary w-full">
-              {loading ? 'Logging in...' : 'Log In'}
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full text-lg font-bold"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="loading-spinner-sm"></div>
+                  Logging in...
+                </span>
+              ) : (
+                'Log In'
+              )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
+          <div className="mt-8 text-center">
+            <p className="text-lexia-text-secondary">
               Don't have an account?{' '}
-              <Link to="/register" className="text-synapse-primary hover:text-synapse-primary/80 font-semibold">
+              <Link
+                to="/register"
+                className="text-lexia-primary hover:text-lexia-primary-dark font-bold transition-colors"
+              >
                 Sign up
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Features */}
-        <div className="mt-8 text-center text-sm text-gray-400">
-          <p>🔒 Secure • 🌍 Multi-language • 🤖 AI-Powered</p>
+        {/* Features Preview */}
+        <div className="mt-8 p-6 bg-gradient-to-r from-lexia-primary/10 via-lexia-secondary/10 to-lexia-accent/10 rounded-2xl border border-lexia-border">
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-3xl mb-2">✍️</div>
+              <p className="text-xs font-semibold text-lexia-text">AI Quests</p>
+            </div>
+            <div>
+              <div className="text-3xl mb-2">🧠</div>
+              <p className="text-xs font-semibold text-lexia-text">Mind Map</p>
+            </div>
+            <div>
+              <div className="text-3xl mb-2">📊</div>
+              <p className="text-xs font-semibold text-lexia-text">Analytics</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

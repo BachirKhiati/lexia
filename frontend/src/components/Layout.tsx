@@ -14,13 +14,13 @@ const Layout = ({ children }: LayoutProps) => {
   const [progress, setProgress] = useState<UserProgress | null>(null);
 
   const navItems = [
-    { path: '/', label: 'Dashboard', icon: '🏠' },
-    { path: '/scribe', label: 'The Scribe', icon: '✍️' },
-    { path: '/synapse', label: 'The Synapse', icon: '🧠' },
-    { path: '/lens', label: 'The Lens', icon: '🌍' },
-    { path: '/orator', label: 'The Orator', icon: '🗣️' },
-    { path: '/analytics', label: 'Analytics', icon: '📊' },
-    { path: '/export-import', label: 'Export/Import', icon: '💾' },
+    { path: '/', label: 'Dashboard', icon: '🏠', gradient: 'from-lexia-primary to-lexia-accent' },
+    { path: '/scribe', label: 'The Scribe', icon: '✍️', gradient: 'from-lexia-accent to-lexia-secondary' },
+    { path: '/synapse', label: 'The Synapse', icon: '🧠', gradient: 'from-lexia-secondary to-lexia-info' },
+    { path: '/lens', label: 'The Lens', icon: '🌍', gradient: 'from-lexia-info to-lexia-success' },
+    { path: '/orator', label: 'The Orator', icon: '🗣️', gradient: 'from-lexia-success to-lexia-warning' },
+    { path: '/analytics', label: 'Analytics', icon: '📊', gradient: 'from-lexia-warning to-lexia-primary' },
+    { path: '/export-import', label: 'Export/Import', icon: '💾', gradient: 'from-lexia-primary to-lexia-secondary' },
   ];
 
   // Fetch user progress on mount
@@ -47,69 +47,89 @@ const Layout = ({ children }: LayoutProps) => {
   }, [user]);
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-synapse-surface border-r border-gray-800 p-6">
-        <div className="mb-8 flex items-center gap-3">
-          <img
-            src="/icons/icon-72x72.svg"
-            alt="Lexia Logo"
-            className="w-12 h-12 flex-shrink-0"
-          />
+    <div className="min-h-screen flex bg-lexia-background">
+      {/* Sidebar - Bright & Elegant */}
+      <aside className="w-72 bg-lexia-surface border-r border-lexia-border p-6 shadow-lg">
+        {/* Logo Section */}
+        <div className="mb-8 flex items-center gap-3 pb-6 border-b border-lexia-border">
+          <div className="relative">
+            <img
+              src="/icons/icon-72x72.svg"
+              alt="Lexia Logo"
+              className="w-14 h-14 flex-shrink-0 drop-shadow-lg"
+            />
+            <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-xl rounded-full"></div>
+          </div>
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
               Lexia
             </h1>
-            <p className="text-sm text-gray-400 mt-1">Interactive Language Universe</p>
+            <p className="text-xs text-lexia-text-secondary mt-1 font-medium">Interactive Language Universe</p>
           </div>
         </div>
 
-        <nav className="space-y-2">
+        {/* Navigation */}
+        <nav className="space-y-1.5">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+              className={`group flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden ${
                 location.pathname === item.path
-                  ? 'bg-synapse-primary text-white shadow-lg'
-                  : 'text-gray-400 hover:bg-synapse-background hover:text-white'
+                  ? 'text-lexia-text-inverse shadow-glow-md'
+                  : 'text-lexia-text hover:bg-lexia-surface-hover'
               }`}
             >
-              <span className="text-xl">{item.icon}</span>
-              <span className="font-medium">{item.label}</span>
+              {/* Gradient background for active item */}
+              {location.pathname === item.path && (
+                <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-100`}></div>
+              )}
+
+              <span className="text-2xl relative z-10 transform group-hover:scale-110 transition-transform duration-300">
+                {item.icon}
+              </span>
+              <span className="font-semibold relative z-10">{item.label}</span>
+
+              {/* Hover gradient effect */}
+              {location.pathname !== item.path && (
+                <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+              )}
             </Link>
           ))}
         </nav>
 
-        {/* Learning Stats */}
-        <div className="mt-8 p-4 bg-synapse-background rounded-lg">
-          <h3 className="text-sm font-semibold text-gray-400 mb-3">Your Progress</h3>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">Words Mastered</span>
-              <span className="text-synapse-solid font-bold">
+        {/* Learning Stats - Colorful Cards */}
+        <div className="mt-8 p-5 bg-gradient-to-br from-lexia-surface to-lexia-surface-hover rounded-2xl border border-lexia-border shadow-md">
+          <h3 className="text-sm font-bold text-lexia-text mb-4 flex items-center gap-2">
+            <span className="text-lg">📈</span>
+            Your Progress
+          </h3>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-lexia-text-secondary">Words Mastered</span>
+              <span className="text-lg font-bold bg-gradient-success bg-clip-text text-transparent">
                 {progress ? progress.words_mastered : '...'}
               </span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">Quests Completed</span>
-              <span className="text-synapse-primary font-bold">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-lexia-text-secondary">Quests Completed</span>
+              <span className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
                 {progress ? progress.quests_completed : '...'}
               </span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-400">Streak</span>
-              <span className="text-orange-500 font-bold">
-                {progress ? `${progress.streak_days} days` : '...'} 🔥
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-lexia-text-secondary">Streak</span>
+              <span className="text-lg font-bold text-lexia-warning flex items-center gap-1">
+                {progress ? progress.streak_days : '...'} 🔥
               </span>
             </div>
           </div>
         </div>
 
-        {/* Language Badge */}
-        <div className="mt-4 p-3 bg-gradient-to-r from-synapse-primary to-synapse-secondary rounded-lg text-center">
-          <p className="text-xs text-gray-200">Learning</p>
-          <p className="text-lg font-bold">
+        {/* Language Badge - Vibrant Gradient */}
+        <div className="mt-4 p-4 bg-gradient-rainbow rounded-2xl text-center shadow-glow-sm">
+          <p className="text-xs text-lexia-text-inverse/80 font-medium uppercase tracking-wide">Learning</p>
+          <p className="text-xl font-bold text-lexia-text-inverse mt-1">
             {user?.language === 'finnish' && '🇫🇮 Finnish'}
             {user?.language === 'english' && '🇬🇧 English'}
             {user?.language === 'spanish' && '🇪🇸 Spanish'}
@@ -118,24 +138,25 @@ const Layout = ({ children }: LayoutProps) => {
           </p>
         </div>
 
-        {/* User info & logout */}
-        <div className="mt-4 p-3 bg-synapse-background rounded-lg">
-          <p className="text-sm text-gray-400 mb-1">Logged in as</p>
-          <p className="text-white font-semibold mb-3">{user?.username}</p>
+        {/* User Info & Logout - Clean Card */}
+        <div className="mt-4 p-4 bg-lexia-surface-hover rounded-2xl border border-lexia-border">
+          <p className="text-xs text-lexia-text-secondary mb-1 font-medium">Logged in as</p>
+          <p className="text-base text-lexia-text font-bold mb-3">{user?.username}</p>
           <button
             onClick={() => {
               logout();
               navigate('/login');
             }}
-            className="text-sm text-red-400 hover:text-red-300 transition-colors"
+            className="text-sm text-red-500 hover:text-red-600 font-semibold transition-colors flex items-center gap-2 group"
           >
-            🚪 Log Out
+            <span className="transform group-hover:translate-x-1 transition-transform">🚪</span>
+            Log Out
           </button>
         </div>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 overflow-y-auto">
+      {/* Main Content - Light & Airy */}
+      <main className="flex-1 overflow-y-auto bg-lexia-background">
         {children}
       </main>
     </div>

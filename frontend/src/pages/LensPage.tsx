@@ -32,21 +32,21 @@ const LensPage = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">
-            🌍 <span className="text-synapse-primary">The Lens</span>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2">
+            🌍 <span className="text-lexia-info">The Lens</span>
           </h1>
-          <p className="text-xl text-lexia-text-secondary">
+          <p className="text-lg sm:text-xl text-lexia-text-secondary">
             Import real-world content and turn it into an interactive learning experience.
           </p>
         </div>
 
         {/* Import form */}
-        <div className="card mb-8">
-          <h2 className="text-2xl font-bold mb-4">Import Content</h2>
+        <div className="card mb-6 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Import Content</h2>
 
           {error && (
             <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-200 text-sm">
@@ -90,7 +90,7 @@ const LensPage = () => {
               <HoverableText text={article.content} language={language} userId={userId} className="text-lexia-text leading-relaxed" />
             </div>
 
-            <div className="mt-4 p-3 bg-synapse-primary/20 rounded-lg border border-synapse-primary">
+            <div className="mt-4 p-3 bg-lexia-primary/20 rounded-lg border border-lexia-primary">
               <p className="text-sm text-lexia-text">
                 💡 <strong>Pro tip:</strong> Click on any word to analyze it. Add unknown words to your knowledge graph to
                 create quests for them!

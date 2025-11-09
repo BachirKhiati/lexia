@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserProgress, UserProgress } from '../services/api';
+import { Menu, X } from 'lucide-react';
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [progress, setProgress] = useState<UserProgress | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { path: '/', label: 'Dashboard', icon: '🏠', gradient: 'from-lexia-primary to-lexia-accent' },
@@ -46,10 +48,41 @@ const Layout = ({ children }: LayoutProps) => {
     }
   }, [user]);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen flex bg-lexia-background">
+      {/* Mobile Menu Toggle Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-lexia-surface rounded-xl shadow-glow-sm border border-lexia-border hover:bg-lexia-surface-hover transition-all"
+        aria-label="Toggle menu"
+      >
+        {isMobileMenuOpen ? (
+          <X className="w-6 h-6 text-lexia-text" />
+        ) : (
+          <Menu className="w-6 h-6 text-lexia-text" />
+        )}
+      </button>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-30 backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar - Bright & Elegant */}
-      <aside className="w-72 bg-lexia-surface border-r border-lexia-border p-6 shadow-lg">
+      <aside className={`
+        fixed lg:static inset-y-0 left-0 z-40
+        w-72 bg-lexia-surface border-r border-lexia-border p-6 shadow-lg
+        transform transition-transform duration-300 ease-in-out
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
         {/* Logo Section */}
         <div className="mb-8 flex items-center gap-3 pb-6 border-b border-lexia-border">
           <div className="relative">
@@ -156,7 +189,8 @@ const Layout = ({ children }: LayoutProps) => {
       </aside>
 
       {/* Main Content - Light & Airy */}
-      <main className="flex-1 overflow-y-auto bg-lexia-background">
+      <main className="flex-1 overflow-y-auto bg-lexia-background w-full lg:w-auto">
+        <div className="lg:hidden h-16"></div> {/* Spacer for mobile menu button */}
         {children}
       </main>
     </div>

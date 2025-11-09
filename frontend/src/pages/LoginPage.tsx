@@ -37,35 +37,35 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lexia-background via-lexia-surface-hover to-lexia-background">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lexia-background via-lexia-surface-hover to-lexia-background py-6 sm:py-12">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-lexia-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-lexia-secondary/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-lexia-accent/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute top-20 left-20 w-36 h-36 sm:w-72 sm:h-72 bg-lexia-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-48 h-48 sm:w-96 sm:h-96 bg-lexia-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 w-40 h-40 sm:w-80 sm:h-80 bg-lexia-accent/10 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
       </div>
 
       <div className="max-w-md w-full relative z-10 px-4">
         {/* Logo/Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
             <div className="relative">
-              <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-20 h-20 drop-shadow-2xl" />
+              <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-14 h-14 sm:w-20 sm:h-20 drop-shadow-2xl" />
               <div className="absolute inset-0 bg-gradient-primary opacity-30 blur-2xl rounded-full"></div>
             </div>
-            <h1 className="text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
               Lexia
             </h1>
           </div>
-          <p className="text-xl text-lexia-text-secondary font-medium">
+          <p className="text-lg sm:text-xl text-lexia-text-secondary font-medium px-4">
             Your Interactive Language Universe
           </p>
         </div>
 
         {/* Login Card */}
         <div className="card">
-          <h2 className="text-3xl font-bold mb-2 text-lexia-text">Welcome Back</h2>
-          <p className="text-lexia-text-secondary mb-6">Sign in to continue your learning journey</p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-lexia-text">Welcome Back</h2>
+          <p className="text-sm sm:text-base text-lexia-text-secondary mb-4 sm:mb-6">Sign in to continue your learning journey</p>
 
           {error && (
             <ErrorAlert

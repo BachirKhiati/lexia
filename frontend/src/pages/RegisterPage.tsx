@@ -55,35 +55,35 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lexia-background via-lexia-surface-hover to-lexia-background py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lexia-background via-lexia-surface-hover to-lexia-background py-6 sm:py-12 px-4">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 right-10 w-96 h-96 bg-lexia-accent/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-lexia-secondary/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-lexia-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-10 right-10 w-48 h-48 sm:w-96 sm:h-96 bg-lexia-accent/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-10 w-40 h-40 sm:w-80 sm:h-80 bg-lexia-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/3 w-36 h-36 sm:w-72 sm:h-72 bg-lexia-primary/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-md w-full relative z-10">
         {/* Logo/Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
             <div className="relative">
-              <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-20 h-20 drop-shadow-2xl" />
+              <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-14 h-14 sm:w-20 sm:h-20 drop-shadow-2xl" />
               <div className="absolute inset-0 bg-gradient-primary opacity-30 blur-2xl rounded-full"></div>
             </div>
-            <h1 className="text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
               Lexia
             </h1>
           </div>
-          <p className="text-xl text-lexia-text-secondary font-medium">
+          <p className="text-lg sm:text-xl text-lexia-text-secondary font-medium px-4">
             Start Your Language Journey
           </p>
         </div>
 
         {/* Register Card */}
         <div className="card">
-          <h2 className="text-3xl font-bold mb-2 text-lexia-text">Create Account</h2>
-          <p className="text-lexia-text-secondary mb-6">Join thousands of language learners</p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-lexia-text">Create Account</h2>
+          <p className="text-sm sm:text-base text-lexia-text-secondary mb-4 sm:mb-6">Join thousands of language learners</p>
 
           {error && (
             <ErrorAlert

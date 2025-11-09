@@ -55,33 +55,48 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-synapse-background py-12 px-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lexia-background via-lexia-surface-hover to-lexia-background py-12 px-4">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-10 right-10 w-96 h-96 bg-lexia-accent/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-lexia-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-lexia-primary/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-md w-full relative z-10">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-16 h-16" />
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-synapse-solid via-cyan-400 to-synapse-secondary bg-clip-text text-transparent">Lexia</h1>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="relative">
+              <img src="/icons/icon-96x96.svg" alt="Lexia" className="w-20 h-20 drop-shadow-2xl" />
+              <div className="absolute inset-0 bg-gradient-primary opacity-30 blur-2xl rounded-full"></div>
+            </div>
+            <h1 className="text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent">
+              Lexia
+            </h1>
           </div>
-          <p className="text-xl text-gray-400">Start Your Language Journey</p>
+          <p className="text-xl text-lexia-text-secondary font-medium">
+            Start Your Language Journey
+          </p>
         </div>
 
         {/* Register Card */}
         <div className="card">
-          <h2 className="text-2xl font-bold mb-6 text-white">Create Account</h2>
+          <h2 className="text-3xl font-bold mb-2 text-lexia-text">Create Account</h2>
+          <p className="text-lexia-text-secondary mb-6">Join thousands of language learners</p>
 
           {error && (
             <ErrorAlert
               message={error}
               details={errorDetails}
               onDismiss={() => setError('')}
-              className="mb-4"
+              className="mb-6"
             />
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-400 mb-2">Email</label>
+              <label className="block text-sm font-bold text-lexia-text mb-2">Email Address</label>
               <input
                 type="email"
                 value={email}
@@ -93,7 +108,7 @@ const RegisterPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-400 mb-2">Username</label>
+              <label className="block text-sm font-bold text-lexia-text mb-2">Username</label>
               <input
                 type="text"
                 value={username}
@@ -105,7 +120,7 @@ const RegisterPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-400 mb-2">Password</label>
+              <label className="block text-sm font-bold text-lexia-text mb-2">Password</label>
               <input
                 type="password"
                 value={password}
@@ -117,10 +132,14 @@ const RegisterPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-400 mb-2">
+              <label className="block text-sm font-bold text-lexia-text mb-2">
                 What language do you want to learn?
               </label>
-              <select value={language} onChange={(e) => setLanguage(e.target.value)} className="input">
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="select"
+              >
                 <option value="finnish">🇫🇮 Finnish</option>
                 <option value="english">🇬🇧 English</option>
                 <option value="spanish">🇪🇸 Spanish</option>
@@ -129,26 +148,42 @@ const RegisterPage = () => {
               </select>
             </div>
 
-            <button type="submit" disabled={loading} className="btn-primary w-full">
-              {loading ? 'Creating account...' : 'Create Account'}
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full text-lg font-bold mt-6"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="loading-spinner-sm"></div>
+                  Creating account...
+                </span>
+              ) : (
+                'Create Account'
+              )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
+          <div className="mt-8 text-center">
+            <p className="text-lexia-text-secondary">
               Already have an account?{' '}
-              <Link to="/login" className="text-synapse-primary hover:text-synapse-primary/80 font-semibold">
+              <Link
+                to="/login"
+                className="text-lexia-primary hover:text-lexia-primary-dark font-bold transition-colors"
+              >
                 Log in
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Info */}
-        <div className="mt-6 p-4 bg-synapse-primary/10 rounded-lg border border-synapse-primary">
-          <p className="text-sm text-gray-300 text-center">
-            By creating an account, you'll get access to all Lexia features including AI-powered quests, your
-            personal knowledge graph, and more!
+        {/* Info Box - Vibrant */}
+        <div className="mt-8 p-6 bg-gradient-to-r from-lexia-primary/10 via-lexia-accent/10 to-lexia-secondary/10 rounded-2xl border border-lexia-border shadow-elegant">
+          <p className="text-sm text-lexia-text text-center font-medium">
+            ✨ By creating an account, you'll get access to all Lexia features including{' '}
+            <span className="font-bold text-lexia-primary">AI-powered quests</span>,{' '}
+            <span className="font-bold text-lexia-accent">your personal knowledge graph</span>, and{' '}
+            <span className="font-bold text-lexia-secondary">intelligent spaced repetition</span>!
           </p>
         </div>
       </div>

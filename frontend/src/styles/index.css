@@ -4,55 +4,312 @@
 
 @layer base {
   body {
-    @apply bg-synapse-background text-white font-sans antialiased;
+    @apply bg-lexia-background text-lexia-text font-sans antialiased;
+    /* Smooth scrolling for elegant UX */
+    scroll-behavior: smooth;
+    /* Smooth theme transitions */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    @apply bg-lexia-dark-background text-lexia-dark-text;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
+    @apply font-bold text-lexia-text dark:text-lexia-dark-text;
+  }
+
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-lexia-primary/40 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-lexia-primary/60;
   }
 }
 
 @layer components {
+  /* Card Components */
   .card {
-    @apply bg-synapse-surface rounded-xl p-6 shadow-lg;
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface rounded-2xl p-6 shadow-elegant border border-lexia-border dark:border-lexia-dark-border transition-all duration-300;
   }
 
+  .card:hover {
+    @apply shadow-glow-md transform -translate-y-0.5;
+  }
+
+  .card-flat {
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface rounded-2xl p-6 border border-lexia-border dark:border-lexia-dark-border;
+  }
+
+  /* Button Components - Bright & Elegant */
   .btn-primary {
-    @apply bg-synapse-primary hover:bg-synapse-primary/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 hover:shadow-lg;
+    @apply bg-gradient-primary text-lexia-text-inverse font-semibold py-3 px-6 rounded-xl
+           transition-all duration-300 hover:shadow-glow-md hover:scale-105
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply bg-synapse-secondary hover:bg-synapse-secondary/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+    @apply bg-gradient-secondary text-lexia-text-inverse font-semibold py-3 px-6 rounded-xl
+           transition-all duration-300 hover:shadow-lg hover:scale-105
+           active:scale-95;
+  }
+
+  .btn-accent {
+    @apply bg-gradient-accent text-lexia-text-inverse font-semibold py-3 px-6 rounded-xl
+           transition-all duration-300 hover:shadow-lg hover:scale-105
+           active:scale-95;
   }
 
   .btn-ghost {
-    @apply border-2 border-synapse-ghost hover:bg-synapse-ghost/10 text-synapse-ghost font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+    @apply border-2 border-lexia-border hover:border-lexia-primary hover:bg-lexia-primary/5
+           text-lexia-text font-semibold py-3 px-6 rounded-xl
+           transition-all duration-300;
   }
 
+  .btn-success {
+    @apply bg-gradient-success text-lexia-text-inverse font-semibold py-3 px-6 rounded-xl
+           transition-all duration-300 hover:shadow-lg hover:scale-105;
+  }
+
+  /* Input Components */
   .input {
-    @apply bg-synapse-surface border-2 border-gray-700 focus:border-synapse-primary rounded-lg px-4 py-2 w-full outline-none transition-all duration-200;
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface border-2 border-lexia-border dark:border-lexia-dark-border
+           focus:border-lexia-primary focus:ring-2 focus:ring-lexia-primary/20
+           rounded-xl px-4 py-3 w-full outline-none
+           transition-all duration-200 text-lexia-text dark:text-lexia-dark-text
+           placeholder:text-lexia-text-tertiary dark:placeholder:text-lexia-dark-text-tertiary;
   }
 
   .textarea {
-    @apply bg-synapse-surface border-2 border-gray-700 focus:border-synapse-primary rounded-lg px-4 py-3 w-full outline-none resize-none transition-all duration-200;
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface border-2 border-lexia-border dark:border-lexia-dark-border
+           focus:border-lexia-primary focus:ring-2 focus:ring-lexia-primary/20
+           rounded-xl px-4 py-3 w-full outline-none resize-none
+           transition-all duration-200 text-lexia-text dark:text-lexia-dark-text
+           placeholder:text-lexia-text-tertiary dark:placeholder:text-lexia-dark-text-tertiary;
+  }
+
+  .select {
+    @apply bg-lexia-surface dark:bg-lexia-dark-surface border-2 border-lexia-border dark:border-lexia-dark-border
+           focus:border-lexia-primary focus:ring-2 focus:ring-lexia-primary/20
+           rounded-xl px-4 py-3 w-full outline-none
+           transition-all duration-200 text-lexia-text dark:text-lexia-dark-text cursor-pointer;
+  }
+
+  /* Badge Components */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+  }
+
+  .badge-primary {
+    @apply bg-lexia-primary/10 text-lexia-primary border border-lexia-primary/20;
+  }
+
+  .badge-success {
+    @apply bg-lexia-success/10 text-lexia-success border border-lexia-success/20;
+  }
+
+  .badge-warning {
+    @apply bg-lexia-warning/10 text-lexia-warning border border-lexia-warning/20;
+  }
+
+  .badge-info {
+    @apply bg-lexia-info/10 text-lexia-info border border-lexia-info/20;
+  }
+
+  /* Stat Card */
+  .stat-card {
+    @apply card flex flex-col items-center justify-center text-center p-8
+           hover:shadow-glow-lg transition-all duration-300;
+  }
+
+  .stat-value {
+    @apply text-4xl font-bold bg-gradient-rainbow bg-clip-text text-transparent;
+  }
+
+  .stat-label {
+    @apply text-sm text-lexia-text-secondary mt-2;
   }
 }
 
-/* Word hover effect */
+/* Word hover effect - Bright & Interactive */
 .hoverable-word {
-  @apply relative cursor-pointer transition-colors duration-150;
+  @apply relative cursor-pointer transition-all duration-200 font-medium;
 }
 
 .hoverable-word:hover {
-  @apply text-synapse-primary underline decoration-2 decoration-synapse-primary;
+  @apply text-lexia-primary underline decoration-2 decoration-lexia-primary
+         bg-lexia-primary/5 px-1 rounded;
 }
 
-/* Loading animation */
+/* Loading animation - Colorful */
 .loading-spinner {
-  @apply animate-spin rounded-full border-4 border-gray-700 border-t-synapse-primary h-12 w-12;
+  @apply animate-spin rounded-full h-12 w-12;
+  border: 4px solid rgba(255, 107, 157, 0.1);
+  border-top-color: #FF6B9D;
 }
 
-/* Success animation */
-.quest-success {
-  @apply animate-glow border-4 border-synapse-solid;
+.loading-spinner-sm {
+  @apply animate-spin rounded-full h-6 w-6;
+  border: 3px solid rgba(255, 107, 157, 0.1);
+  border-top-color: #FF6B9D;
 }
+
+/* Success animation - Vibrant glow */
+.quest-success {
+  @apply animate-glow border-4 border-lexia-success shadow-glow-lg;
+}
+
+/* Progress bar - Gradient */
+.progress-bar {
+  @apply h-2 bg-lexia-border rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full bg-gradient-primary transition-all duration-500 rounded-full;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply absolute z-50 px-3 py-2 text-sm bg-lexia-text text-lexia-text-inverse
+         rounded-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-200;
+}
+
+.tooltip.show {
+  @apply opacity-100;
+}
+
+/* Skeleton loading - Shimmer effect */
+.skeleton {
+  @apply bg-lexia-border rounded-lg animate-pulse;
+}
+
+.skeleton-shimmer {
+  @apply bg-gradient-to-r from-lexia-border via-lexia-surface-hover to-lexia-border;
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Notification/Alert */
+.alert {
+  @apply p-4 rounded-xl border flex items-start gap-3;
+}
+
+.alert-success {
+  @apply bg-lexia-success/10 border-lexia-success text-lexia-success;
+}
+
+.alert-warning {
+  @apply bg-lexia-warning/10 border-lexia-warning text-lexia-warning;
+}
+
+.alert-info {
+  @apply bg-lexia-info/10 border-lexia-info text-lexia-info;
+}
+
+.alert-error {
+  @apply bg-red-50 border-red-300 text-red-700;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes celebrate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-slideInFromRight {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-celebrate {
+  animation: celebrate 0.6s ease-in-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+

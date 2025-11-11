@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { OnboardingProvider } from './contexts/OnboardingContext';
+import { ToastProvider } from './contexts/ToastContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './components/Layout';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 
@@ -22,7 +24,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-synapse-background">
+      <div className="min-h-screen flex items-center justify-center bg-lexia-background">
         <div className="loading-spinner" />
       </div>
     );
@@ -37,7 +39,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 // Loading fallback component
 const LoadingFallback = () => (
-  <div className="min-h-screen flex items-center justify-center bg-synapse-background">
+  <div className="min-h-screen flex items-center justify-center bg-lexia-background">
     <div className="loading-spinner" />
   </div>
 );
@@ -83,12 +85,16 @@ function AppRoutes() {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <OnboardingProvider>
-          <AppRoutes />
-          <PWAInstallPrompt />
-        </OnboardingProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <OnboardingProvider>
+              <AppRoutes />
+              <PWAInstallPrompt />
+            </OnboardingProvider>
+          </ToastProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 }

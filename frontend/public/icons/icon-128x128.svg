@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <!-- Bright background gradient -->
     <linearGradient id="bgGrad128" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5F7FF;stop-opacity:1" />
     </linearGradient>
+
+    <!-- Vibrant rainbow logo gradient: Coral-pink → Turquoise → Purple -->
     <linearGradient id="logoGrad128" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00D9FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A855F7;stop-opacity:1" />
     </linearGradient>
+
+    <!-- Soft shadow for depth -->
+    <filter id="shadow128">
+      <feDropShadow dx="0" dy="2.56" stdDeviation="3.84" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Vibrant glow effect -->
     <filter id="glow128">
-      <feGaussianBlur stdDeviation="1.92" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="2.56" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -19,12 +29,13 @@
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="128" height="128" rx="23.04" fill="url(#bgGrad128)"/>
+  <!-- Bright background with subtle border -->
+  <rect width="128" height="128" rx="23.04" fill="url(#bgGrad128)" filter="url(#shadow128)"/>
+  <rect width="128" height="128" rx="23.04" fill="none" stroke="#E5E7EB" stroke-width="1.28"/>
 
   <!-- Lexia Logo: Modern "L" with connectivity nodes -->
   <g transform="translate(25.6, 25.6)" filter="url(#glow128)">
-    <!-- Main L shape -->
+    <!-- Main L shape with vibrant gradient -->
     <path d="M 19.2 11.52
              L 19.2 65.28
              L 57.599999999999994 65.28"
@@ -34,18 +45,18 @@
           stroke-linejoin="round"
           fill="none"/>
 
-    <!-- Connection nodes (representing language connectivity) -->
-    <circle cx="19.2" cy="11.52" r="7.68" fill="#10b981"/>
-    <circle cx="19.2" cy="38.4" r="5.12" fill="#06b6d4"/>
-    <circle cx="19.2" cy="65.28" r="7.68" fill="#8b5cf6"/>
-    <circle cx="57.599999999999994" cy="65.28" r="7.68" fill="#10b981"/>
+    <!-- Connection nodes with bright colors -->
+    <circle cx="19.2" cy="11.52" r="7.68" fill="#FF6B9D"/>
+    <circle cx="19.2" cy="38.4" r="5.12" fill="#00D9FF"/>
+    <circle cx="19.2" cy="65.28" r="7.68" fill="#A855F7"/>
+    <circle cx="57.599999999999994" cy="65.28" r="7.68" fill="#10D98E"/>
 
     <!-- Accent line (suggesting text/language) -->
     <path d="M 34.56 23.04
              L 57.599999999999994 23.04"
-          stroke="#06b6d4"
+          stroke="#00D9FF"
           stroke-width="5.12"
           stroke-linecap="round"
-          opacity="0.6"/>
+          opacity="0.7"/>
   </g>
 </svg>

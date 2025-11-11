@@ -21,7 +21,7 @@ export default function ExportImportPage() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `synapse-export-${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `lexia-export-${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -46,7 +46,7 @@ export default function ExportImportPage() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `synapse-vocabulary-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `lexia-vocabulary-${new Date().toISOString().split('T')[0]}.csv`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -129,24 +129,24 @@ export default function ExportImportPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2 text-synapse-text">
-          Export & Import Data
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-lexia-text flex items-center gap-2">
+          💾 Export & Import Data
         </h1>
-        <p className="text-synapse-text-secondary">
+        <p className="text-sm sm:text-base text-lexia-text-secondary">
           Export your learning data or import vocabulary from external sources
         </p>
       </div>
 
       {/* Export Section */}
-      <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-synapse-text">
+      <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-lexia-text">
           <Download className="w-5 h-5" />
           Export Your Data
         </h2>
-        <p className="text-synapse-text-secondary mb-6">
+        <p className="text-lexia-text-secondary mb-6">
           Download all your vocabulary, quests, and progress data for backup or migration
         </p>
 
@@ -154,14 +154,14 @@ export default function ExportImportPage() {
           {/* Export JSON */}
           <button
             onClick={handleExportJSON}
-            className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors group"
+            className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-lexia-border border border-lexia-border rounded-lg transition-colors group"
           >
-            <FileJson className="w-8 h-8 text-synapse-accent flex-shrink-0" />
+            <FileJson className="w-8 h-8 text-lexia-accent flex-shrink-0" />
             <div className="text-left">
-              <div className="font-semibold text-synapse-text group-hover:text-synapse-accent transition-colors">
+              <div className="font-semibold text-lexia-text group-hover:text-lexia-accent transition-colors">
                 Export as JSON
               </div>
-              <div className="text-sm text-synapse-text-secondary">
+              <div className="text-sm text-lexia-text-secondary">
                 Complete backup with all data
               </div>
             </div>
@@ -170,14 +170,14 @@ export default function ExportImportPage() {
           {/* Export CSV */}
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors group"
+            className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-lexia-border border border-lexia-border rounded-lg transition-colors group"
           >
-            <FileSpreadsheet className="w-8 h-8 text-synapse-accent flex-shrink-0" />
+            <FileSpreadsheet className="w-8 h-8 text-lexia-accent flex-shrink-0" />
             <div className="text-left">
-              <div className="font-semibold text-synapse-text group-hover:text-synapse-accent transition-colors">
+              <div className="font-semibold text-lexia-text group-hover:text-lexia-accent transition-colors">
                 Export as CSV
               </div>
-              <div className="text-sm text-synapse-text-secondary">
+              <div className="text-sm text-lexia-text-secondary">
                 Vocabulary only (Excel compatible)
               </div>
             </div>
@@ -186,24 +186,24 @@ export default function ExportImportPage() {
       </div>
 
       {/* Import Section */}
-      <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-synapse-text">
+      <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-lexia-text">
           <Upload className="w-5 h-5" />
           Import Data
         </h2>
-        <p className="text-synapse-text-secondary mb-6">
+        <p className="text-lexia-text-secondary mb-6">
           Import vocabulary from CSV files or restore your complete data from a JSON export
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Import CSV */}
-          <label className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors cursor-pointer group">
-            <FileSpreadsheet className="w-8 h-8 text-synapse-accent flex-shrink-0" />
+          <label className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-lexia-border border border-lexia-border rounded-lg transition-colors cursor-pointer group">
+            <FileSpreadsheet className="w-8 h-8 text-lexia-accent flex-shrink-0" />
             <div className="text-left flex-1">
-              <div className="font-semibold text-synapse-text group-hover:text-synapse-accent transition-colors">
+              <div className="font-semibold text-lexia-text group-hover:text-lexia-accent transition-colors">
                 Import CSV
               </div>
-              <div className="text-sm text-synapse-text-secondary">
+              <div className="text-sm text-lexia-text-secondary">
                 Add vocabulary from CSV file
               </div>
             </div>
@@ -217,13 +217,13 @@ export default function ExportImportPage() {
           </label>
 
           {/* Import JSON */}
-          <label className="flex items-center gap-3 p-4 bg-synapse-background hover:bg-synapse-border border border-synapse-border rounded-lg transition-colors cursor-pointer group">
-            <FileJson className="w-8 h-8 text-synapse-accent flex-shrink-0" />
+          <label className="flex items-center gap-3 p-4 bg-lexia-background hover:bg-lexia-border border border-lexia-border rounded-lg transition-colors cursor-pointer group">
+            <FileJson className="w-8 h-8 text-lexia-accent flex-shrink-0" />
             <div className="text-left flex-1">
-              <div className="font-semibold text-synapse-text group-hover:text-synapse-accent transition-colors">
+              <div className="font-semibold text-lexia-text group-hover:text-lexia-accent transition-colors">
                 Import JSON
               </div>
-              <div className="text-sm text-synapse-text-secondary">
+              <div className="text-sm text-lexia-text-secondary">
                 Restore complete backup
               </div>
             </div>
@@ -238,15 +238,15 @@ export default function ExportImportPage() {
         </div>
 
         {/* CSV Format Guide */}
-        <div className="mt-6 bg-synapse-background border border-synapse-border rounded-lg p-4">
-          <h3 className="font-semibold mb-2 text-synapse-text">CSV Format</h3>
-          <p className="text-sm text-synapse-text-secondary mb-2">
+        <div className="mt-6 bg-lexia-background border border-lexia-border rounded-lg p-4">
+          <h3 className="font-semibold mb-2 text-lexia-text">CSV Format</h3>
+          <p className="text-sm text-lexia-text-secondary mb-2">
             Your CSV file should have the following columns (header row required):
           </p>
-          <code className="block bg-synapse-card p-2 rounded text-sm text-synapse-accent">
+          <code className="block bg-lexia-surface p-2 rounded text-sm text-lexia-accent">
             Word, Definition, Part of Speech
           </code>
-          <p className="text-xs text-synapse-text-secondary mt-2">
+          <p className="text-xs text-lexia-text-secondary mt-2">
             Additional columns (Status, Ease Factor, etc.) are optional
           </p>
         </div>
@@ -314,28 +314,28 @@ export default function ExportImportPage() {
       {importing && (
         <div className="text-center py-8">
           <div className="loading-spinner mx-auto mb-4" />
-          <p className="text-synapse-text-secondary">Importing data...</p>
+          <p className="text-lexia-text-secondary">Importing data...</p>
         </div>
       )}
 
       {/* Info Section */}
-      <div className="bg-synapse-background border border-synapse-border rounded-lg p-6">
-        <h3 className="font-semibold mb-3 text-synapse-text">Data Privacy</h3>
-        <ul className="space-y-2 text-sm text-synapse-text-secondary">
+      <div className="bg-lexia-background border border-lexia-border rounded-lg p-6">
+        <h3 className="font-semibold mb-3 text-lexia-text">Data Privacy</h3>
+        <ul className="space-y-2 text-sm text-lexia-text-secondary">
           <li className="flex items-start gap-2">
-            <span className="text-synapse-accent">•</span>
+            <span className="text-lexia-accent">•</span>
             <span>Exports include all your vocabulary, quests, and progress data</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-synapse-accent">•</span>
+            <span className="text-lexia-accent">•</span>
             <span>Imported words that already exist will be skipped</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-synapse-accent">•</span>
+            <span className="text-lexia-accent">•</span>
             <span>JSON exports preserve all SRS data and progress</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-synapse-accent">•</span>
+            <span className="text-lexia-accent">•</span>
             <span>CSV imports create new words with default SRS values</span>
           </li>
         </ul>

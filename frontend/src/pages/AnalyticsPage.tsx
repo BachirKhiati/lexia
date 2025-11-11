@@ -37,10 +37,10 @@ export default function AnalyticsPage() {
         {/* Header Skeleton */}
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <div className="h-9 w-64 bg-synapse-border rounded animate-pulse mb-2" />
-            <div className="h-5 w-48 bg-synapse-border rounded animate-pulse" />
+            <div className="h-9 w-64 bg-lexia-border rounded animate-pulse mb-2" />
+            <div className="h-5 w-48 bg-lexia-border rounded animate-pulse" />
           </div>
-          <div className="h-10 w-32 bg-synapse-border rounded animate-pulse" />
+          <div className="h-10 w-32 bg-lexia-border rounded animate-pulse" />
         </div>
 
         {/* Stats Cards Skeleton */}
@@ -53,34 +53,34 @@ export default function AnalyticsPage() {
 
         {/* Charts Grid Skeleton */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6 h-64">
-            <div className="h-6 w-48 bg-synapse-border rounded animate-pulse mb-4" />
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6 h-64">
+            <div className="h-6 w-48 bg-lexia-border rounded animate-pulse mb-4" />
             <div className="space-y-3">
-              <div className="h-12 bg-synapse-border rounded animate-pulse" />
-              <div className="h-12 bg-synapse-border rounded animate-pulse" />
+              <div className="h-12 bg-lexia-border rounded animate-pulse" />
+              <div className="h-12 bg-lexia-border rounded animate-pulse" />
             </div>
           </div>
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6 h-64">
-            <div className="h-6 w-48 bg-synapse-border rounded animate-pulse mb-4" />
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6 h-64">
+            <div className="h-6 w-48 bg-lexia-border rounded animate-pulse mb-4" />
             <div className="space-y-2">
-              <div className="h-8 bg-synapse-border rounded animate-pulse" />
-              <div className="h-8 bg-synapse-border rounded animate-pulse" />
-              <div className="h-8 bg-synapse-border rounded animate-pulse" />
+              <div className="h-8 bg-lexia-border rounded animate-pulse" />
+              <div className="h-8 bg-lexia-border rounded animate-pulse" />
+              <div className="h-8 bg-lexia-border rounded animate-pulse" />
             </div>
           </div>
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6 h-64">
-            <div className="h-6 w-48 bg-synapse-border rounded animate-pulse mb-4" />
-            <div className="h-48 bg-synapse-border rounded animate-pulse" />
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6 h-64">
+            <div className="h-6 w-48 bg-lexia-border rounded animate-pulse mb-4" />
+            <div className="h-48 bg-lexia-border rounded animate-pulse" />
           </div>
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6 h-64">
-            <div className="h-6 w-48 bg-synapse-border rounded animate-pulse mb-4" />
-            <div className="h-48 bg-synapse-border rounded animate-pulse" />
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6 h-64">
+            <div className="h-6 w-48 bg-lexia-border rounded animate-pulse mb-4" />
+            <div className="h-48 bg-lexia-border rounded animate-pulse" />
           </div>
         </div>
 
         {/* Challenging Words Skeleton */}
-        <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-          <div className="h-6 w-64 bg-synapse-border rounded animate-pulse mb-4" />
+        <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+          <div className="h-6 w-64 bg-lexia-border rounded animate-pulse mb-4" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ListSkeleton count={3} />
           </div>
@@ -94,10 +94,10 @@ export default function AnalyticsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-synapse-text mb-2">
+          <h1 className="text-3xl font-bold text-lexia-text mb-2">
             📊 Learning Analytics
           </h1>
-          <p className="text-synapse-text-secondary">
+          <p className="text-lexia-text-secondary">
             Track your progress and insights
           </p>
         </div>
@@ -106,7 +106,7 @@ export default function AnalyticsPage() {
         <select
           value={selectedPeriod}
           onChange={(e) => setSelectedPeriod(Number(e.target.value))}
-          className="px-4 py-2 bg-synapse-card border border-synapse-border rounded-lg text-synapse-text"
+          className="px-4 py-2 bg-lexia-surface border border-lexia-border rounded-lg text-lexia-text"
         >
           <option value={7}>Last 7 days</option>
           <option value={30}>Last 30 days</option>
@@ -152,8 +152,8 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Words Progress */}
         {stats && (
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-synapse-text mb-4">
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-lexia-text mb-4">
               Vocabulary Progress
             </h3>
             <div className="space-y-4">
@@ -169,8 +169,8 @@ export default function AnalyticsPage() {
                 max={stats.total_words}
                 color="gray"
               />
-              <div className="pt-4 border-t border-synapse-border">
-                <div className="flex justify-between text-sm text-synapse-text-secondary">
+              <div className="pt-4 border-t border-lexia-border">
+                <div className="flex justify-between text-sm text-lexia-text-secondary">
                   <span>Average Ease Factor</span>
                   <span className="font-semibold text-synapse-accent">
                     {stats.average_ease_factor.toFixed(2)}
@@ -183,8 +183,8 @@ export default function AnalyticsPage() {
 
         {/* Words by Part of Speech */}
         {wordsByPOS && wordsByPOS.length > 0 && (
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-synapse-text mb-4">
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-lexia-text mb-4">
               Words by Part of Speech
             </h3>
             <div className="space-y-3">
@@ -192,14 +192,14 @@ export default function AnalyticsPage() {
                 <div key={item.part_of_speech} className="flex items-center gap-3">
                   <div className="flex-1">
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-synapse-text capitalize">
+                      <span className="text-sm text-lexia-text capitalize">
                         {item.part_of_speech}
                       </span>
                       <span className="text-sm font-semibold text-synapse-accent">
                         {item.count}
                       </span>
                     </div>
-                    <div className="h-2 bg-synapse-background rounded-full overflow-hidden">
+                    <div className="h-2 bg-lexia-background rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-synapse-accent to-green-600"
                         style={{
@@ -216,8 +216,8 @@ export default function AnalyticsPage() {
 
         {/* Words Over Time */}
         {wordsOverTime && wordsOverTime.length > 0 && (
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-synapse-text mb-4">
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-lexia-text mb-4">
               Words Added Over Time
             </h3>
             <SimpleLineChart data={wordsOverTime} color="green" />
@@ -226,8 +226,8 @@ export default function AnalyticsPage() {
 
         {/* Quests Over Time */}
         {questsOverTime && questsOverTime.length > 0 && (
-          <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-synapse-text mb-4">
+          <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-lexia-text mb-4">
               Quests Completed Over Time
             </h3>
             <SimpleLineChart data={questsOverTime} color="purple" />
@@ -237,31 +237,31 @@ export default function AnalyticsPage() {
 
       {/* Challenging Words */}
       {challengingWords && challengingWords.length > 0 && (
-        <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-synapse-text mb-4">
+        <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-lexia-text mb-4">
             🎯 Most Challenging Words
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {challengingWords.map((word) => (
               <div
                 key={word.word}
-                className="bg-synapse-background rounded-lg p-4 border border-synapse-border"
+                className="bg-lexia-background rounded-lg p-4 border border-lexia-border"
               >
                 <div className="flex items-start justify-between mb-2">
                   <div>
-                    <div className="font-semibold text-synapse-text">{word.word}</div>
-                    <div className="text-sm text-synapse-text-secondary">
+                    <div className="font-semibold text-lexia-text">{word.word}</div>
+                    <div className="text-sm text-lexia-text-secondary">
                       {word.definition}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-synapse-text-secondary">Ease Factor</div>
+                    <div className="text-xs text-lexia-text-secondary">Ease Factor</div>
                     <div className="text-lg font-bold text-orange-500">
                       {word.ease_factor.toFixed(2)}
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-synapse-text-secondary">
+                <div className="text-xs text-lexia-text-secondary">
                   {word.reviews} reviews
                 </div>
               </div>
@@ -292,16 +292,16 @@ function StatCard({ title, value, subtitle, icon, color }: StatCardProps) {
   };
 
   return (
-    <div className="bg-synapse-card border border-synapse-border rounded-lg p-6">
+    <div className="bg-lexia-surface border border-lexia-border rounded-lg p-6">
       <div className="flex items-start justify-between mb-4">
         <div className="text-2xl">{icon}</div>
         <div
           className={`w-2 h-2 rounded-full bg-gradient-to-r ${colorClasses[color]}`}
         />
       </div>
-      <div className="text-3xl font-bold text-synapse-text mb-1">{value}</div>
-      <div className="text-sm text-synapse-text-secondary mb-1">{title}</div>
-      <div className="text-xs text-synapse-text-secondary">{subtitle}</div>
+      <div className="text-3xl font-bold text-lexia-text mb-1">{value}</div>
+      <div className="text-sm text-lexia-text-secondary mb-1">{title}</div>
+      <div className="text-xs text-lexia-text-secondary">{subtitle}</div>
     </div>
   );
 }
@@ -323,12 +323,12 @@ function ProgressBar({ label, value, max, color }: ProgressBarProps) {
   return (
     <div>
       <div className="flex justify-between mb-2">
-        <span className="text-sm text-synapse-text">{label}</span>
+        <span className="text-sm text-lexia-text">{label}</span>
         <span className="text-sm font-semibold text-synapse-accent">
           {value} ({percentage.toFixed(0)}%)
         </span>
       </div>
-      <div className="h-3 bg-synapse-background rounded-full overflow-hidden">
+      <div className="h-3 bg-lexia-background rounded-full overflow-hidden">
         <div
           className={`h-full ${colorClasses[color]} transition-all duration-500`}
           style={{ width: `${percentage}%` }}
@@ -346,7 +346,7 @@ interface SimpleLineChartProps {
 function SimpleLineChart({ data, color }: SimpleLineChartProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="h-48 flex items-center justify-center text-synapse-text-secondary">
+      <div className="h-48 flex items-center justify-center text-lexia-text-secondary">
         No data available
       </div>
     );
@@ -374,7 +374,7 @@ function SimpleLineChart({ data, color }: SimpleLineChartProps) {
                 title={`${point.date}: ${point.count}`}
               />
               {index % Math.floor(data.length / 5) === 0 && (
-                <div className="text-xs text-synapse-text-secondary mt-2 rotate-45 origin-top-left">
+                <div className="text-xs text-lexia-text-secondary mt-2 rotate-45 origin-top-left">
                   {new Date(point.date).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
